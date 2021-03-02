@@ -5,8 +5,7 @@ function Form(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    props.addTask(state.task);
-    props.addName(state.assignee);
+    props.addTask(state.task, state.assignee);
     setState({ task: '', assignee: '' });
     console.log(state.assignee);
   };

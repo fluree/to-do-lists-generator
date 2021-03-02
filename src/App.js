@@ -87,13 +87,6 @@ function App(props) {
     setTasks([...tasks, newTask]);
   }
 
-  // function addName(assigned) {
-  //   const newAssignee = { id: 'assignee' + nanoid(), assigned: assigned };
-  //   console.log(assigned);
-  //   setAssign(...assigned, newAssignee);
-  //   console.log(newAssignee);
-  // }
-
   const listHeadingRef = useRef(null);
   const prevTaskLength = usePrevious(tasks.length);
 
