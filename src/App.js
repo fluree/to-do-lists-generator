@@ -58,6 +58,7 @@ function App(props) {
         id={task.id}
         name={task.name}
         completed={task.completed}
+        assigned={task.assigned}
         key={task.id}
         toggleTaskCompleted={toggleTaskCompleted}
         deleteTask={deleteTask}
@@ -84,7 +85,9 @@ function App(props) {
 
   function addName(assigned) {
     const newAssignee = { id: 'assignee' + nanoid(), assigned: assigned };
+    console.log(assigned);
     setAssign(...assigned, newAssignee);
+    console.log(newAssignee);
   }
 
   const listHeadingRef = useRef(null);
