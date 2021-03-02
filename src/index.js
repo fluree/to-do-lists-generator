@@ -1,16 +1,16 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import "./styles/tailwind.css";
-import App from "./App";
-import reportWebVitals from "./reportWebVitals";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './styles/tailwind.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
 
 const DATA = [
-  { id: "todo-0", name: "Eat", completed: true },
-  { id: "todo-1", name: "Sleep", completed: false },
-  { id: "todo-2", name: "Repeat", completed: false },
+  { id: 'todo-0', name: 'Eat', completed: true, assigned: 'Felix' },
+  { id: 'todo-1', name: 'Sleep', completed: false, assigned: 'Gerardo' },
+  { id: 'todo-2', name: 'Repeat', completed: false, assigned: 'Maria' },
 ];
 
-ReactDOM.render(<App tasks={DATA} />, document.getElementById("root"));
+ReactDOM.render(<App tasks={DATA} />, document.getElementById('root'));
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
