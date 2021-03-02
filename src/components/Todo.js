@@ -1,3 +1,4 @@
+import { nanoid } from 'nanoid';
 import React, { useEffect, useRef, useState } from 'react';
 
 function usePrevious(value) {
@@ -9,7 +10,7 @@ function usePrevious(value) {
 }
 
 export default function Todo(props) {
-  const [state, setState] = useState({ newName: '', newAssignee: '' });
+  const [state, setState] = useState({ newName: '' });
   const [isEditing, setEditing] = useState(false);
   const editFieldRef = useRef(null);
   const editButtonRef = useRef(null);
@@ -23,7 +24,7 @@ export default function Todo(props) {
     e.preventDefault();
     props.editTask(props.id, state.newName);
     setEditing(false);
-    setState({ ...state, [e.target.name]: e.target.value });
+    setState({ newName: '' });
   }
 
   const editingTemplate = (
@@ -37,13 +38,6 @@ export default function Todo(props) {
           className=''
           type='text'
           value={state.newName}
-          onChange={handleChange}
-          ref={editFieldRef}
-        />
-        <input
-          className=''
-          type='text'
-          value={state.newAssignee}
           onChange={handleChange}
           ref={editFieldRef}
         />
@@ -72,7 +66,9 @@ export default function Todo(props) {
         <label className='' htmlFor={props.id}>
           {props.name}
         </label>
-        <label className=''>{props.assigned}</label>
+        <label id={'assignee-' + nanoid()} className=''>
+          {props.assigned}
+        </label>
       </div>
       <div className=''>
         <button
