@@ -22,7 +22,6 @@ const FILTER_NAMES = Object.keys(FILTER_MAP);
 
 function App(props) {
   const [tasks, setTasks] = useState(props.tasks);
-  const [assigned, setAssign] = useState(props.assigned);
   const [filter, setFilter] = useState('All');
 
   //tasks are marked as complete or not
@@ -78,17 +77,22 @@ function App(props) {
   const tasksNoun = taskList.length !== 1 ? 'tasks' : 'task';
   const headingText = `${taskList.length} ${tasksNoun} remaining`;
 
-  function addTask(name) {
-    const newTask = { id: 'todo' + nanoid(), name: name, completed: false };
+  function addTask(name, assigned) {
+    const newTask = {
+      id: 'todo' + nanoid(),
+      name: name,
+      completed: false,
+      assigned: assigned,
+    };
     setTasks([...tasks, newTask]);
   }
 
-  function addName(assigned) {
-    const newAssignee = { id: 'assignee' + nanoid(), assigned: assigned };
-    console.log(assigned);
-    setAssign(...assigned, newAssignee);
-    console.log(newAssignee);
-  }
+  // function addName(assigned) {
+  //   const newAssignee = { id: 'assignee' + nanoid(), assigned: assigned };
+  //   console.log(assigned);
+  //   setAssign(...assigned, newAssignee);
+  //   console.log(newAssignee);
+  // }
 
   const listHeadingRef = useRef(null);
   const prevTaskLength = usePrevious(tasks.length);
@@ -102,7 +106,7 @@ function App(props) {
   return (
     <div className=''>
       <h1>TodoLists</h1>
-      <Form addTask={addTask} addName={addName} />
+      <Form addTask={addTask} />
       <div className=''>{filterList}</div>
       <h2 id='list-heading' tabIndex='-1' ref={listHeadingRef}>
         {headingText}
