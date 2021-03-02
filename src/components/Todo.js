@@ -37,6 +37,7 @@ export default function Todo(props) {
           id={props.id}
           className=''
           type='text'
+          name='newName'
           value={state.newName}
           onChange={handleChange}
           ref={editFieldRef}
