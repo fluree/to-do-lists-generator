@@ -31,7 +31,7 @@ export default function Todo(props) {
     <form className='' onSubmit={handleSubmit}>
       <div className=''>
         <label className='' htmlFor={props.id}>
-          New name for {props.name}
+          New name for {props.task}
         </label>
         <input
           id={props.id}
@@ -46,17 +46,19 @@ export default function Todo(props) {
       <div className=''>
         <button type='button' className='' onClick={() => setEditing(false)}>
           Cancel
-          <span className='hidden'>renaming {props.name}</span>
+          <span className='hidden'>renaming {props.task}</span>
         </button>
         <button type='submit' className=''>
           Save
-          <span className='hidden'>new name for {props.name}</span>
+          <span className='hidden'>new name for {props.task}</span>
         </button>
       </div>
     </form>
   );
   const viewTemplate = (
     <div className=''>
+      <h2>{props.name}</h2>
+      <h3>{props.description}</h3>
       <div className=''>
         <input
           id={props.id}
@@ -65,10 +67,13 @@ export default function Todo(props) {
           onChange={() => props.toggleTaskCompleted(props.id)}
         />
         <label className='' htmlFor={props.id}>
-          {props.name}
+          {props.task}
         </label>
         <label id={'assignee-' + nanoid()} className=''>
-          {props.assigned}
+          {props.assignee}
+        </label>
+        <label id={'email-' + nanoid()} className=''>
+          {props.email}
         </label>
       </div>
       <div className=''>
@@ -78,14 +83,14 @@ export default function Todo(props) {
           onClick={() => setEditing(true)}
           ref={editButtonRef}
         >
-          Edit <span className='hidden'>{props.name}</span>
+          Edit <span className='hidden'>{props.task}</span>
         </button>
         <button
           type='button'
           className=''
           onClick={() => props.deleteTask(props.id)}
         >
-          Delete <span className='hidden'>{props.name}</span>
+          Delete <span className='hidden'>{props.task}</span>
         </button>
       </div>
     </div>

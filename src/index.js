@@ -5,9 +5,27 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 const DATA = [
-  { id: 'todo-0', name: 'Eat', completed: true, assigned: 'Felix' },
-  { id: 'todo-1', name: 'Sleep', completed: false, assigned: 'Gerardo' },
-  { id: 'todo-2', name: 'Repeat', completed: false, assigned: 'Maria' },
+  {
+    name: 'My first List',
+    description: 'My first example list',
+    id: 'todo-0',
+    task: [
+      'Exercise',
+      'Nap',
+      'Eat protein for lunch',
+      'Go for a run after work',
+      'feed Nemo',
+    ],
+    completed: [true, true, false, false, false],
+    assignee: ['Flor', 'Felix', 'Flor', 'Flor', 'Felix'],
+    email: [
+      'flor@flor.com',
+      'felix@felix.com',
+      'flor@flor.com',
+      'flor@flor.com',
+      'felix@felix.com',
+    ],
+  },
 ];
 
 ReactDOM.render(<App tasks={DATA} />, document.getElementById('root'));
