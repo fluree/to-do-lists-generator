@@ -1,16 +1,8 @@
 import Todo from './components/Todo';
 import Form from './components/Form';
 import FilterButton from './components/FilterButton';
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import { nanoid } from 'nanoid';
-
-function usePrevious(value) {
-  const ref = useRef();
-  useEffect(() => {
-    ref.current = value;
-  });
-  return ref.current;
-}
 
 const FILTER_MAP = {
   All: () => true,
@@ -23,6 +15,11 @@ const FILTER_NAMES = Object.keys(FILTER_MAP);
 function App(props) {
   const [tasks, setTasks] = useState(props.tasks);
   const [filter, setFilter] = useState('All');
+
+  const handleSubmit = (list) => {
+    console.log(list);
+    addList(list);
+  };
 
   //tasks are marked as complete or not
   function toggleTaskCompleted(id) {
@@ -39,11 +36,11 @@ function App(props) {
     const remainingTasks = tasks.filter((task) => id !== task.id);
     setTasks(remainingTasks);
   }
-
+  //tasks are edited
   function editTask(id, newName) {
     const editedTaskList = tasks.map((task) => {
       if (id === task.id) {
-        return { ...task, name: newName };
+        return { ...task, task: newName };
       }
       return task;
     });
@@ -54,10 +51,13 @@ function App(props) {
     .filter(FILTER_MAP[filter])
     .map((task) => (
       <Todo
-        id={task.id}
         name={task.name}
+        description={task.description}
+        id={task.id}
+        task={task.task}
         completed={task.completed}
-        assigned={task.assigned}
+        assignee={task.assignee}
+        email={task.email}
         key={task.id}
         toggleTaskCompleted={toggleTaskCompleted}
         deleteTask={deleteTask}
@@ -65,45 +65,33 @@ function App(props) {
       />
     ));
 
-  const filterList = FILTER_NAMES.map((name) => (
+  const filterList = FILTER_NAMES.map((task) => (
     <FilterButton
-      key={name}
-      name={name}
-      isPressed={name === filter}
+      key={task}
+      name={task}
+      isPressed={task === filter}
       setFilter={setFilter}
     />
   ));
 
-  const tasksNoun = taskList.length !== 1 ? 'tasks' : 'task';
-  const headingText = `${taskList.length} ${tasksNoun} remaining`;
-
-  function addTask(name, assigned) {
-    const newTask = {
-      id: 'todo' + nanoid(),
+  function addList({ name, description, task, assignee, email }) {
+    const newList = {
       name: name,
+      description: description,
+      id: 'todo' + nanoid(),
+      task: task,
       completed: false,
-      assigned: assigned,
+      assignee: assignee,
+      email: email,
     };
-    setTasks([...tasks, newTask]);
+    setTasks([...tasks, newList]);
   }
-
-  const listHeadingRef = useRef(null);
-  const prevTaskLength = usePrevious(tasks.length);
-
-  useEffect(() => {
-    if (tasks.length - prevTaskLength === -1) {
-      listHeadingRef.current.focus();
-    }
-  }, [tasks.length, prevTaskLength]);
 
   return (
     <div className=''>
       <h1>TodoLists</h1>
-      <Form addTask={addTask} />
+      <Form submit={handleSubmit} />
       <div className=''>{filterList}</div>
-      <h2 id='list-heading' tabIndex='-1' ref={listHeadingRef}>
-        {headingText}
-      </h2>
       <ul role='list' className='' aria-labelledby='list-heading'>
         {taskList}
       </ul>
