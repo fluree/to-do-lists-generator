@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import InputComponent from './InputComponent';
+import TasksInput from './TasksInput';
 
 function Form({ submit }) {
   const [state, setState] = useState({
     name: '',
     description: '',
-    task: '',
-    assignee: '',
-    email: '',
+    tasks: [],
   });
 
   function handleChange(e) {
@@ -18,6 +17,11 @@ function Form({ submit }) {
     });
   }
 
+  function handleTaskChange(index, task) {
+    let newTasks = state.tasks;
+    newTasks[index] = task;
+    setState({ ...state, tasks: newTasks });
+  }
   return (
     <form>
       <div>
@@ -36,30 +40,7 @@ function Form({ submit }) {
           change={handleChange}
         />
       </div>
-      <div>
-        <InputComponent
-          title='Task'
-          name='task'
-          value={state.task}
-          change={handleChange}
-        />
-      </div>
-      <div>
-        <InputComponent
-          title='Assignee'
-          name='assignee'
-          value={state.assignee}
-          change={handleChange}
-        />
-      </div>
-      <div>
-        <InputComponent
-          title='Email'
-          name='email'
-          value={state.email}
-          change={handleChange}
-        />
-      </div>
+      <TasksInput change={handleTaskChange} index={0} />
       <button
         onClick={(e) => {
           submit(state);
