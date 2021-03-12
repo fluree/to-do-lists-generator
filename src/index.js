@@ -9,26 +9,47 @@ const DATA = [
     name: 'My first List',
     description: 'My first example list',
     id: 'todo-0',
-    task: [
-      'Exercise',
-      'Nap',
-      'Eat protein for lunch',
-      'Go for a run after work',
-      'feed Nemo',
-    ],
-    completed: [true, true, false, false, false],
-    assignee: ['Flor', 'Felix', 'Flor', 'Flor', 'Felix'],
-    email: [
-      'flor@flor.com',
-      'felix@felix.com',
-      'flor@flor.com',
-      'flor@flor.com',
-      'felix@felix.com',
+    tasks: [
+      {
+        id: 'task-0',
+        task: 'exercise',
+        completed: true,
+        assignee: 'Flor',
+        email: 'flor@flor.com',
+      },
+      {
+        id: 'task-1',
+        task: 'Eat Lunch',
+        completed: true,
+        assignee: 'Flor',
+        email: 'flor@flor.com',
+      },
+      {
+        id: 'task-2',
+        task: 'go for a run',
+        completed: false,
+        assignee: 'Flor',
+        email: 'flor@flor.com',
+      },
+      {
+        id: 'task-3',
+        task: 'feed Nemo',
+        completed: false,
+        assignee: 'Flor',
+        email: 'flor@flor.com',
+      },
+      {
+        id: 'task-4',
+        task: 'nap time',
+        completed: false,
+        assignee: 'Flor',
+        email: 'flor@flor.com',
+      },
     ],
   },
 ];
 
-ReactDOM.render(<App tasks={DATA} />, document.getElementById('root'));
+ReactDOM.render(<App data={DATA} />, document.getElementById('root'));
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
