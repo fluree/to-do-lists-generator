@@ -1,8 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { nanoid } from 'nanoid';
+import InputComponent from './InputComponent';
 
 function Task({ task, handleSubmit }) {
   const [isEditing, setEditing] = useState(false);
+  const editFieldRef = useRef(null);
+  const editButtonRef = useRef(null);
+  const wasEditing = usePrevious(isEditing);
+  const [state, setState] = useState('');
+
+  function handleChange(e) {
+    setState({ ...state, [e.target.name]: e.target.value });
+  }
+
+  function usePrevious(value) {
+    const ref = useRef();
+    useEffect(() => {
+      ref.current = value;
+    });
+    return ref.current;
+  }
+
+  useEffect(() => {
+    if (!wasEditing && isEditing) {
+      editFieldRef.current.focus();
+    }
+    if (wasEditing && !isEditing) {
+      editButtonRef.current.focus();
+    }
+  }, [wasEditing, isEditing]);
+
   return (
     <>
       <div className=''>
@@ -10,7 +37,7 @@ function Task({ task, handleSubmit }) {
           id={task.id}
           type='checkbox'
           defaultChecked={task.completed}
-          //   onChange={() => props.toggleTaskCompleted(task.id)}
+          onChange={() => task.toggleTaskCompleted(task.id)}
         />
         <label className='' htmlFor={task.id}>
           {task.task}
@@ -27,14 +54,14 @@ function Task({ task, handleSubmit }) {
           type=''
           className=''
           onClick={() => setEditing(true)}
-          //   ref={editButtonRef}
+          ref={editButtonRef}
         >
           Edit <span className='hidden'>{task.task}</span>
         </button>
         <button
           type='button'
           className=''
-          //   onClick={() => task.deleteTask(task.id)}
+          onClick={() => task.deleteTask(task.id)}
         >
           Delete <span className='hidden'>{task.task}</span>
         </button>
@@ -44,14 +71,14 @@ function Task({ task, handleSubmit }) {
           <div className=''>
             <label className='' htmlFor={task.id}>
               New name for {task.task}
-              <input
+              <InputComponent
                 id={task.id}
                 className=''
                 type='text'
                 name='newName'
-                // value={state.newName}
-                // onChange={handleChange}
-                // ref={editFieldRef}
+                value={state.newName}
+                onChange={handleChange}
+                ref={editFieldRef}
               />
               <div className=''>
                 <button
