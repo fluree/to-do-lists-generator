@@ -41,7 +41,6 @@ function Form({ submit }) {
   }
 
   function addMoreInputs() {
-    console.log('click');
     let moreTasks = state.tasks;
     moreTasks.push({
       id: `task-${nanoid()}`,
@@ -51,6 +50,12 @@ function Form({ submit }) {
       email: '',
     });
     setState({ ...state, tasks: moreTasks });
+  }
+
+  function removeInputs() {
+    let currentTasks = state.tasks;
+    currentTasks.pop();
+    setState({ ...state, tasks: currentTasks });
   }
 
   function clearForm() {
@@ -114,7 +119,11 @@ function Form({ submit }) {
             >
               Submit
             </Button>
-            <Container maxWidth='xs' width='25%' disableGutters>
+            <Container
+              maxWidth='xs'
+              disableGutters
+              style={{ width: '25%', margin: '0' }}
+            >
               <IconButton
                 disableTouchRipple
                 style={{ backgroundColor: 'transparent', outlineStyle: 'none' }}
@@ -124,7 +133,13 @@ function Form({ submit }) {
               >
                 <AddIcon color='secondary' />
               </IconButton>
-              <IconButton>
+              <IconButton
+                disableTouchRipple
+                style={{ backgroundColor: 'transparent', outlineStyle: 'none' }}
+                size='small'
+                p={0}
+                onClick={removeInputs}
+              >
                 <RemoveIcon color='secondary' />
               </IconButton>
             </Container>
