@@ -1,27 +1,32 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Task from './Task';
+import { Box } from '@material-ui/core';
 
 export default function Todo(props) {
-  const [state, setState] = useState({ newName: '' });
-  // const editFieldRef = useRef(null);
-  // const editButtonRef = useRef(null);
-  // const wasEditing = usePrevious(isEditing);
+  function handleSubmit(task) {
+    props.editTask(task);
+  }
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    props.editTask(props.tasks.id, state.newName);
-    setState({ newName: '' });
+  function handleDeletion(task) {
+    props.deleteTask(task);
   }
 
   const viewTemplate = (
-    <div className=''>
+    <Box display='flex' alignItems='center' flexDirection='column' p={2}>
       <h2>{props.name}</h2>
       <h3>{props.description}</h3>
-
       {props.tasks.map((task) => {
-        return <Task handleSubmit={handleSubmit} task={task} key={task.id} />;
+        return (
+          <Task
+            handleSubmit={handleSubmit}
+            handleDeletion={handleDeletion}
+            id={task.id}
+            task={task}
+            key={task.id}
+          />
+        );
       })}
-    </div>
+    </Box>
   );
 
   return <li className=''>{viewTemplate}</li>;

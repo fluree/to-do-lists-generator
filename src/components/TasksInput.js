@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import InputComponent from './InputComponent';
-import { nanoid } from 'nanoid';
+import { Box } from '@material-ui/core';
 
-function TasksInput({ change, index }) {
+function TasksInput({ change, id }) {
   const [state, setState] = useState({
-    id: `task-${nanoid()}`,
+    id: id,
     completed: false,
     task: '',
     assignee: '',
@@ -16,35 +16,33 @@ function TasksInput({ change, index }) {
       ...state,
       [name]: value,
     });
-    change(index, state);
+    change(state);
   }
+
   return (
-    <div>
-      <div>
-        <InputComponent
-          title='Task'
-          name='task'
-          value={state.task}
-          change={handleChange}
-        />
-      </div>
-      <div>
-        <InputComponent
-          title='Assignee'
-          name='assignee'
-          value={state.assignee}
-          change={handleChange}
-        />
-      </div>
-      <div>
-        <InputComponent
-          title='Email'
-          name='email'
-          value={state.email}
-          change={handleChange}
-        />
-      </div>
-    </div>
+    <Box display='flex' flexDirection='column'>
+      <InputComponent
+        title='Task'
+        type='text'
+        name='task'
+        value={state.task}
+        change={handleChange}
+      />
+      <InputComponent
+        title='Assignee'
+        type='text'
+        name='assignee'
+        value={state.assignee}
+        change={handleChange}
+      />
+      <InputComponent
+        title='Email'
+        type='text'
+        name='email'
+        value={state.email}
+        change={handleChange}
+      />
+    </Box>
   );
 }
 

@@ -1,104 +1,136 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import { nanoid } from 'nanoid';
 import InputComponent from './InputComponent';
+import { Button } from '@material-ui/core';
+import { Checkbox } from '@material-ui/core';
+import { Container } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 
-function Task({ task, handleSubmit }) {
+function Task({ task, handleSubmit, handleDeletion }) {
   const [isEditing, setEditing] = useState(false);
-  const editFieldRef = useRef(null);
-  const editButtonRef = useRef(null);
-  const wasEditing = usePrevious(isEditing);
-  const [state, setState] = useState('');
+  const [state, setState] = useState({ ...task, newName: '' });
 
   function handleChange(e) {
     setState({ ...state, [e.target.name]: e.target.value });
   }
 
-  function usePrevious(value) {
-    const ref = useRef();
-    useEffect(() => {
-      ref.current = value;
-    });
-    return ref.current;
+  async function setNewName(e) {
+    const newName = state.newName;
+    e.preventDefault();
+    await setState({ ...task, task: newName, newName: '' });
+    setEditing(false);
+    handleSubmit(state);
   }
 
-  useEffect(() => {
-    if (!wasEditing && isEditing) {
-      editFieldRef.current.focus();
-    }
-    if (wasEditing && !isEditing) {
-      editButtonRef.current.focus();
-    }
-  }, [wasEditing, isEditing]);
-
   return (
-    <>
-      <div className=''>
-        <input
-          id={task.id}
-          type='checkbox'
-          defaultChecked={task.completed}
-          onChange={() => task.toggleTaskCompleted(task.id)}
+    <Container
+      style={{
+        borderStyle: 'dotted',
+        borderWidth: '5px',
+        borderColor: 'secondary',
+        marginBottom: '1rem',
+      }}
+    >
+      <Box display='flex' justifyContent='space-evenly'>
+        <Checkbox
+          id={state.id}
+          name='completed'
+          defaultChecked={state.completed}
+          onChange={(e) => handleChange(e)}
         />
-        <label className='' htmlFor={task.id}>
-          {task.task}
+        <label className='' htmlFor={state.id}>
+          {state.task}
         </label>
         <label id={'assignee-' + nanoid()} className=''>
-          {task.assignee}
+          {state.assignee}
         </label>
         <label id={'email-' + nanoid()} className=''>
-          {task.email}
+          {state.email}
         </label>
-      </div>
-      <div className=''>
-        <button
+      </Box>
+      <Box display='flex' justifyContent='space-evenly'>
+        <Button
+          variant='text'
+          color='primary'
           type=''
           className=''
           onClick={() => setEditing(true)}
-          ref={editButtonRef}
         >
-          Edit <span className='hidden'>{task.task}</span>
-        </button>
-        <button
+          Edit
+          <Box component='span' display='none'>
+            {state.task}
+          </Box>
+        </Button>
+        <Button
+          variant='text'
+          color='primary'
           type='button'
           className=''
-          onClick={() => task.deleteTask(task.id)}
+          onClick={() => handleDeletion(task)}
         >
-          Delete <span className='hidden'>{task.task}</span>
-        </button>
-      </div>
+          Delete
+          <Box component='span' display='none'>
+            {state.task}
+          </Box>
+        </Button>
+      </Box>
       {isEditing && (
         <form className='' onSubmit={handleSubmit}>
-          <div className=''>
-            <label className='' htmlFor={task.id}>
-              New name for {task.task}
+          <Container>
+            <Box
+              display='flex'
+              flexDirection='row'
+              alignItems='baseline'
+              justifyContent='space-evenly'
+            >
+              <label className='' htmlFor={state.id + 'New-Name'}>
+                New name for {state.task}
+              </label>
               <InputComponent
-                id={task.id}
+                id={state.id + 'New-Name'}
                 className=''
                 type='text'
                 name='newName'
                 value={state.newName}
-                onChange={handleChange}
-                ref={editFieldRef}
+                change={handleChange}
+                title='New Task'
               />
-              <div className=''>
-                <button
-                  type='button'
-                  className=''
-                  onClick={() => setEditing(false)}
-                >
-                  Cancel
-                  <span className='hidden'>renaming {task.task}</span>
-                </button>
-                <button type='submit' className=''>
-                  Save
-                  <span className='hidden'>new name for {task.task}</span>
-                </button>
-              </div>
-            </label>
-          </div>
+            </Box>
+            <Box
+              display='flex'
+              flexDirection='row'
+              alignItems='baseline'
+              justifyContent='space-evenly'
+              p={2}
+            >
+              <Button
+                variant='contained'
+                size='small'
+                type='button'
+                className=''
+                onClick={() => setEditing(false)}
+              >
+                Cancel
+                <Box component='span' display='none'>
+                  renaming {state.task}
+                </Box>
+              </Button>
+              <Button
+                variant='contained'
+                size='small'
+                type='submit'
+                onClick={(e) => setNewName(e)}
+              >
+                Save
+                <Box component='span' display='none'>
+                  new name for {state.task}
+                </Box>
+              </Button>
+            </Box>
+          </Container>
         </form>
       )}
-    </>
+    </Container>
   );
 }
 export default Task;
