@@ -8,17 +8,26 @@ import { Box } from '@material-ui/core';
 
 function Task({ task, handleSubmit, handleDeletion }) {
   const [isEditing, setEditing] = useState(false);
-  const [state, setState] = useState({ ...task, newName: '' });
+  const [state, setState] = useState({ ...task });
+  const [newName, setNewName] = useState('');
 
-  function handleChange(e) {
-    setState({ ...state, [e.target.name]: e.target.value });
+  function handleNewNameChange(e) {
+    setNewName(e.target.value);
   }
 
-  async function setNewName(e) {
-    const newName = state.newName;
+  async function setTaskNewName(e) {
     e.preventDefault();
-    await setState({ ...task, task: newName, newName: '' });
+    await setState({ ...task, task: newName });
+    setNewName('');
     setEditing(false);
+    handleSubmit(state);
+  }
+  async function toggleCheckbox() {
+    const taskCompleted = !state.completed;
+    await setState({ ...task, completed: taskCompleted }, () => {
+      console.log(taskCompleted);
+    });
+    console.log(taskCompleted);
     handleSubmit(state);
   }
 
@@ -31,12 +40,13 @@ function Task({ task, handleSubmit, handleDeletion }) {
         marginBottom: '1rem',
       }}
     >
-      <Box display='flex' justifyContent='space-evenly'>
+      <Box display='flex' justifyContent='space-evenly' alignItems='baseline'>
         <Checkbox
           id={state.id}
           name='completed'
-          defaultChecked={state.completed}
-          onChange={(e) => handleChange(e)}
+          value={state.completed || false}
+          checked={state.completed}
+          onChange={() => toggleCheckbox()}
         />
         <label className='' htmlFor={state.id}>
           {state.task}
@@ -91,8 +101,8 @@ function Task({ task, handleSubmit, handleDeletion }) {
                 className=''
                 type='text'
                 name='newName'
-                value={state.newName}
-                change={handleChange}
+                value={newName}
+                change={handleNewNameChange}
                 title='New Task'
               />
             </Box>
@@ -119,7 +129,7 @@ function Task({ task, handleSubmit, handleDeletion }) {
                 variant='contained'
                 size='small'
                 type='submit'
-                onClick={(e) => setNewName(e)}
+                onClick={(e) => setTaskNewName(e)}
               >
                 Save
                 <Box component='span' display='none'>

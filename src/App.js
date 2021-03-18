@@ -15,7 +15,6 @@ function App(props) {
       id={list.id}
       tasks={list.tasks}
       key={list.id}
-      toggleTaskCompleted={toggleTaskCompleted}
       deleteTask={deleteTask}
       editTask={editTask}
     />
@@ -34,17 +33,6 @@ function App(props) {
     };
     setLists((lists) => [...lists, newList]);
   }
-
-  //tasks are marked as complete or not
-  function toggleTaskCompleted(id) {
-    const updatedTasks = lists.map((task) => {
-      if (id === task.id) {
-        return { ...task, completed: !task.completed };
-      }
-      return task;
-    });
-    setLists(updatedTasks);
-  }
   //tasks are deleted
   function deleteTask(chosenTask) {
     const remainingTasks = lists.map((list) => {
@@ -59,6 +47,7 @@ function App(props) {
   }
   //tasks are edited
   async function editTask(newTask) {
+    console.log(newTask);
     const editedTaskList = await lists.map((list) => {
       const index = list.tasks.findIndex((task) => task.id === newTask.id);
       if (index) {
@@ -67,6 +56,7 @@ function App(props) {
       return list;
     });
     setLists(editedTaskList);
+    console.log({ editedTaskList });
   }
 
   return (
