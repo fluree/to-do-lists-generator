@@ -22,51 +22,6 @@ import { typography } from './styles/FlureeTheme/typography';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-let DATA = [
-  {
-    name: 'My first List',
-    description: 'My first example list',
-    id: 'todo-0',
-    tasks: [
-      {
-        id: 'task-0',
-        task: 'exercise',
-        completed: true,
-        assignee: 'Flor',
-        email: 'flor@flor.com',
-      },
-      {
-        id: 'task-1',
-        task: 'Eat Lunch',
-        completed: true,
-        assignee: 'Flor',
-        email: 'flor@flor.com',
-      },
-      {
-        id: 'task-2',
-        task: 'go for a run',
-        completed: false,
-        assignee: 'Flor',
-        email: 'flor@flor.com',
-      },
-      {
-        id: 'task-3',
-        task: 'feed Nemo',
-        completed: false,
-        assignee: 'Flor',
-        email: 'flor@flor.com',
-      },
-      {
-        id: 'task-4',
-        task: 'nap time',
-        completed: false,
-        assignee: 'Flor',
-        email: 'flor@flor.com',
-      },
-    ],
-  },
-];
-
 const flureeBasic = {
   palette: {
     background: {
@@ -206,7 +161,7 @@ const flureeTheme = createMuiTheme(flureeBasic);
 
 ReactDOM.render(
   <ThemeProvider theme={flureeTheme}>
-    <App data={DATA} />
+    <App />
   </ThemeProvider>,
   document.getElementById('root')
 );

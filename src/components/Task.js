@@ -25,10 +25,8 @@ function Task({ task, handleSubmit, handleDeletion }) {
   async function toggleCheckbox() {
     const taskCompleted = !state.completed;
     await setState({ ...task, completed: taskCompleted }, () => {
-      console.log(taskCompleted);
+      handleSubmit(state);
     });
-    console.log(taskCompleted);
-    handleSubmit(state);
   }
 
   return (
@@ -36,26 +34,26 @@ function Task({ task, handleSubmit, handleDeletion }) {
       style={{
         borderStyle: 'dotted',
         borderWidth: '5px',
-        borderColor: 'secondary',
+        borderColor: '#979797',
         marginBottom: '1rem',
       }}
     >
-      <Box display='flex' justifyContent='space-evenly' alignItems='baseline'>
+      <Box display='flex' justifyContent='space-between' alignItems='baseline'>
         <Checkbox
-          id={state.id}
+          id={state._id}
           name='completed'
-          value={state.completed || false}
-          checked={state.completed}
+          value={state.isCompleted || false}
+          checked={state.isCompleted}
           onChange={() => toggleCheckbox()}
         />
         <label className='' htmlFor={state.id}>
-          {state.task}
+          {state.name}
         </label>
         <label id={'assignee-' + nanoid()} className=''>
-          {state.assignee}
+          {state.assignedTo.name}
         </label>
         <label id={'email-' + nanoid()} className=''>
-          {state.email}
+          {state.assignedTo.email}
         </label>
       </Box>
       <Box display='flex' justifyContent='space-evenly'>
@@ -68,7 +66,7 @@ function Task({ task, handleSubmit, handleDeletion }) {
         >
           Edit
           <Box component='span' display='none'>
-            {state.task}
+            {state.name}
           </Box>
         </Button>
         <Button
@@ -94,10 +92,10 @@ function Task({ task, handleSubmit, handleDeletion }) {
               justifyContent='space-evenly'
             >
               <label className='' htmlFor={state.id + 'New-Name'}>
-                New name for {state.task}
+                New name for {state.name}
               </label>
               <InputComponent
-                id={state.id + 'New-Name'}
+                id={state._id + 'New-Name'}
                 className=''
                 type='text'
                 name='newName'
@@ -122,7 +120,7 @@ function Task({ task, handleSubmit, handleDeletion }) {
               >
                 Cancel
                 <Box component='span' display='none'>
-                  renaming {state.task}
+                  renaming {state.name}
                 </Box>
               </Button>
               <Button
@@ -133,7 +131,7 @@ function Task({ task, handleSubmit, handleDeletion }) {
               >
                 Save
                 <Box component='span' display='none'>
-                  new name for {state.task}
+                  new name for {state.name}
                 </Box>
               </Button>
             </Box>

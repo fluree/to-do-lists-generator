@@ -1,24 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { nanoid } from 'nanoid';
 import Todo from './components/Todo';
 import Form from './components/Form';
 import List from '@material-ui/core/List';
 import { Grid } from '@material-ui/core';
 
-function App(props) {
-  const [lists, setLists] = useState(props.data);
+function App() {
+  const [lists, setLists] = useState([]);
 
-  const taskList = lists.map((list) => (
-    <Todo
-      name={list.name}
-      description={list.description}
-      id={list.id}
-      tasks={list.tasks}
-      key={list.id}
-      deleteTask={deleteTask}
-      editTask={editTask}
-    />
-  ));
+  const fetchListData = async () => {
+    let response = await axios.post(
+      `http://localhost:8080/fdb/todo/lists/query`,
+      {
+        select: [
+          '*',
+          {
+            tasks: [
+              '*',
+              {
+                assignedTo: ['*'],
+              },
+            ],
+          },
+        ],
+        from: 'list',
+        opts: {
+          compact: true,
+          orderBy: ['ASC', '_id'],
+        },
+      }
+    );
+    console.log(response.data);
+    setLists(response.data);
+  };
+
+  useEffect(() => {
+    fetchListData();
+  }, []);
 
   const handleSubmit = (list) => {
     addList(list);
@@ -59,6 +78,22 @@ function App(props) {
     console.log({ editedTaskList });
   }
 
+  const TaskList = (props) => {
+    const listItem = (
+      <Todo
+        name={props.list.name}
+        description={props.list.description}
+        id={props.list._id}
+        tasks={props.list.tasks}
+        key={props.list._id}
+        deleteTask={deleteTask}
+        editTask={editTask}
+      />
+    );
+
+    return <div>{listItem}</div>;
+  };
+  console.log(lists);
   return (
     <Grid container alignItems='center' justify='center'>
       <Grid item xs={8}>
@@ -67,7 +102,9 @@ function App(props) {
       </Grid>
       <Grid item xs={8}>
         <List role='list' className='' aria-labelledby='list-heading'>
-          {taskList}
+          {lists.map((list, i) => (
+            <TaskList list={list} key={i} />
+          ))}
         </List>
       </Grid>
     </Grid>

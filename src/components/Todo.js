@@ -15,14 +15,15 @@ export default function Todo(props) {
     <Box display='flex' alignItems='center' flexDirection='column' p={2}>
       <h2>{props.name}</h2>
       <h3>{props.description}</h3>
-      {props.tasks.map((task) => {
+
+      {props.tasks.map((task, i) => {
         return (
           <Task
             handleSubmit={handleSubmit}
             handleDeletion={handleDeletion}
-            id={task.id}
+            id={task._id}
             task={task}
-            key={task.id}
+            key={i}
           />
         );
       })}
