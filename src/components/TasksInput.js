@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import InputComponent from './InputComponent';
 import { Box } from '@material-ui/core';
 
@@ -7,7 +7,7 @@ function TasksInput({ change, id }) {
     id: id,
     completed: false,
     task: '',
-    assignee: '',
+    assignedTo: '',
     email: '',
   });
   function handleChange(e) {
@@ -16,8 +16,10 @@ function TasksInput({ change, id }) {
       ...state,
       [name]: value,
     });
-    change(state);
+    change({ ...state, [name]: value });
   }
+
+  // useEffect(() => {}, [state.email]);
 
   return (
     <Box display='flex' flexDirection='column'>
@@ -31,8 +33,8 @@ function TasksInput({ change, id }) {
       <InputComponent
         title='Assignee'
         type='text'
-        name='assignee'
-        value={state.assignee}
+        name='assignedTo'
+        value={state.assignedTo}
         change={handleChange}
       />
       <InputComponent

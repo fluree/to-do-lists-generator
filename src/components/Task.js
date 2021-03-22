@@ -50,7 +50,7 @@ function Task({ task, handleSubmit, handleDeletion }) {
           {state.name}
         </label>
         <label id={'assignee-' + nanoid()} className=''>
-          {state.assignedTo.name}
+          {state.assignedTo ? state.assignedTo.name : ''}
         </label>
         <label id={'email-' + nanoid()} className=''>
           {state.assignedTo.email}

@@ -18,7 +18,7 @@ function Form({ submit }) {
         id: `task-${nanoid()}`,
         completed: false,
         task: '',
-        assignee: '',
+        assignedTo: '',
         email: '',
       },
     ],
@@ -34,7 +34,6 @@ function Form({ submit }) {
 
   function handleTaskChange(task) {
     let newTasks = state.tasks;
-    console.log(task);
     const index = newTasks.findIndex((newTask) => newTask.id === task.id);
     newTasks[index] = task;
     setState({ ...state, tasks: newTasks });
@@ -46,7 +45,7 @@ function Form({ submit }) {
       id: `task-${nanoid()}`,
       completed: false,
       task: '',
-      assignee: '',
+      assignedTo: '',
       email: '',
     });
     setState({ ...state, tasks: moreTasks });
@@ -67,7 +66,7 @@ function Form({ submit }) {
           id: `task-${nanoid()}`,
           completed: false,
           task: '',
-          assignee: '',
+          assignedTo: '',
           email: '',
         },
       ],
