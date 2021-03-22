@@ -31,7 +31,6 @@ function App() {
         },
       }
     );
-    console.log(response.data);
     setLists(response.data);
   };
 
@@ -39,19 +38,58 @@ function App() {
     fetchListData();
   }, []);
 
-  const handleSubmit = (list) => {
-    addList(list);
-  };
-
   function addList({ name, description, tasks }) {
     const newList = {
       name: name,
       description: description,
-      id: 'todo' + nanoid(),
+      id: nanoid(),
       tasks: tasks,
     };
+
+    let transactLoad = [
+      {
+        _id: 'list$sent' + nanoid(),
+        tasks: [newList.tasks],
+        name: newList.name,
+        description: newList.description,
+      },
+    ];
+
+    tasks.forEach((task, index) => {
+      transactLoad.push(
+        {
+          _id: 'task$New' + nanoid(),
+          name: task[index],
+          isCompleted: false,
+          assignedTo: [`'assignee/name', '${task.assignedTo}'`],
+        },
+        {
+          _id: 'assignee$assignee_' + nanoid(),
+          name: task.assignedTo,
+          email: task.email,
+        }
+      );
+    });
+
     setLists((lists) => [...lists, newList]);
+    debugger;
+    const sendListData = async () => {
+      let transactResponse = await axios.post(
+        `http://localhost:8080/fdb/todo/lists/transact`,
+        transactLoad
+      );
+      debugger;
+      setLists(transactResponse.data);
+      console.log(transactResponse.data);
+    };
+    sendListData();
   }
+
+  const handleSubmit = (list) => {
+    addList(list);
+    console.log(list);
+  };
+
   //tasks are deleted
   function deleteTask(chosenTask) {
     const remainingTasks = lists.map((list) => {
@@ -75,7 +113,6 @@ function App() {
       return list;
     });
     setLists(editedTaskList);
-    console.log({ editedTaskList });
   }
 
   const TaskList = (props) => {
