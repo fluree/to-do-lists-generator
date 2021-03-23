@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import InputComponent from './InputComponent';
 import TasksInput from './TasksInput';
-import { nanoid } from 'nanoid';
 import { Button } from '@material-ui/core';
 import { Box } from '@material-ui/core';
 import { Container } from '@material-ui/core';
@@ -15,7 +14,7 @@ function Form({ submit }) {
     description: '',
     tasks: [
       {
-        id: `task-${nanoid()}`,
+        id: `task${'$' + Math.floor(Math.random() * 10 + 1)}`,
         completed: false,
         task: '',
         assignedTo: '',
@@ -42,7 +41,7 @@ function Form({ submit }) {
   function addMoreInputs() {
     let moreTasks = state.tasks;
     moreTasks.push({
-      id: `task-${nanoid()}`,
+      id: `task${'$' + Math.floor(Math.random() * 10 + 1)}`,
       completed: false,
       task: '',
       assignedTo: '',
@@ -63,7 +62,7 @@ function Form({ submit }) {
       description: '',
       tasks: [
         {
-          id: `task-${nanoid()}`,
+          id: `task${'$' + Math.floor(Math.random() * 10 + 1)}`,
           completed: false,
           task: '',
           assignedTo: '',

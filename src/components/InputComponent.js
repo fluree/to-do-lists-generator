@@ -1,15 +1,14 @@
 import React from 'react';
-import { nanoid } from 'nanoid';
 import { TextField } from '@material-ui/core';
 
-function InputComponent({ title, name, value, change }) {
+function InputComponent({ title, name, value, change, index }) {
   return (
     <TextField
       type='text'
       margin='dense'
       label={title}
       variant='outlined'
-      id={title + nanoid()}
+      id={title + index}
       name={name}
       autoComplete='off'
       value={value}

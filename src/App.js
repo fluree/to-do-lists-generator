@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { nanoid } from 'nanoid';
 import Todo from './components/Todo';
 import Form from './components/Form';
 import List from '@material-ui/core/List';
@@ -42,14 +41,13 @@ function App() {
     const newList = {
       name: name,
       description: description,
-      id: nanoid(),
+      id: `list${'$' + Math.floor(Math.random() * 10 + 1)}`,
       tasks: tasks,
     };
 
     let transactLoad = [
       {
-        _id: 'list$sent' + nanoid(),
-        tasks: [newList.tasks],
+        _id: newList.id,
         name: newList.name,
         description: newList.description,
       },
@@ -58,13 +56,13 @@ function App() {
     tasks.forEach((task, index) => {
       transactLoad.push(
         {
-          _id: 'task$New' + nanoid(),
-          name: task[index],
+          _id: 'task$New' + index,
+          name: task.name,
           isCompleted: false,
-          assignedTo: [`'assignee/name', '${task.assignedTo}'`],
+          assignedTo: [`"_assignee/name", "${task.assignedTo}"`],
         },
         {
-          _id: 'assignee$assignee_' + nanoid(),
+          _id: `assignee${'$' + Math.floor(Math.random() * 10 + 1)}`,
           name: task.assignedTo,
           email: task.email,
         }
@@ -72,13 +70,11 @@ function App() {
     });
 
     setLists((lists) => [...lists, newList]);
-    debugger;
     const sendListData = async () => {
       let transactResponse = await axios.post(
         `http://localhost:8080/fdb/todo/lists/transact`,
         transactLoad
       );
-      debugger;
       setLists(transactResponse.data);
       console.log(transactResponse.data);
     };

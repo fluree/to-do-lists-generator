@@ -16,14 +16,14 @@ export default function Todo(props) {
       <h2>{props.name}</h2>
       <h3>{props.description}</h3>
 
-      {props.tasks.map((task, i) => {
+      {props.tasks.map((task, index) => {
         return (
           <Task
             handleSubmit={handleSubmit}
             handleDeletion={handleDeletion}
-            id={task._id}
+            id={task.index}
             task={task}
-            key={i}
+            key={index}
           />
         );
       })}
