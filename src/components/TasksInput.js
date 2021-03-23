@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import InputComponent from './InputComponent';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import InputLabel from '@material-ui/core/InputLabel';
 import { Box } from '@material-ui/core';
+import axios from 'axios';
 
 function TasksInput({ change, id }) {
   const [state, setState] = useState({
@@ -10,8 +14,12 @@ function TasksInput({ change, id }) {
     assignedTo: '',
     email: '',
   });
+  const [users, setUsers] = useState([]);
+
   function handleChange(e) {
+    console.log(e.target);
     const { name, value } = e.target;
+
     setState({
       ...state,
       [name]: value,
@@ -19,7 +27,24 @@ function TasksInput({ change, id }) {
     change({ ...state, [name]: value });
   }
 
-  // useEffect(() => {}, [state.email]);
+  const loadAssignedToData = async () => {
+    const response = await axios.post(
+      `http://localhost:8080/fdb/todo/lists/query`,
+      {
+        select: ['assignee/_id', 'assignee/email', 'assignee/name'],
+        from: 'assignee',
+        opts: {
+          compact: true,
+          orderBy: ['ASC', '_id'],
+        },
+      }
+    );
+    setUsers(response.data);
+  };
+
+  useEffect(() => {
+    loadAssignedToData();
+  }, []);
 
   return (
     <Box display='flex' flexDirection='column'>
@@ -30,13 +55,24 @@ function TasksInput({ change, id }) {
         value={state.task}
         change={handleChange}
       />
-      <InputComponent
+      <InputLabel variant='filled' id='select-label'>
+        Select Assignee
+      </InputLabel>
+      <Select
         title='Assignee'
-        type='text'
         name='assignedTo'
         value={state.assignedTo}
-        change={handleChange}
-      />
+        type='select'
+        onChange={handleChange}
+        variant='filled'
+      >
+        {users.map((user, id) => (
+          <MenuItem key={id} value={user.name}>
+            {user.name}
+          </MenuItem>
+        ))}
+        <MenuItem value='new'>New Assignee</MenuItem>
+      </Select>
       <InputComponent
         title='Email'
         type='text'
