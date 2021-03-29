@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { ListProvider } from './ListContext';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import {
   flureeBlue,
@@ -160,9 +161,11 @@ const flureeBasic = {
 const flureeTheme = createMuiTheme(flureeBasic);
 
 ReactDOM.render(
-  <ThemeProvider theme={flureeTheme}>
-    <App />
-  </ThemeProvider>,
+  <ListProvider>
+    <ThemeProvider theme={flureeTheme}>
+      <App />
+    </ThemeProvider>
+  </ListProvider>,
   document.getElementById('root')
 );
 

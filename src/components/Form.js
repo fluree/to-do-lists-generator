@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
+import { ListContext } from '../ListContext';
 import InputComponent from './InputComponent';
 import TasksInput from './TasksInput';
 import { Button } from '@material-ui/core';
@@ -9,68 +10,17 @@ import IconButton from '@material-ui/core/IconButton';
 import RemoveIcon from '@material-ui/icons/Remove';
 
 function Form({ submit }) {
-  const [state, setState] = useState({
-    name: '',
-    description: '',
-    tasks: [
-      {
-        id: `task${'$' + Math.floor(Math.random() * 10 + 1)}`,
-        completed: false,
-        task: '',
-        assignedTo: '',
-        email: '',
-      },
-    ],
-  });
+  const inputComponentState = useContext(ListContext);
 
-  function handleChange(e) {
-    const { name, value } = e.target;
-    setState({
-      ...state,
-      [name]: value,
-    });
-  }
+  const {
+    inputState,
+    handleChange,
+    handleTaskChange,
+    addMoreInputs,
+    removeInputs,
+    clearForm,
+  } = inputComponentState;
 
-  function handleTaskChange(task) {
-    let newTasks = state.tasks;
-    const index = newTasks.findIndex((newTask) => newTask.id === task.id);
-    newTasks[index] = task;
-    setState({ ...state, tasks: newTasks });
-  }
-
-  function addMoreInputs() {
-    let moreTasks = state.tasks;
-    moreTasks.push({
-      id: `task${'$' + Math.floor(Math.random() * 10 + 1)}`,
-      completed: false,
-      task: '',
-      assignedTo: '',
-      email: '',
-    });
-    setState({ ...state, tasks: moreTasks });
-  }
-
-  function removeInputs() {
-    let currentTasks = state.tasks;
-    currentTasks.pop();
-    setState({ ...state, tasks: currentTasks });
-  }
-
-  function clearForm() {
-    setState({
-      name: '',
-      description: '',
-      tasks: [
-        {
-          id: `task${'$' + Math.floor(Math.random() * 10 + 1)}`,
-          completed: false,
-          task: '',
-          assignedTo: '',
-          email: '',
-        },
-      ],
-    });
-  }
   return (
     <Box display='flex' flexDirection='column' alignItems='center'>
       <form style={{ minWidth: '18rem' }} autoComplete='off'>
@@ -78,13 +28,13 @@ function Form({ submit }) {
           <InputComponent
             title='List Name'
             name='name'
-            value={state.name}
+            value={inputState.name}
             change={handleChange}
           />
           <InputComponent
             title='List Description'
             name='description'
-            value={state.description}
+            value={inputState.description}
             change={handleChange}
           />
           <Box
@@ -93,7 +43,7 @@ function Form({ submit }) {
             justifyContent='space-between'
           >
             <Box display='flex' flexDirection='column'>
-              {state.tasks.map((task) => {
+              {inputState.tasks.map((task) => {
                 return (
                   <TasksInput
                     id={task.id}
@@ -110,7 +60,7 @@ function Form({ submit }) {
               color='primary'
               style={{ backgroundColor: 'transparent' }}
               onClick={(e) => {
-                submit(state);
+                submit(inputState);
                 e.preventDefault();
                 clearForm();
               }}
@@ -124,7 +74,10 @@ function Form({ submit }) {
             >
               <IconButton
                 disableTouchRipple
-                style={{ backgroundColor: 'transparent', outlineStyle: 'none' }}
+                style={{
+                  backgroundColor: 'transparent',
+                  outlineStyle: 'none',
+                }}
                 size='small'
                 p={0}
                 onClick={addMoreInputs}
@@ -133,7 +86,10 @@ function Form({ submit }) {
               </IconButton>
               <IconButton
                 disableTouchRipple
-                style={{ backgroundColor: 'transparent', outlineStyle: 'none' }}
+                style={{
+                  backgroundColor: 'transparent',
+                  outlineStyle: 'none',
+                }}
                 size='small'
                 p={0}
                 onClick={removeInputs}
