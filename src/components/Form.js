@@ -9,7 +9,7 @@ import AddIcon from '@material-ui/icons/Add';
 import IconButton from '@material-ui/core/IconButton';
 import RemoveIcon from '@material-ui/icons/Remove';
 
-function Form({ submit }) {
+function Form() {
   const inputComponentState = useContext(ListContext);
 
   const {
@@ -19,6 +19,7 @@ function Form({ submit }) {
     addMoreInputs,
     removeInputs,
     clearForm,
+    handleSubmit,
   } = inputComponentState;
 
   return (
@@ -60,7 +61,7 @@ function Form({ submit }) {
               color='primary'
               style={{ backgroundColor: 'transparent' }}
               onClick={(e) => {
-                submit(inputState);
+                handleSubmit(inputState);
                 e.preventDefault();
                 clearForm();
               }}

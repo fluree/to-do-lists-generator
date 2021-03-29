@@ -6,7 +6,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import { Box } from '@material-ui/core';
 
-function TasksInput({ change, id }) {
+function TasksInput() {
   // const createNewUser = async () => {
   //   const newUser = `assignee${'$' + Math.floor(Math.random() * 10 + 1)}`;
   //   const assigneeResponse = await axios.post(
@@ -47,6 +47,7 @@ function TasksInput({ change, id }) {
       <Select
         title='Assignee'
         name='assignedTo'
+        defaultValue=''
         value={inputState.assignedTo}
         type='select'
         onChange={handleChange}
