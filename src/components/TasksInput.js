@@ -36,8 +36,7 @@ function TasksInput({ task }) {
       <Select
         title='Assignee'
         name='assignedTo'
-        defaultValue=''
-        value={newTaskState.assignedTo ? newTaskState.assignedTo : ' '}
+        value={newTaskState.assignedTo ? newTaskState.assignedTo : 'new'}
         type='select'
         onChange={sendTasksToParent}
         variant='filled'
