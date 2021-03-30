@@ -40,7 +40,7 @@ function Task({ task, handleSubmit, handleDeletion }) {
     >
       <Box display='flex' justifyContent='space-between' alignItems='baseline'>
         <Checkbox
-          id={state._id}
+          id={state.id}
           name='completed'
           value={state.isCompleted || false}
           checked={state.isCompleted}
