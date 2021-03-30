@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { ListContext } from '../ListContext';
 import InputComponent from './InputComponent';
 import Select from '@material-ui/core/Select';
@@ -6,31 +6,20 @@ import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import { Box } from '@material-ui/core';
 
-function TasksInput() {
-  // const createNewUser = async () => {
-  //   const newUser = `assignee${'$' + Math.floor(Math.random() * 10 + 1)}`;
-  //   const assigneeResponse = await axios.post(
-  //     `http://localhost:8080/fdb/todo/lists/transact`,
-  //     [
-  //       {
-  //         _id: newUser,
-  //         'assignee/name': state.assignedTo,
-  //       },
-  //     ]
-  //   );
-  //   return assigneeResponse['tempids'][newUser];
-  // };
+function TasksInput({ task }) {
+  const [newTaskState, setNewTaskState] = useState(task);
 
   const taskState = useContext(ListContext);
+  const { userIsNew, setNewUser, users, handleTaskChange } = taskState;
 
-  const {
-    inputState,
-    userIsNew,
-    setNewUser,
-    users,
-    handleChange,
-    handleInputChange,
-  } = taskState;
+  function sendTasksToParent(e) {
+    const { name, value } = e.target;
+    setNewTaskState({ ...newTaskState, [name]: value });
+  }
+
+  useEffect(() => {
+    handleTaskChange(newTaskState);
+  }, [newTaskState]);
 
   return (
     <Box display='flex' flexDirection='column'>
@@ -38,8 +27,8 @@ function TasksInput() {
         title='Task'
         type='text'
         name='task'
-        value={inputState.task}
-        change={handleChange}
+        value={newTaskState.task}
+        change={sendTasksToParent}
       />
       <InputLabel variant='filled' id='select-label'>
         Select Assignee
@@ -48,17 +37,13 @@ function TasksInput() {
         title='Assignee'
         name='assignedTo'
         defaultValue=''
-        value={inputState.assignedTo}
+        value={newTaskState.assignedTo ? newTaskState.assignedTo : ' '}
         type='select'
-        onChange={handleChange}
+        onChange={sendTasksToParent}
         variant='filled'
       >
         {users.map((user, id) => (
-          <MenuItem
-            key={id}
-            value={user.name}
-            onClick={() => setNewUser(false)}
-          >
+          <MenuItem key={id} value={user._id} onClick={() => setNewUser(false)}>
             {user.name}
           </MenuItem>
         ))}
@@ -67,21 +52,23 @@ function TasksInput() {
         </MenuItem>
       </Select>
       {userIsNew && (
-        <InputComponent
-          title='New Assignee'
-          type='text'
-          name='newAssignedTo'
-          value={inputState.newAssignedTo}
-          change={handleInputChange}
-        />
+        <>
+          <InputComponent
+            title='New Assignee'
+            type='text'
+            name='newAssignedTo'
+            value={newTaskState.newAssignedTo}
+            change={sendTasksToParent}
+          />
+          <InputComponent
+            title='Email'
+            type='text'
+            name='email'
+            value={newTaskState.email}
+            change={sendTasksToParent}
+          />
+        </>
       )}
-      <InputComponent
-        title='Email'
-        type='text'
-        name='email'
-        value={inputState.email}
-        change={handleChange}
-      />
     </Box>
   );
 }
