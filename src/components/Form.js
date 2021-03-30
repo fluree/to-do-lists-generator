@@ -15,7 +15,6 @@ function Form() {
   const {
     inputState,
     handleChange,
-    handleTaskChange,
     addMoreInputs,
     removeInputs,
     clearForm,
@@ -45,13 +44,7 @@ function Form() {
           >
             <Box display='flex' flexDirection='column'>
               {inputState.tasks.map((task) => {
-                return (
-                  <TasksInput
-                    id={task.id}
-                    change={handleTaskChange}
-                    key={task.id}
-                  />
-                );
+                return <TasksInput task={task} id={task.id} key={task.id} />;
               })}
             </Box>
           </Box>
