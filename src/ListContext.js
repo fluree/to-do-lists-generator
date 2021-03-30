@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { nanoid } from 'nanoid';
 
 const ListContext = React.createContext({});
 
@@ -10,7 +11,7 @@ const ListProvider = (props) => {
     description: '',
     tasks: [
       {
-        id: `task${'-' + Math.floor(Math.random() * 10 + 1)}`,
+        id: `task-${nanoid()}`,
         completed: false,
         task: '',
         assignedTo: '',
@@ -21,21 +22,6 @@ const ListProvider = (props) => {
   });
   const [userIsNew, setNewUser] = useState(false);
   const [users, setUsers] = useState([]);
-
-  async function handleInputChange(e) {
-    const { name, value } = e.target;
-
-    setInputState({
-      ...inputState,
-      [name]: value,
-    });
-
-    // if (userIsNew) {
-    //   const newAssigneeId = await createNewUser();
-    // }
-
-    // change({ ...state, [name]: value });
-  }
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -55,7 +41,7 @@ const ListProvider = (props) => {
   function addMoreInputs() {
     let moreTasks = inputState.tasks;
     moreTasks.push({
-      id: `task${'-' + Math.floor(Math.random() * 10 + 1)}`,
+      id: `task-${nanoid()}`,
       completed: false,
       task: '',
       assignedTo: '',
@@ -67,7 +53,7 @@ const ListProvider = (props) => {
   function removeInputs() {
     let currentTasks = inputState.tasks;
     currentTasks.pop();
-    inputState({ ...inputState, tasks: currentTasks });
+    setInputState({ ...inputState, tasks: currentTasks });
   }
 
   function clearForm() {
@@ -143,22 +129,28 @@ const ListProvider = (props) => {
     };
 
     tasks.forEach((task, index) => {
+      let userId = task.assignedTo;
+      let isAssignedTo = userId;
+      if (userId === 'new') {
+        userId = `assignee$${index}`;
+        isAssignedTo = {
+          _id: userId,
+          name: task.newAssignedTo,
+          email: task.email,
+        };
+      }
+
       const newTask = {
         _id: `task$${index}`,
         name: task.task,
         isCompleted: task.completed,
-        assignedTo: {
-          _id: `assignee$${index}`,
-          name: task.assignedTo,
-          email: task.email,
-        },
+        assignedTo: isAssignedTo,
       };
       newList.tasks.push(newTask);
     });
 
     let transactLoad = [newList];
 
-    // setLists((lists) => [...lists, newList]);
     const sendListData = async () => {
       let transactResponse = await axios.post(
         `http://localhost:8080/fdb/todo/lists/transact`,
@@ -167,7 +159,16 @@ const ListProvider = (props) => {
       if (transactResponse.status === 200) {
         const _id = transactResponse?.data?.tempids['list$1'];
 
-        //I've moved setLists() down here
+        const updatedTasks = newList.tasks.map((task) => {
+          if (!task.assignedTo.email) {
+            const actualUser = users.filter(
+              (user) => user._id === task.assignedTo
+            );
+            task.assignedTo = actualUser[0];
+          }
+          return task;
+        });
+        newList.tasks = updatedTasks;
         setLists((lists) => [...lists, { ...newList, _id }]);
       }
     };
@@ -176,7 +177,6 @@ const ListProvider = (props) => {
 
   const handleSubmit = (list) => {
     addList(list);
-    console.log(list);
   };
 
   //tasks are deleted
@@ -193,7 +193,6 @@ const ListProvider = (props) => {
   }
   //tasks are edited
   async function editTask(newTask) {
-    console.log(newTask);
     const editedTaskList = await lists.map((list) => {
       const index = list.tasks.findIndex((task) => task.id === newTask.id);
       if (index) {
@@ -213,12 +212,12 @@ const ListProvider = (props) => {
         handleSubmit,
         addList,
         inputState,
+        setInputState,
         users,
         setUsers,
         userIsNew,
         setNewUser,
         handleChange,
-        handleInputChange,
         handleTaskChange,
         addMoreInputs,
         removeInputs,
