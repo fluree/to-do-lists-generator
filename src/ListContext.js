@@ -23,6 +23,7 @@ const ListProvider = (props) => {
   const [userIsNew, setNewUser] = useState(false);
   const [users, setUsers] = useState([]);
 
+  //this handles the changes for the name and description inputs in the form component
   function handleChange(e) {
     const { name, value } = e.target;
     setInputState({
@@ -31,6 +32,7 @@ const ListProvider = (props) => {
     });
   }
 
+  //this handles the changes for the inputs in the TasksInput component
   function handleTaskChange(task) {
     let newTasks = inputState.tasks;
     const index = newTasks.findIndex((newTask) => newTask.id === task.id);
@@ -38,6 +40,7 @@ const ListProvider = (props) => {
     setInputState({ ...inputState, tasks: newTasks });
   }
 
+  //this adds more TaskInputs when the + button is pressed
   function addMoreInputs() {
     let moreTasks = inputState.tasks;
     moreTasks.push({
@@ -50,12 +53,14 @@ const ListProvider = (props) => {
     setInputState({ ...inputState, tasks: moreTasks });
   }
 
+  //this removes a TaskInput when the - button is pressed
   function removeInputs() {
     let currentTasks = inputState.tasks;
     currentTasks.pop();
     setInputState({ ...inputState, tasks: currentTasks });
   }
 
+  //this clears the form when after the submit button is pressed
   function clearForm() {
     setInputState({
       name: '',
@@ -72,6 +77,7 @@ const ListProvider = (props) => {
     });
   }
 
+  // load all the assignee data from fdb on render
   const loadAssignedToData = async () => {
     const response = await axios.post(
       `http://localhost:8080/fdb/todo/lists/query`,
@@ -87,10 +93,12 @@ const ListProvider = (props) => {
     setUsers(response.data);
   };
 
+  //calls the assignee data function
   useEffect(() => {
     loadAssignedToData();
   }, []);
 
+  // fetches all the list data in the fdb
   const fetchListData = async () => {
     let response = await axios.post(
       `http://localhost:8080/fdb/todo/lists/query`,
@@ -116,10 +124,12 @@ const ListProvider = (props) => {
     setLists(response.data);
   };
 
+  //calls the fetching list data function on render
   useEffect(() => {
     fetchListData();
   }, []);
 
+  //adds a new list to the DB
   function addList({ name, description, tasks }) {
     const newList = {
       _id: `list${'$' + Math.floor(Math.random() * 10 + 1)}`,
@@ -151,7 +161,7 @@ const ListProvider = (props) => {
 
     let transactLoad = [newList];
 
-    const sendListData = async () => {
+    let sendListData = async () => {
       let transactResponse = await axios.post(
         `http://localhost:8080/fdb/todo/lists/transact`,
         transactLoad
@@ -175,6 +185,7 @@ const ListProvider = (props) => {
     sendListData();
   }
 
+  //calls the addList function on submission
   const handleSubmit = (list) => {
     addList(list);
   };
@@ -182,15 +193,27 @@ const ListProvider = (props) => {
   //tasks are deleted
   function deleteTask(chosenTask) {
     const remainingTasks = lists.map((list) => {
-      const index = list.tasks.findIndex((task) => task.id === chosenTask.id);
+      const index = list.tasks.findIndex((task) => task.id === chosenTask._id);
+      console.log(index);
+      let deleteTaskFluree = async () => {
+        await axios.post(`http://localhost:8080/fdb/todo/lists/transact`, [
+          {
+            _id: chosenTask._id,
+            _action: 'delete',
+          },
+        ]);
+      };
       if (index) {
+        console.log(list.tasks[index]);
         delete list.tasks[index];
+        deleteTaskFluree();
       }
       return list;
     });
 
     setLists(remainingTasks);
   }
+
   //tasks are edited
   async function editTask(newTask) {
     const editedTaskList = await lists.map((list) => {
