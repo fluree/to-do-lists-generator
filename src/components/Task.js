@@ -46,7 +46,7 @@ function Task({ task, handleSubmit, handleDeletion }) {
           checked={state.isCompleted}
           onChange={() => toggleCheckbox()}
         />
-        <label className='' htmlFor={state.id}>
+        <label id={state._id} className='' htmlFor={state.id}>
           {state.name}
         </label>
         <label id={'assignee-' + nanoid()} className=''>
