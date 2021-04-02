@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { ListContext } from '../ListContext';
 import { nanoid } from 'nanoid';
 import InputComponent from './InputComponent';
@@ -24,10 +24,6 @@ function Task({ task, handleDeletion }) {
     setEditing(false);
     editTask({ ...taskState, name: newName });
   }
-
-  useEffect(() => {
-    console.log(taskState);
-  }, [taskState]);
 
   async function toggleCheckbox() {
     // const taskCompleted = !taskState.completed;
