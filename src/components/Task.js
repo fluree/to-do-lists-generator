@@ -25,11 +25,9 @@ function Task({ task, handleDeletion }) {
     editTask({ ...taskState, name: newName });
   }
 
-  async function toggleCheckbox() {
-    // const taskCompleted = !taskState.completed;
-    // await setState({ ...task, completed: taskCompleted }, () => {
-    //   handleSubmit(taskState);
-    // });
+  function toggleCheckbox() {
+    const taskCompleted = !taskState.isCompleted;
+    editTask({ ...taskState, isCompleted: taskCompleted });
   }
 
   return (
@@ -43,9 +41,9 @@ function Task({ task, handleDeletion }) {
     >
       <Box display='flex' justifyContent='space-between' alignItems='baseline'>
         <Checkbox
-          id={taskState.id}
+          id={`checkbox-${taskState._id}`}
           name='completed'
-          value={taskState.isCompleted || false}
+          // value={taskState.isCompleted}
           checked={taskState.isCompleted}
           onChange={() => toggleCheckbox()}
         />

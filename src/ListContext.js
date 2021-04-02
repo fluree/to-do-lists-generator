@@ -12,7 +12,7 @@ const ListProvider = (props) => {
     tasks: [
       {
         id: `task-${nanoid()}`,
-        completed: false,
+        isCompleted: false,
         task: '',
         assignedTo: '',
         email: '',
@@ -216,17 +216,24 @@ const ListProvider = (props) => {
   async function editTask(newTask) {
     const editedTaskList = await lists.map((list) => {
       const index = list.tasks.findIndex((task) => task._id === newTask._id);
-      let editTaskName = async () => {
-        await axios.post(`http://localhost:8080/fdb/todo/lists/transact`, [
-          {
-            _id: newTask._id,
-            'task/name': newTask.name,
-          },
-        ]);
+
+      let taskChangeTransact = [
+        {
+          _id: newTask._id,
+          'task/name': newTask.name,
+          'task/isCompleted': newTask.isCompleted,
+        },
+      ];
+
+      let editTaskProps = async () => {
+        await axios.post(
+          `http://localhost:8080/fdb/todo/lists/transact`,
+          taskChangeTransact
+        );
       };
       if (index >= 0) {
         list.tasks[index] = newTask;
-        editTaskName();
+        editTaskProps();
       }
       return list;
     });
