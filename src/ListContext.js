@@ -194,7 +194,6 @@ const ListProvider = (props) => {
   function deleteTask(chosenTask) {
     const remainingTasks = lists.map((list) => {
       const index = list.tasks.findIndex((task) => task._id === chosenTask._id);
-      console.log(index);
       let deleteTaskFluree = async () => {
         await axios.post(`http://localhost:8080/fdb/todo/lists/transact`, [
           {
@@ -204,7 +203,6 @@ const ListProvider = (props) => {
         ]);
       };
       if (index >= 0) {
-        console.log(list.tasks[index]);
         delete list.tasks[index];
         deleteTaskFluree();
       }
@@ -216,10 +214,8 @@ const ListProvider = (props) => {
 
   //tasks are edited
   async function editTask(newTask) {
-    console.log(newTask);
     const editedTaskList = await lists.map((list) => {
       const index = list.tasks.findIndex((task) => task._id === newTask._id);
-      console.log(index);
       let editTaskName = async () => {
         await axios.post(`http://localhost:8080/fdb/todo/lists/transact`, [
           {
