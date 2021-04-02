@@ -3,10 +3,6 @@ import Task from './Task';
 import { Box } from '@material-ui/core';
 
 export default function Todo(props) {
-  function handleSubmit(task) {
-    props.editTask(task);
-  }
-
   function handleDeletion(task) {
     props.deleteTask(task);
   }
@@ -19,9 +15,8 @@ export default function Todo(props) {
       {props.tasks.map((task, index) => {
         return (
           <Task
-            handleSubmit={handleSubmit}
             handleDeletion={handleDeletion}
-            id={task.index}
+            id={task.id}
             task={task}
             key={index}
           />

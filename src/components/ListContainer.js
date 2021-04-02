@@ -6,7 +6,7 @@ import { ListContext } from '../ListContext';
 function ListContainer() {
   const listInfo = useContext(ListContext);
 
-  const { lists, editTask, deleteTask } = listInfo;
+  const { lists, deleteTask } = listInfo;
 
   const TaskList = (props) => {
     const listItem = (
@@ -17,7 +17,6 @@ function ListContainer() {
         tasks={props.list.tasks}
         key={props.list._id}
         deleteTask={deleteTask}
-        editTask={editTask}
       />
     );
 

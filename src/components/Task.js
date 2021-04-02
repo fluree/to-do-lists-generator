@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import { ListContext } from '../ListContext';
 import { nanoid } from 'nanoid';
 import InputComponent from './InputComponent';
 import { Button } from '@material-ui/core';
@@ -7,26 +8,33 @@ import { Container } from '@material-ui/core';
 import { Box } from '@material-ui/core';
 
 function Task({ task, handleSubmit, handleDeletion }) {
+  const taskInfo = useContext(ListContext);
+  const { editTask } = taskInfo;
   const [isEditing, setEditing] = useState(false);
-  const [state, setState] = useState({ ...task });
+  let [taskState, setEditableState] = useState({ ...task });
   const [newName, setNewName] = useState('');
 
   function handleNewNameChange(e) {
     setNewName(e.target.value);
   }
 
-  async function setTaskNewName(e) {
+  function setTaskNewName(e) {
     e.preventDefault();
-    await setState({ ...task, task: newName });
+    setEditableState({ ...taskState, name: newName });
     setNewName('');
     setEditing(false);
-    handleSubmit(state);
+    editTask(taskState);
   }
+
+  useEffect(() => {
+    console.log(taskState);
+  }, [taskState]);
+
   async function toggleCheckbox() {
-    const taskCompleted = !state.completed;
-    await setState({ ...task, completed: taskCompleted }, () => {
-      handleSubmit(state);
-    });
+    // const taskCompleted = !taskState.completed;
+    // await setState({ ...task, completed: taskCompleted }, () => {
+    //   handleSubmit(taskState);
+    // });
   }
 
   return (
@@ -40,20 +48,20 @@ function Task({ task, handleSubmit, handleDeletion }) {
     >
       <Box display='flex' justifyContent='space-between' alignItems='baseline'>
         <Checkbox
-          id={state.id}
+          id={taskState.id}
           name='completed'
-          value={state.isCompleted || false}
-          checked={state.isCompleted}
+          value={taskState.isCompleted || false}
+          checked={taskState.isCompleted}
           onChange={() => toggleCheckbox()}
         />
-        <label id={state._id} className='' htmlFor={state.id}>
-          {state.name}
+        <label id={taskState._id} className='' htmlFor={taskState._id}>
+          {taskState.name}
         </label>
         <label id={'assignee-' + nanoid()} className=''>
-          {state.assignedTo ? state.assignedTo.name : ''}
+          {taskState.assignedTo ? taskState.assignedTo.name : ''}
         </label>
         <label id={'email-' + nanoid()} className=''>
-          {state.assignedTo.email}
+          {taskState.assignedTo.email}
         </label>
       </Box>
       <Box display='flex' justifyContent='space-evenly'>
@@ -66,7 +74,7 @@ function Task({ task, handleSubmit, handleDeletion }) {
         >
           Edit
           <Box component='span' display='none'>
-            {state.name}
+            {taskState.name}
           </Box>
         </Button>
         <Button
@@ -78,7 +86,7 @@ function Task({ task, handleSubmit, handleDeletion }) {
         >
           Delete
           <Box component='span' display='none'>
-            {state.task}
+            {taskState.task}
           </Box>
         </Button>
       </Box>
@@ -91,11 +99,11 @@ function Task({ task, handleSubmit, handleDeletion }) {
               alignItems='baseline'
               justifyContent='space-evenly'
             >
-              <label className='' htmlFor={state.id + 'New-Name'}>
-                New name for {state.name}
+              <label className='' htmlFor={taskState._id + 'New-Name'}>
+                New name for {taskState.name}
               </label>
               <InputComponent
-                id={state._id + 'New-Name'}
+                id={taskState._id + 'New-Name'}
                 className=''
                 type='text'
                 name='newName'
@@ -120,7 +128,7 @@ function Task({ task, handleSubmit, handleDeletion }) {
               >
                 Cancel
                 <Box component='span' display='none'>
-                  renaming {state.name}
+                  renaming {taskState.name}
                 </Box>
               </Button>
               <Button
@@ -131,7 +139,7 @@ function Task({ task, handleSubmit, handleDeletion }) {
               >
                 Save
                 <Box component='span' display='none'>
-                  new name for {state.name}
+                  new name for {taskState.name}
                 </Box>
               </Button>
             </Box>
