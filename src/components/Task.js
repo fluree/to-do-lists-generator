@@ -7,11 +7,11 @@ import { Checkbox } from '@material-ui/core';
 import { Container } from '@material-ui/core';
 import { Box } from '@material-ui/core';
 
-function Task({ task, handleSubmit, handleDeletion }) {
+function Task({ task, handleDeletion }) {
   const taskInfo = useContext(ListContext);
-  const { editTask } = taskInfo;
+  const { editTask, handleSubmit } = taskInfo;
   const [isEditing, setEditing] = useState(false);
-  let [taskState, setEditableState] = useState({ ...task });
+  let [taskState] = useState({ ...task });
   const [newName, setNewName] = useState('');
 
   function handleNewNameChange(e) {
@@ -20,10 +20,9 @@ function Task({ task, handleSubmit, handleDeletion }) {
 
   function setTaskNewName(e) {
     e.preventDefault();
-    setEditableState({ ...taskState, name: newName });
     setNewName('');
     setEditing(false);
-    editTask(taskState);
+    editTask({ ...taskState, name: newName });
   }
 
   useEffect(() => {
