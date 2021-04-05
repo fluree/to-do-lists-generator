@@ -2,10 +2,15 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { nanoid } from 'nanoid';
 
+//List Context holds all the functionality that will issue transactions and queries from the Fluree DB
+
 const ListContext = React.createContext({});
 
 const ListProvider = (props) => {
+  // initial state of the lists array, custom hook to set the lists each time the hook is called
   const [lists, setLists] = useState([]);
+
+  //this useState hook and variable hold my initial value and the custom hook to update the value
   const [inputState, setInputState] = useState({
     name: '',
     description: '',
@@ -77,7 +82,7 @@ const ListProvider = (props) => {
     });
   }
 
-  // load all the assignee data from fdb on render
+  //load all the assignee data from fdb on render to propagate the "assignee" Select
   const loadAssignedToData = async () => {
     const response = await axios.post(
       `http://localhost:8080/fdb/todo/lists/query`,
@@ -121,6 +126,7 @@ const ListProvider = (props) => {
         },
       }
     );
+    //use the custom setLists hook to propagate list data pulled from Fluree to the Todo and Task components
     setLists(response.data);
   };
 
@@ -137,34 +143,37 @@ const ListProvider = (props) => {
       description,
       tasks: [],
     };
-
+    //for each task input information submitted loop through to set all the required predicate information
     tasks.forEach((task, index) => {
-      let userId = task.assignedTo;
-      let isAssignedTo = userId;
+      let userId = task.assignedTo; //sets userId to the assignee/_id we queried from Fluree on first render
+      let isAssignedTo = userId; //
       if (userId === 'new') {
-        userId = `assignee$${index}`;
+        //if the _id is 'new' meaning new assignee(ie not a value we queired from Fluree) then execute code below
+        userId = `assignee$${index}`; //creates a temporary id for the new assignee
         isAssignedTo = {
-          _id: userId,
-          name: task.newAssignedTo,
-          email: task.email,
+          _id: userId, // temporar id goes here
+          name: task.newAssignedTo, //the first name of the new assignee
+          email: task.email, //the email of the new assignee
         };
-      }
+      } //All existing assignees already have their name and email info in Fluree, so we issue the transaction with their if values recieved in the initial query
 
       const newTask = {
-        _id: `task$${index}`,
-        name: task.task,
-        isCompleted: task.completed,
-        assignedTo: isAssignedTo,
+        // creates a transaction using FlureeQL syntax to send over the new list data to Fluree
+        _id: `task$${index}`, //temporary id for the new list data
+        name: task.task, //name of the task
+        isCompleted: task.completed, //whether the task is completed (boolean)
+        assignedTo: isAssignedTo, //this predicate, in the task collection, is of special type ref so it takes the assigne/_id as parameter to reference the assignee data in the assignee collection belonging to that _id value
       };
-      newList.tasks.push(newTask);
+      newList.tasks.push(newTask); //push each new task into the tasks array in the new list object
     });
 
-    let transactLoad = [newList];
+    let transactLoad = [newList]; //set the transactLoad to the newList array for use in the transaction
 
     let sendListData = async () => {
+      //hold the axios API request
       let transactResponse = await axios.post(
-        `http://localhost:8080/fdb/todo/lists/transact`,
-        transactLoad
+        `http://localhost:8080/fdb/todo/lists/transact`, //place your URL followed by this structure: /fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/transact
+        transactLoad //this is the body that contains the list data in FlureeQL
       );
       if (transactResponse.status === 200) {
         const _id = transactResponse?.data?.tempids['list$1'];
@@ -241,7 +250,7 @@ const ListProvider = (props) => {
   }
 
   return (
-    <ListContext.Provider
+    <ListContext.Provider //this provides all the state and functionality to every component within in it
       value={{
         lists,
         deleteTask,
