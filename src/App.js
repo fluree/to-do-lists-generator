@@ -15,7 +15,7 @@ function App() {
           justifyContent='space-evenly'
           alignItems='baseline'
         >
-          <h1>TodoLists</h1>
+          <h1>To do Lists</h1>
           <img
             src={Blue_Brandmark}
             alt='Fluree Yeti logo'
