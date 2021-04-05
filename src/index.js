@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+// the provider of the state and functionality context is imported
 import { ListProvider } from './ListContext';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import {
@@ -167,7 +168,7 @@ ReactDOM.render(
     </ThemeProvider>
   </ListProvider>,
   document.getElementById('root')
-);
+); // the app is nested in the list provider and has access to the context
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
