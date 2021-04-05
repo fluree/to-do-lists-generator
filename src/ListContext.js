@@ -176,25 +176,26 @@ const ListProvider = (props) => {
         transactLoad //this is the body that contains the list data in FlureeQL
       );
       if (transactResponse.status === 200) {
-        const _id = transactResponse?.data?.tempids['list$1'];
+        const _id = transactResponse?.data?.tempids['list$1']; // Ask Andrew about this line
 
-        const updatedTasks = newList.tasks.map((task) => {
+        //this filters through the tasks array and matches the assignee to the _ids recieved on render
+        const updateTasksWithAssigneeIds = newList.tasks.map((task) => {
           if (!task.assignedTo.email) {
-            const actualUser = users.filter(
+            const existingUser = users.filter(
               (user) => user._id === task.assignedTo
             );
-            task.assignedTo = actualUser[0];
+            task.assignedTo = existingUser[0];
           }
           return task;
         });
-        newList.tasks = updatedTasks;
-        setLists((lists) => [...lists, { ...newList, _id }]);
+        newList.tasks = updateTasksWithAssigneeIds; // sets the tasks array to the id changes in updateTasksWithAssigneeIds
+        setLists((lists) => [...lists, { ...newList, _id }]); //adds new list data to our UI
       }
     };
-    sendListData();
+    sendListData(); //sends the transaction over to Fluree DB with the list data provided
   }
 
-  //calls the addList function on submission
+  //calls the addList function on list submission
   const handleSubmit = (list) => {
     addList(list);
   };
@@ -202,51 +203,56 @@ const ListProvider = (props) => {
   //tasks are deleted
   function deleteTask(chosenTask) {
     const remainingTasks = lists.map((list) => {
-      const index = list.tasks.findIndex((task) => task._id === chosenTask._id);
+      //for every task loop through the task's data
+      const index = list.tasks.findIndex((task) => task._id === chosenTask._id); //match on _id
       let deleteTaskFluree = async () => {
+        //the transaction to delete a task in Fluree
         await axios.post(`http://localhost:8080/fdb/todo/lists/transact`, [
           {
-            _id: chosenTask._id,
-            _action: 'delete',
+            _id: chosenTask._id, //this is the task _id to match to the task data in Fluree
+            _action: 'delete', // action key required for deletions
           },
         ]);
       };
       if (index >= 0) {
-        delete list.tasks[index];
-        deleteTaskFluree();
+        delete list.tasks[index]; //deletes the task from the UI
+        deleteTaskFluree(); //issues the axios request to send the transaction to delete the task from Fluree
       }
       return list;
     });
 
-    setLists(remainingTasks);
+    setLists(remainingTasks); //calls the custom hook to set the lists in the UI
   }
 
-  //tasks are edited
+  //task are edited (task name or their completed status)
   async function editTask(newTask) {
     const editedTaskList = await lists.map((list) => {
-      const index = list.tasks.findIndex((task) => task._id === newTask._id);
+      //for every task loop through the task's data
+      const index = list.tasks.findIndex((task) => task._id === newTask._id); //match on _id
 
       let taskChangeTransact = [
+        //sets the transaction to update data, this type of query can include the "_action" : "update", but it is transact it is inferred
         {
-          _id: newTask._id,
-          'task/name': newTask.name,
-          'task/isCompleted': newTask.isCompleted,
+          _id: newTask._id, //the task _id from list
+          'task/name': newTask.name, //name of the task, if it is different it will change in Fluree
+          'task/isCompleted': newTask.isCompleted, //completed status, if different it will change in Fluree
         },
       ];
 
       let editTaskProps = async () => {
         await axios.post(
+          // axios request to submit an update transaction to fluree
           `http://localhost:8080/fdb/todo/lists/transact`,
-          taskChangeTransact
+          taskChangeTransact //this is the body that holds the update transaction in FlureeQL
         );
       };
       if (index >= 0) {
-        list.tasks[index] = newTask;
+        list.tasks[index] = newTask; //sets the selected task to the newTask with changes
         editTaskProps();
       }
       return list;
     });
-    setLists(editedTaskList);
+    setLists(editedTaskList); //calls the custom hook to set the lists in the UI
   }
 
   return (
