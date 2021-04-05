@@ -9,7 +9,12 @@ function App() {
   return (
     <Grid container alignItems='center' justify='center'>
       <Grid item xs={8}>
-        <Box display='flex' flexDirection='row' justifyContent='space-evenly'>
+        <Box
+          display='flex'
+          flexDirection='row'
+          justifyContent='space-evenly'
+          alignItems='baseline'
+        >
           <h1>TodoLists</h1>
           <img
             src={Blue_Brandmark}
