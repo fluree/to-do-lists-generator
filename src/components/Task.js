@@ -15,19 +15,20 @@ function Task({ task, handleDeletion }) {
   const [newName, setNewName] = useState('');
 
   function handleNewNameChange(e) {
-    setNewName(e.target.value);
+    setNewName(e.target.value); //sets the newName state to the input value
   }
 
   function setTaskNewName(e) {
     e.preventDefault();
-    setNewName('');
-    setEditing(false);
-    editTask({ ...taskState, name: newName });
+    setNewName(''); //resets the newName state
+    setEditing(false); //sets editing to false to hide the newName input
+    editTask({ ...taskState, name: newName }); // calls the function from the context with the changed params
   }
 
   function toggleCheckbox() {
+    //changes the checkbox state
     const taskCompleted = !taskState.isCompleted;
-    editTask({ ...taskState, isCompleted: taskCompleted });
+    editTask({ ...taskState, isCompleted: taskCompleted }); //calls the function from the context to recieve the change
   }
 
   return (
@@ -43,7 +44,6 @@ function Task({ task, handleDeletion }) {
         <Checkbox
           id={`checkbox-${taskState._id}`}
           name='completed'
-          // value={taskState.isCompleted}
           checked={taskState.isCompleted}
           onChange={() => toggleCheckbox()}
         />
