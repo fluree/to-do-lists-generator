@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# To do list generator powered by React and FlureeDB
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This repo is designed to introduce a basic react application that uses FlureeDB to manage data. By using Axios library, queries and transactions are issued to send and recieve data from my FlureeDB.
 
 ## Available Scripts
 
@@ -11,33 +11,6 @@ In the project directory, you can run:
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
 ## Learn More
 
@@ -45,26 +18,132 @@ You can learn more in the [Create React App documentation](https://facebook.gith
 
 To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
+# Getting Started with Fluree
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+This to do list generator uses [Fluree Anywhere](https://docs.flur.ee/docs/1.0.0/getting-started/fluree-anywhere) to manage data, for a indepth installation guide of Fluree visit the [Installation](https://docs.flur.ee/docs/1.0.0/getting-started/installation) docs. For brief installation points refer below.
 
-### Analyzing the Bundle Size
+## Installing Fluree
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- Download and unzip Fluree
+- Launch Fluree with default options by running `./fluree_start.sh` in the terminal for mac and in Bash emulator for Windows
+- Once Fluree is done starting up it will log the web server port 8080, `http://localhost:8080`.
+- To exit click `ctrl + c`, this will not delete any ledgers or successful transactions.
 
-### Making a Progressive Web App
+> Fluree requires Java 11 or above. To verify your version run `java - version` in the terminal or visit [java](https://www.java.com/en/download/manual.jsp) to download.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
-### Advanced Configuration
+## Creating your Ledger, Schema, and Sample Data
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+In this section we will break down ledger creation, implementing a basic schema, and adding sample data.
 
-### Deployment
+### Ledger
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+A ledger in Fluree is bascially the mechanism which stores and keeps track of updates or *transactions* to your data. There are a few different ways to create a new ledger, for more details refer to the [ledger](https://docs.flur.ee/docs/1.0.0/getting-started/ledger-operations) docs.
 
-### `npm run build` fails to minify
+Here we will create a new ledger in the admin UI:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+![Fluree admin UI](/src/Images/FlureeDB_Admin_Console.png)
+
+
+After pressing the 'Add Ledger' button you will see the modal below. Enter a network name and DB name, example: `test/one1`
+
+![Ledger Modal](/src/Images/Create_ledger_modal.png)
+
+> The name of your network and ledger enable you to precisely issue queries and transactions
+
+### Schema
+
+Once the ledger has been created the next step is to build your schema. Schema in Fluree consist of *collections* and *predicates*. You can think of *collections* as tables in a relational DB and *predicates* as columns, refer to the [start here](https://docs.flur.ee/docs/1.0.0/getting-started/start-here#overview) section in the docs for a more elaborate explanation.
+
+Below is the schema for the to do list generator:
+
+The schema has three collections, list, task, and assignee.
+
+                        [    
+                            {
+                            "_id": "_collection",
+                            "name": "list"
+                            },
+                            {
+                            "_id": "_collection",
+                            "name": "task"
+                            },
+                            {
+                            "_id": "_collection",
+                            "name": "assignee"
+                            }
+                        ]
+
+  Each collection has three predicates.
+  
+  The list collection consists of list/name, list/description, and list/tasks
+
+                        [
+                            { "_id": "_predicate",
+                            "name": "list/name",
+                            "type": "string",
+                            "index": true
+                            },
+                            {
+                            "_id": "_predicate",
+                            "name": "list/description",
+                            "type": "string"
+                            },
+                            {
+                            "_id": "_predicate",
+                            "name": "list/tasks",
+                            "type": "ref",
+                            "multi": true,
+                            "restrictCollection": "task"
+                            }
+                        ]
+
+The task collection consists of task/name, task/assignedTo, and task/isCompleted
+
+                        [                       
+                            {
+                            "_id": "_predicate",
+                            "name": "task/name",
+                            "type": "string",
+                            "index": true
+                            },
+                            {
+                            "_id": "_predicate",
+                            "name": "task/assignedTo",
+                            "type": "ref",
+                            "index": true,
+                            "restrictCollection": "assignee"
+                            },
+                            {
+                            "_id": "_predicate",
+                            "name": "task/isCompleted",
+                            "type": "boolean"
+                            }   
+                        ]
+
+The assignee collection consists of assignee/name, assignee/email, and assignee/lists
+
+                        [ 
+                            
+                            {
+                            "_id": "_predicate",
+                            "name": "assignee/name",
+                            "type": "string",
+                            "index": true
+                            },
+                            {
+                            "_id": "_predicate",
+                            "name": "assignee/email",
+                            "type": "string",
+                            "unique": true
+                            },
+                            {
+                            "_id": "_predicate",
+                            "name": "assignee/lists",
+                            "type": "ref",
+                            "multi": true,
+                            "restrictCollection": "list"
+                            }
+                        ]   
+
+### Sample Data
