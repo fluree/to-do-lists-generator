@@ -1,3 +1,7 @@
+
+
+ ![React](/public/logo192.png) ![Fluree](/src/Images/Dark_Stacked.png)
+
 # To do list generator powered by React and FlureeDB
 
 This repo is designed to introduce a basic react application that uses FlureeDB to manage data. By using [axios](https://axios-http.com/), queries and transactions are issued to send and recieve data from my FlureeDB.
