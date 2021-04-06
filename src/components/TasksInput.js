@@ -10,15 +10,17 @@ function TasksInput({ task }) {
   const [newTaskState, setNewTaskState] = useState(task);
 
   const taskState = useContext(ListContext);
-  const { userIsNew, setNewUser, users, handleTaskChange } = taskState;
+  const { userIsNew, setNewUser, users, handleTaskChange } = taskState; //the context that this component is using
 
   function sendTasksToParent(e) {
+    //sends tasks array to parent
     const { name, value } = e.target;
-    setNewTaskState({ ...newTaskState, [name]: value });
+    setNewTaskState({ ...newTaskState, [name]: value }); //sets the new state of the tasks
   }
 
   useEffect(() => {
     handleTaskChange(newTaskState);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newTaskState]);
 
   return (
