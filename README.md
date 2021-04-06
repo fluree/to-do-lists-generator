@@ -1,6 +1,6 @@
 
 
- ![React](/public/logo192.png) ![Fluree](/src/Images/Dark_Stacked.png)
+ ![React](/public/logo192.png) ![Fluree](/src/Images/Blue_Stacked.png)
 
 # To do list generator powered by React and FlureeDB
 
