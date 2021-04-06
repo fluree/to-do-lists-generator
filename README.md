@@ -53,7 +53,9 @@ After pressing the 'Add Ledger' button you will see the modal below. Enter a net
 
 ### Schema
 
-Once the ledger has been created the next step is to build your schema. Schema in Fluree consist of *collections* and *predicates*. You can think of *collections* as tables in a relational DB and *predicates* as columns, refer to the [start here](https://docs.flur.ee/docs/1.0.0/getting-started/start-here#overview) section in the docs for a more elaborate explanation.
+Once the ledger has been created the next step is to build your schema. Schema in Fluree consist of [*collections*](https://docs.flur.ee/docs/1.0.0/schema/collections) and [*predicates*](https://docs.flur.ee/docs/1.0.0/schema/predicates).
+
+You can think of *collections* as tables in a relational DB and *predicates* as columns, refer to the [Schema](https://docs.flur.ee/docs/1.0.0/schema/overview) section in the docs for a more elaborate explanation.
 
 Below is the schema for the to do list generator:
 
@@ -79,7 +81,8 @@ The schema has three collections, list, task, and assignee.
   The list collection consists of list/name, list/description, and list/tasks
 
                         [
-                            { "_id": "_predicate",
+                            { 
+                            "_id": "_predicate",
                             "name": "list/name",
                             "type": "string",
                             "index": true
@@ -145,5 +148,7 @@ The assignee collection consists of assignee/name, assignee/email, and assignee/
                             "restrictCollection": "list"
                             }
                         ]   
+
+ > Predicates 
 
 ### Sample Data
