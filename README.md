@@ -160,14 +160,18 @@ The assignee collection consists of assignee/name, assignee/email, and assignee/
 
  > An important thing to note about predicates is that within Fluree they are their own type of collection, so they can consist of predicates themselves (you can think of them as properties that describe a type of predicate). For a list of types and further explanation refer to the [predicate](https://docs.flur.ee/docs/1.0.0/schema/predicates#_predicate-predicates) docs.
 
- Once you have solidified your schema you can insert it into your DB, using the admin UI, as your first transaction: 
+ Once you have solidified your schema you can insert it into your DB, using the admin UI, as your first transaction:
 
  <p width="100%" align="center">
  <img src='/src/Images/importing%20first%20set%20of%20schema.png' alt='importing collection schema' width='600'>
  </p>
 
-
-
 ### Sample Data
 
-### Querying and Transaction Data
+After setting your schema it is time to transact some dummy data. Similar to how you transacted your schema you will transact some dummy data.
+
+<p width="100%" align="center">
+ <img src='/src/Images/Seed_data_example.png' alt='importing collection schema' width='600'>
+ </p>
+
+### Querying and Transaction Data within the application
