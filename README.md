@@ -153,6 +153,6 @@ The assignee collection consists of assignee/name, assignee/email, and assignee/
                             }
                         ]   
 
- > An important thing to note about predicates is that within Fluree they are their own type of collection, so they can consist of predicate themselves (you can thing of them as properties that describe a type predicate). For a list of types and further explanation refer to the [predicate](https://docs.flur.ee/docs/1.0.0/schema/predicates#_predicate-predicates) docs.
+ > An important thing to note about predicates is that within Fluree they are their own type of collection, so they can consist of predicates themselves (you can think of them as properties that describe a type of predicate). For a list of types and further explanation refer to the [predicate](https://docs.flur.ee/docs/1.0.0/schema/predicates#_predicate-predicates) docs.
 
 ### Sample Data

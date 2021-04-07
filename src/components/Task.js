@@ -11,7 +11,7 @@ function Task({ task, handleDeletion }) {
   const taskInfo = useContext(ListContext);
   const { editTask, handleSubmit } = taskInfo;
   const [isEditing, setEditing] = useState(false);
-  let [taskState] = useState({ ...task });
+  const [taskState] = useState({ ...task });
   const [newName, setNewName] = useState('');
 
   function handleNewNameChange(e) {
