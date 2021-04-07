@@ -174,6 +174,6 @@ After setting your schema it is time to transact some dummy data. Similar to how
  <img src='/src/Images/Seed_data_example.png' alt='importing collection schema' width='600'>
  </p>
 
-### Querying and Transaction Data within the application
+### Querying and Transacting Data within the application
 
 Now that you have some data inside we can dive into the way we structure queries and transactions in the application.
