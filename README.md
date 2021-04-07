@@ -42,7 +42,7 @@ In this section we will break down ledger creation, implementing a basic schema,
 
 ### Ledger
 
-A ledger in Fluree is bascially the mechanism which stores and keeps track of updates or *transactions* to your data. There are a few different ways to create a new ledger, for more details refer to the [ledger](https://docs.flur.ee/docs/1.0.0/getting-started/ledger-operations) docs.
+A ledger in Fluree is bascially the mechanism which stores and keeps track of [updates](https://docs.flur.ee/docs/1.0.0/transact/updating-data) or [*transactions*](https://docs.flur.ee/docs/1.0.0/transact/basics) to your data. There are a few different ways to create a new ledger, for more details refer to the [ledger](https://docs.flur.ee/docs/1.0.0/getting-started/ledger-operations) docs.
 
 Here we will create a new ledger in the admin UI:
 
@@ -155,4 +155,12 @@ The assignee collection consists of assignee/name, assignee/email, and assignee/
 
  > An important thing to note about predicates is that within Fluree they are their own type of collection, so they can consist of predicates themselves (you can think of them as properties that describe a type of predicate). For a list of types and further explanation refer to the [predicate](https://docs.flur.ee/docs/1.0.0/schema/predicates#_predicate-predicates) docs.
 
+ Once you have solidified your schema you can insert it into your DB, using the admin UI, as your first transaction: 
+
+ ![importing collection schema](src/Images/importing%20first%20set%20of%20schema.png)
+
+
+
 ### Sample Data
+
+### Querying and Transaction Data
