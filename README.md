@@ -1,6 +1,7 @@
 
-
+<p width="100%" align="center">
  <img src='/public/logo192.png' alt='React logo' width='200' height='200'> <img src='/src/Images/Blue_Stacked.png' alt='Fluree logo' width='185'>
+ </p>
 
 # To do list generator powered by React and FlureeDB
 
@@ -46,13 +47,16 @@ A ledger in Fluree is bascially the mechanism which stores and keeps track of [u
 
 Here we will create a new ledger in the admin UI:
 
+<p width="100%" align="center">
 <img src='/src/Images/FlureeDB_Admin_Console.png' alt='Fluree admin UI' width='600'>
+</p>
 
 
 After pressing the 'Add Ledger' button you will see the modal below. Enter a network name and DB name, example: `test/one1`
 
-
+<p width="100%" align="center">
 <img src='/src/Images/Create_ledger_modal.png' alt='Ledger Modal' width='600'>
+</p>
 
 > The name of your network and ledger enable you to precisely issue queries and transactions
 
@@ -158,8 +162,9 @@ The assignee collection consists of assignee/name, assignee/email, and assignee/
 
  Once you have solidified your schema you can insert it into your DB, using the admin UI, as your first transaction: 
 
- 
+ <p width="100%" align="center">
  <img src='/src/Images/importing%20first%20set%20of%20schema.png' alt='importing collection schema' width='600'>
+ </p>
 
 
 
