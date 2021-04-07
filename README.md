@@ -168,10 +168,12 @@ The assignee collection consists of assignee/name, assignee/email, and assignee/
 
 ### Sample Data
 
-After setting your schema it is time to transact some dummy data. Similar to how you transacted your schema you will transact some dummy data.
+After setting your schema it is time to transact some dummy data. Similar to how you transacted your schema you will transact some dummy data within the admin UI.
 
 <p width="100%" align="center">
  <img src='/src/Images/Seed_data_example.png' alt='importing collection schema' width='600'>
  </p>
 
 ### Querying and Transaction Data within the application
+
+Now that you have some data inside we can dive into the way we structure queries and transactions in the application.
