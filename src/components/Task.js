@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { ListContext } from '../ListContext';
 import { nanoid } from 'nanoid';
 import InputComponent from './InputComponent';
+import { Typography } from '@material-ui/core';
 import { Button } from '@material-ui/core';
 import { Checkbox } from '@material-ui/core';
 import { Container } from '@material-ui/core';
@@ -47,22 +48,30 @@ function Task({ task, handleDeletion }) {
           checked={taskState.isCompleted}
           onChange={() => toggleCheckbox()}
         />
-        <label id={taskState._id} className='' htmlFor={taskState._id}>
-          {taskState.name}
-        </label>
-        <label id={'assignee-' + nanoid()} className=''>
+        <Typography
+          variant='body1'
+          component='label'
+          id={taskState._id}
+          htmlFor={taskState._id}
+        >
+          <label>{taskState.name}</label>
+        </Typography>
+        <Typography
+          variant='body1'
+          component='label'
+          id={'assignee-' + nanoid()}
+        >
           {taskState.assignedTo ? taskState.assignedTo.name : ''}
-        </label>
-        <label id={'email-' + nanoid()} className=''>
+        </Typography>
+        <Typography variant='body1' component='label' id={'email-' + nanoid()}>
           {taskState.assignedTo.email}
-        </label>
+        </Typography>
       </Box>
       <Box display='flex' justifyContent='space-evenly'>
         <Button
           variant='text'
           color='primary'
-          type=''
-          className=''
+          type='button'
           onClick={() => setEditing(true)}
         >
           Edit
@@ -74,7 +83,6 @@ function Task({ task, handleDeletion }) {
           variant='text'
           color='primary'
           type='button'
-          className=''
           onClick={() => handleDeletion(task)}
         >
           Delete
@@ -84,7 +92,7 @@ function Task({ task, handleDeletion }) {
         </Button>
       </Box>
       {isEditing && (
-        <form className='' onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <Container>
             <Box
               display='flex'
@@ -92,12 +100,11 @@ function Task({ task, handleDeletion }) {
               alignItems='baseline'
               justifyContent='space-evenly'
             >
-              <label className='' htmlFor={taskState._id + 'New-Name'}>
+              <label htmlFor={taskState._id + 'New-Name'}>
                 New name for {taskState.name}
               </label>
               <InputComponent
                 id={taskState._id + 'New-Name'}
-                className=''
                 type='text'
                 name='newName'
                 value={newName}
@@ -116,7 +123,6 @@ function Task({ task, handleDeletion }) {
                 variant='contained'
                 size='small'
                 type='button'
-                className=''
                 onClick={() => setEditing(false)}
               >
                 Cancel

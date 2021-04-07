@@ -2,6 +2,7 @@ import React from 'react';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import themeObject from '@fluree/mui-theme';
 import Form from './components/Form';
+import { Typography } from '@material-ui/core';
 import { Grid } from '@material-ui/core';
 import { Box } from '@material-ui/core';
 import ListContainer from './components/ListContainer';
@@ -19,7 +20,9 @@ function App() {
             justifyContent='space-evenly'
             alignItems='baseline'
           >
-            <h1>To do Lists</h1>
+            <Typography variant='h5' component='h5'>
+              To do Lists
+            </Typography>
             <img
               src={Blue_Brandmark}
               alt='Fluree Yeti logo'
