@@ -28,7 +28,7 @@ This to do list generator uses [Fluree Anywhere](https://docs.flur.ee/docs/1.0.0
 
 ## Installing Fluree
 
-- Download and unzip Fluree
+- [Download](https://docs.flur.ee/docs/1.0.0/getting-started/installation#installing-fluree-locally) and unzip Fluree
 - Launch Fluree with default options by running `./fluree_start.sh` in the terminal for mac and in Bash emulator for Windows
 - Once Fluree is done starting up it will log the web server port 8080, `http://localhost:8080`.
 - To exit click `ctrl + c`, this will not delete any ledgers or successful transactions.
