@@ -143,22 +143,23 @@ const ListProvider = (props) => {
       description,
       tasks: [],
     };
+
     //for each task input information submitted loop through to set all the required predicate information
     tasks.forEach((task, index) => {
       let userId = task.assignedTo; //sets userId to the assignee/_id we queried from Fluree on first render
-      let isAssignedTo = userId; //
+      let isAssignedTo = userId;
       if (userId === 'new') {
         //if the _id is 'new' meaning new assignee(ie not a value we queired from Fluree) then execute code below
         userId = `assignee$${index}`; //creates a temporary id for the new assignee
         isAssignedTo = {
-          _id: userId, // temporar id goes here
+          _id: userId, //temporar id goes here
           name: task.newAssignedTo, //the first name of the new assignee
           email: task.email, //the email of the new assignee
         };
-      } //All existing assignees already have their name and email info in Fluree, so we issue the transaction with their if values recieved in the initial query
+      } //all existing assignees already have their name and email info in Fluree, so we issue the transaction with their if values recieved in the initial query
 
       const newTask = {
-        // creates a transaction using FlureeQL syntax to send over the new list data to Fluree
+        //creates a transaction using FlureeQL syntax to send over the new list data to Fluree
         _id: `task$${index}`, //temporary id for the new list data
         name: task.task, //name of the task
         isCompleted: task.completed, //whether the task is completed (boolean)
@@ -231,7 +232,7 @@ const ListProvider = (props) => {
       const index = list.tasks.findIndex((task) => task._id === newTask._id); //match on _id
 
       let taskChangeTransact = [
-        //sets the transaction to update data, this type of query can include the "_action" : "update", but it is transact it is inferred
+        //sets the transaction to update data, this type of query can include the "_action" : "update", but if it is transact it is inferred
         {
           _id: newTask._id, //the task _id from list
           'task/name': newTask.name, //name of the task, if it is different it will change in Fluree
