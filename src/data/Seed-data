@@ -1,13 +1,13 @@
 [
   {
-    "_id": "assignee$assignee1", //temporary id
+    "_id": "assignee$assignee1",
     "name": "Jane",
     "email": "jDoe@gmail.com",
-    "lists": ["list$first"] //temporary id
+    "lists": ["list$first"]
   },
   {
     "_id": "list$first",
-    "tasks": ["task$first", "task$second", "task$third"], //temporary ids
+    "tasks": ["task$first", "task$second", "task$third"],
     "name": "Spring 2021",
     "description": "Spring cleaning list"
   },
@@ -15,7 +15,7 @@
     "_id": "task$first",
     "name": "Donate gently used clothing",
     "isCompleted": false, //boolean
-    "assignedTo": "assignee$assignee1" //temporary id for reference type
+    "assignedTo": "assignee$assignee1"
   },
   {
     "_id": "task$second",

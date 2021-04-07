@@ -85,7 +85,7 @@ const ListProvider = (props) => {
   //load all the assignee data from fdb on render to propagate the "assignee" Select
   const loadAssignedToData = async () => {
     const response = await axios.post(
-      `http://localhost:8080/fdb/todo/lists/query`,
+      `http://localhost:8080/fdb/test/one1/query`,
       {
         select: ['assignee/_id', 'assignee/email', 'assignee/name'],
         from: 'assignee',
@@ -106,7 +106,7 @@ const ListProvider = (props) => {
   // fetches all the list data in the fdb
   const fetchListData = async () => {
     let response = await axios.post(
-      `http://localhost:8080/fdb/todo/lists/query`,
+      `http://localhost:8080/fdb/test/one1/query`,
       {
         select: [
           '*',
@@ -208,7 +208,7 @@ const ListProvider = (props) => {
       const index = list.tasks.findIndex((task) => task._id === chosenTask._id); //match on _id
       let deleteTaskFluree = async () => {
         //the transaction to delete a task in Fluree
-        await axios.post(`http://localhost:8080/fdb/todo/lists/transact`, [
+        await axios.post(`http://localhost:8080/fdb/test/one1/transact`, [
           {
             _id: chosenTask._id, //this is the task _id to match to the task data in Fluree
             _action: 'delete', // action key required for deletions
@@ -243,7 +243,7 @@ const ListProvider = (props) => {
       let editTaskProps = async () => {
         await axios.post(
           // axios request to submit an update transaction to fluree
-          `http://localhost:8080/fdb/todo/lists/transact`,
+          `http://localhost:8080/fdb/test/one1/transact`,
           taskChangeTransact //this is the body that holds the update transaction in FlureeQL
         );
       };
