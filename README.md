@@ -198,24 +198,24 @@ The application will need to pull the list data from Fluree on load in order to 
 
  Below is the query that was nested in `fetchListData` 
 
-            {
-                select: [
-                    '*',
-                    {
-                    tasks: [
+                {
+                    select: [
                         '*',
                         {
-                        assignedTo: ['*'],
+                        tasks: [
+                            '*',
+                            {
+                            assignedTo: ['*'],
+                            },
+                        ],
                         },
                     ],
+                    from: 'list',
+                    opts: {
+                        compact: true,
+                        orderBy: ['ASC', '_id'],
                     },
-                ],
-                from: 'list',
-                opts: {
-                    compact: true,
-                    orderBy: ['ASC', '_id'],
-                },
-            }        
+                }        
 
 This type of query is called [Crawling the graph](https://docs.flur.ee/docs/1.0.0/query/advanced-query#crawling-the-graph), it contains sub-queries that pull data from different collections that have predicates of type [ref](https://docs.flur.ee/docs/schema/predicates#predicate-types), starting with the collection in the `from` clause. So essentially we are selecting ALL the data from the `list` collection then all the related data in the `task` collection, since `tasks` is a reference predicate in the `list` collection. 
 
