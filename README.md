@@ -217,7 +217,7 @@ The other section of this query (below the `from` clause), uses the query key of
 
 #### Querying list data
 
- Below is the query that was nested in `fetchListData` 
+ Below is the query that was nested in `fetchListData`
 
                 {
                     select: [
@@ -240,6 +240,6 @@ The other section of this query (below the `from` clause), uses the query key of
 
 This type of query is called [Crawling the graph](https://docs.flur.ee/docs/1.0.0/query/advanced-query#crawling-the-graph), it contains sub-queries that pull data from different collections that have predicates of type [ref](https://docs.flur.ee/docs/schema/predicates#predicate-types), starting with the collection in the `from` clause. So essentially we are selecting ALL the data from the `list` collection then all the related data in the `task` collection, since `tasks` is a reference predicate in the `list` collection.
 
-The next subquery pulls related data from the `assignee` collection, since the `assignedTo` predicate in the `task` collection is a reference predicate to the `asignee` collection.
+The next subquery pulls related data from the `assignee` collection, since the `assignedTo` predicate in the `task` collection is a reference predicate to the `assignee` collection.
 
 Another way of thinking about the predicate type of `ref` are as `joins` in a relational DBs, but the ability to join is a property set to predicates (in Fluree) as displayed in the predicate schema above.
