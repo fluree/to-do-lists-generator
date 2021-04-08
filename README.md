@@ -223,4 +223,4 @@ The next subquery pulls related data from the `assignee` collection, since the `
 
 Another way of thinking about the predicate type of `ref` are `joins` in a relational DBs, but the ability to join is a property set to predicates (in Fluree) as displayed in the predicate schema above.
 
-The other section of this query (below the `from` clause), uses the query key of `opts` which is not required and gives you the ability to set optional keys when retrieving data, for a list of optional keys and their descriptions, refer to the docs [here](https://docs.flur.ee/docs/1.0.0/query/overview#opts-key)
+The other section of this query (below the `from` clause), uses the query key of `opts` which is not required, but gives you the ability to set optional keys when retrieving data, for a list of optional keys and their descriptions, refer to the docs [here](https://docs.flur.ee/docs/1.0.0/query/overview#opts-key)
