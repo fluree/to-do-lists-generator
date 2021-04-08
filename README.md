@@ -43,7 +43,7 @@ In this section we will break down ledger creation, implementing a basic schema,
 
 ### Ledger
 
-A ledger in Fluree is bascially the mechanism which stores and keeps track of [updates](https://docs.flur.ee/docs/1.0.0/transact/updating-data) or [*transactions*](https://docs.flur.ee/docs/1.0.0/transact/basics) to your data. There are a few different ways to create a new ledger, for more details refer to the [ledger](https://docs.flur.ee/docs/1.0.0/getting-started/ledger-operations) docs.
+A ledger in Fluree is bascially the mechanism which stores and keeps track of [*updates*](https://docs.flur.ee/docs/1.0.0/transact/updating-data) or [*transactions*](https://docs.flur.ee/docs/1.0.0/transact/basics) to your data. There are a few different ways to create a new ledger, for more details refer to the [ledger](https://docs.flur.ee/docs/1.0.0/getting-started/ledger-operations) docs.
 
 Here we will create a new ledger in the admin UI:
 
