@@ -196,7 +196,7 @@ The application will need to pull the assignee data in order to propagate the `S
  <img src='/src/Images/Pull_assignee_from_FDB.png' alt='importing collection schema' width='600'>
  </p>
 
- Below is the query that is nestes in `loadAssignedToData`
+ Below is the query that is nested in `loadAssignedToData`
 
                 {
                 select: ['assignee/_id', 'assignee/email' 'assignee/name'],
