@@ -190,7 +190,7 @@ The application will need to pull the assignee data in order to propagate the `S
 
 > While Fluree does allow querying in GraphQL, Curl, and SparQL, queries issued in this application are in FlureeQL. Please refer to the docs for examples in the above [languages](https://docs.flur.ee/docs/1.0.0/query/overview) by toggling the *Display Examples* at the top left corner.
 
-#### Querying list data 
+#### Querying assignee data
 
 <p width="100%" align="center">
  <img src='/src/Images/Pull_assignee_from_FDB.png' alt='importing collection schema' width='600'>
@@ -214,6 +214,8 @@ The other section of this query (below the `from` clause), uses the query key of
 <p width="100%" align="center">
  <img src='/src/Images/Pull_list_data_from_FDB.png' alt='importing collection schema' width='600'>
  </p>
+
+#### Querying list data
 
  Below is the query that was nested in `fetchListData` 
 
