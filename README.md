@@ -209,7 +209,7 @@ The application will need to pull the assignee data in order to propagate the `S
 
 This is a basic query, we are selecting all the `_id`, `email`, and `name` predicate values in the assignee collection.
 
-The other section of this query (below the `from` clause), uses the query key of `opts` which is not required, but gives you the ability to set optional keys when retrieving data, for a list of optional keys and their descriptions, refer to the docs[here](https://docs.flur.ee/docs/1.0.0/query/overview#opts-key).
+The other section of this query (below the `from` clause), uses the query key of `opts` which is not required, but gives you the ability to set optional keys when retrieving data, for a list of optional keys and their descriptions, refer to the doc [here](https://docs.flur.ee/docs/1.0.0/query/overview#opts-key).
 
 #### Querying list data
 
