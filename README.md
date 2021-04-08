@@ -211,11 +211,11 @@ This is a basic query, we are selecting all the `_id`, `email`, and `name` predi
 
 The other section of this query (below the `from` clause), uses the query key of `opts` which is not required, but gives you the ability to set optional keys when retrieving data, for a list of optional keys and their descriptions, refer to the docs[here](https://docs.flur.ee/docs/1.0.0/query/overview#opts-key).
 
+#### Querying list data
+
 <p width="100%" align="center">
  <img src='/src/Images/Pull_list_data_from_FDB.png' alt='importing collection schema' width='600'>
  </p>
-
-#### Querying list data
 
  Below is the query that was nested in `fetchListData`
 
