@@ -182,7 +182,7 @@ When the dummy data has been successfully transacted, run the `npm start` comman
 
 ### Querying and Transacting Data within the application
 
-Now that you have some data inside we can dive into the way we structure queries and transactions in the application.
+Now that you have some data inside we can dive into the way we structure [queries](https://docs.flur.ee/docs/1.0.0/query/overview) and [transactions](https://docs.flur.ee/docs/1.0.0/transact/basics) in the application.
 
 First lets review the functionality that is connected to the DB and the data that is being recieved and sent.
 
@@ -195,3 +195,30 @@ The application will need to pull the list data from Fluree on load in order to 
 <p width="100%" align="center">
  <img src='/src/Images/Pull_list_data_from_FDB.png' alt='importing collection schema' width='600'>
  </p>
+
+ Below is the query that was nested in `fetchListData` 
+
+            {
+                select: [
+                    '*',
+                    {
+                    tasks: [
+                        '*',
+                        {
+                        assignedTo: ['*'],
+                        },
+                    ],
+                    },
+                ],
+                from: 'list',
+                opts: {
+                    compact: true,
+                    orderBy: ['ASC', '_id'],
+                },
+            }        
+
+This type of query is called [Crawling the graph](https://docs.flur.ee/docs/1.0.0/query/advanced-query#crawling-the-graph), it contains sub-queries that pull data from different collections that have predicates of type [ref](https://docs.flur.ee/docs/schema/predicates#predicate-types), starting with the collection in the `from` clause. So essentially we are selecting ALL the data from the `list` collection then all the related data in the `task` collection, since `tasks` is a reference predicate in the `list` collection. 
+
+The next subquery pulls related data from the `assignee` collection, since the `assignedTo` predicate in the `task` collection is a reference predicate to the `asignee` collection. 
+
+Another way of thinking about the predicate type of `ref` are `joins` in a relational DB, but the ability to join is a property set to predicates as highlighted in the predicate schema above. 
