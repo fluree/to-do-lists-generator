@@ -82,19 +82,18 @@ const ListProvider = (props) => {
     });
   }
 
+  const baseURL = 'http://localhost:8080/fdb/test/one1/';
+
   //load all the assignee data from fdb on render to propagate the "assignee" Select
   const loadAssignedToData = async () => {
-    const response = await axios.post(
-      `http://localhost:8080/fdb/test/one1/query`,
-      {
-        select: ['assignee/_id', 'assignee/email', 'assignee/name'],
-        from: 'assignee',
-        opts: {
-          compact: true,
-          orderBy: ['ASC', '_id'],
-        },
-      }
-    );
+    const response = await axios.post(`${baseURL}query`, {
+      select: ['assignee/_id', 'assignee/email', 'assignee/name'],
+      from: 'assignee',
+      opts: {
+        compact: true,
+        orderBy: ['ASC', '_id'],
+      },
+    });
     setUsers(response.data);
   };
 
@@ -105,27 +104,24 @@ const ListProvider = (props) => {
 
   // fetches all the list data in the fdb
   const fetchListData = async () => {
-    let response = await axios.post(
-      `http://localhost:8080/fdb/test/one1/query`,
-      {
-        select: [
-          '*',
-          {
-            tasks: [
-              '*',
-              {
-                assignedTo: ['*'],
-              },
-            ],
-          },
-        ],
-        from: 'list',
-        opts: {
-          compact: true,
-          orderBy: ['ASC', '_id'],
+    let response = await axios.post(`${baseURL}query`, {
+      select: [
+        '*',
+        {
+          tasks: [
+            '*',
+            {
+              assignedTo: ['*'],
+            },
+          ],
         },
-      }
-    );
+      ],
+      from: 'list',
+      opts: {
+        compact: true,
+        orderBy: ['ASC', '_id'],
+      },
+    });
     //use the custom setLists hook to propagate list data pulled from Fluree to the Todo and Task components
     setLists(response.data);
   };
@@ -173,7 +169,7 @@ const ListProvider = (props) => {
     let sendListData = async () => {
       //hold the axios API request
       let transactResponse = await axios.post(
-        `http://localhost:8080/fdb/todo/lists/transact`, //place your URL followed by this structure: /fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/transact
+        `${baseURL}transact`, //place your URL followed by this structure: /fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/transact
         transactLoad //this is the body that contains the list data in FlureeQL
       );
       if (transactResponse.status === 200) {
@@ -208,7 +204,7 @@ const ListProvider = (props) => {
       const index = list.tasks.findIndex((task) => task._id === chosenTask._id); //match on _id
       let deleteTaskFluree = async () => {
         //the transaction to delete a task in Fluree
-        await axios.post(`http://localhost:8080/fdb/test/one1/transact`, [
+        await axios.post(`${baseURL}transact`, [
           {
             _id: chosenTask._id, //this is the task _id to match to the task data in Fluree
             _action: 'delete', // action key required for deletions
@@ -243,7 +239,7 @@ const ListProvider = (props) => {
       let editTaskProps = async () => {
         await axios.post(
           // axios request to submit an update transaction to fluree
-          `http://localhost:8080/fdb/test/one1/transact`,
+          `${baseURL}/transact`,
           taskChangeTransact //this is the body that holds the update transaction in FlureeQL
         );
       };
