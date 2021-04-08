@@ -186,11 +186,30 @@ Now that you have some data inside we can dive into the way we structure [querie
 
 First lets review the functionality that is connected to the DB and the data that is being recieved and sent.
 
-The application will need to pull the list data from Fluree on load in order to propagate the `Todo` and the `Task` components. The assignee data will also need to be pulled in order to propagate the `Select Assignee` component in the form. We will grab this data by querying Fluree
+The application will need to pull the assignee data in order to propagate the `Select Assignee` component in the form. We will also need to grab the list data from Fluree on load in order to propagate the `Todo` and the `Task` components. This will all be done by querying Fluree.
 
 > While Fluree does allow querying in GraphQL, Curl, and SparQL, queries issued in this application are in FlureeQL. Please refer to the docs for examples in the above [languages](https://docs.flur.ee/docs/1.0.0/query/overview) by toggling the *Display Examples* at the top left corner.
 
 #### Querying list data 
+
+<p width="100%" align="center">
+ <img src='/src/Images/Pull_assignee_from_FDB.png' alt='importing collection schema' width='600'>
+ </p>
+
+ Below is the query that is nestes in `loadAssignedToData`
+
+                {
+                select: ['assignee/_id', 'assignee/email' 'assignee/name'],
+                from: 'assignee',
+                opts: {
+                    compact: true,
+                    orderBy: ['ASC', '_id'],
+                        },
+                }       
+
+This is a basic query, we are selecting all the `_id`, `email`, and `name` predicate values in the assignee collection.
+
+The other section of this query (below the `from` clause), uses the query key of `opts` which is not required, but gives you the ability to set optional keys when retrieving data, for a list of optional keys and their descriptions, refer to the docs[here](https://docs.flur.ee/docs/1.0.0/query/overview#opts-key).
 
 <p width="100%" align="center">
  <img src='/src/Images/Pull_list_data_from_FDB.png' alt='importing collection schema' width='600'>
@@ -221,6 +240,4 @@ This type of query is called [Crawling the graph](https://docs.flur.ee/docs/1.0.
 
 The next subquery pulls related data from the `assignee` collection, since the `assignedTo` predicate in the `task` collection is a reference predicate to the `asignee` collection.
 
-Another way of thinking about the predicate type of `ref` are `joins` in a relational DBs, but the ability to join is a property set to predicates (in Fluree) as displayed in the predicate schema above.
-
-The other section of this query (below the `from` clause), uses the query key of `opts` which is not required, but gives you the ability to set optional keys when retrieving data, for a list of optional keys and their descriptions, refer to the docs [here](https://docs.flur.ee/docs/1.0.0/query/overview#opts-key)
+Another way of thinking about the predicate type of `ref` are as `joins` in a relational DBs, but the ability to join is a property set to predicates (in Fluree) as displayed in the predicate schema above.
