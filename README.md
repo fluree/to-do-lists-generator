@@ -174,7 +174,7 @@ After setting your schema it is time to transact some dummy data. Similar to how
  <img src='/src/Images/Seed_data_example.png' alt='importing collection schema' width='600'>
  </p>
 
-Once the dummy data has been transacted, run the `npm start` command to view the application and data in the browser, open [http://localhost:3000](http://localhost:3000). You should see the following: 
+When the dummy data has been successfully transacted, run the `npm start` command to view the application with populated data in the browser, open [http://localhost:3000](http://localhost:3000). You should see the following: 
 
 <p width="100%" align="center">
  <img src='/src/Images/TodoList_example.png' alt='importing collection schema' width='600'>
