@@ -221,4 +221,4 @@ This type of query is called [Crawling the graph](https://docs.flur.ee/docs/1.0.
 
 The next subquery pulls related data from the `assignee` collection, since the `assignedTo` predicate in the `task` collection is a reference predicate to the `asignee` collection. 
 
-Another way of thinking about the predicate type of `ref` are `joins` in a relational DB, but the ability to join is a property set to predicates as highlighted in the predicate schema above. 
+Another way of thinking about the predicate type of `ref` are `joins` in a relational DBs, but the ability to join is a property set to predicates (in Fluree) as displayed in the predicate schema above. 
