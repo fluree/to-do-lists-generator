@@ -324,7 +324,7 @@ We will be using `transactLoad` in the api request detailed in the next code bre
         }],
             }
 
-    Now we focus on the second part of the `addList` function. We have built the transact item with all the form data, but need to construct the api request.        
+Now we focus on the second part of the `addList` function. We have built the transact item with all the form data, but need to construct the api request.
 
  <p width="100%" align="center">
  <img src='/src/Images/add_list_pt_2.png' alt='second part of addList function' width='600'>
