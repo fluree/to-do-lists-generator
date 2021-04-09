@@ -245,4 +245,17 @@ Another way of thinking about the predicate type of `ref` are as `joins` in a re
 
 #### Transacting and updating data
 
-The next set of functionality will cover are the areas where transactions are eing 
+The next set of functionality we will cover are the ones that send transactions to fluree in the application. When the form component is filled and submitted the data is sent to Fluree via a transact. The other events are when a deletion of a task is made, and then when a task name is edited or the checkbox completed status is changed, these are all updates that are sent to Fluree via a transact.
+
+## transacting data to Fluree
+
+Here we will break down all the steps that go into transacting the form data to Fluree, and the creation of the transact in the api request.
+
+<p width="100%" align="center">
+ <img src='/src/Images/add_list_build_transaction.png' alt='importing collection schema' width='600'>
+ </p>
+
+
+ <p width="100%" align="center">
+ <img src='/src/Images/add_list_pt_2.png' alt='importing collection schema' width='600'>
+ </p>
