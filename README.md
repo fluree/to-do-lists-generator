@@ -1,6 +1,7 @@
 
 <p width="100%" align="center">
- <img src='/public/logo192.png' alt='React logo' width='200' height='200'> <img src='/src/Images/Blue_Stacked.png' alt='Fluree logo' width='185'>
+ <img src='/public/logo192.png' alt='React logo' width='200' height='200'> 
+ <img src='/src/Images/Blue_Stacked.png' alt='Fluree logo' width='185'>
  </p>
 
 # To do list generator powered by React and FlureeDB
@@ -162,7 +163,7 @@ The assignee collection consists of assignee/name, assignee/email, and assignee/
  Once you have solidified your schema you can insert it into your DB, using the admin UI, as your first transaction:
 
  <p width="100%" align="center">
- <img src='/src/Images/importing%20first%20set%20of%20schema.png' alt='importing collection schema' width='600'>
+ <img src='/src/Images/importing%20first%20set%20of%20schema.png' alt='example of import in admin UI' width='600'>
  </p>
 
 ### Sample Data
@@ -170,13 +171,13 @@ The assignee collection consists of assignee/name, assignee/email, and assignee/
 After setting your schema it is time to transact some dummy data. Similar to how you transacted your schema you will transact some dummy data within the admin UI.
 
 <p width="100%" align="center">
- <img src='/src/Images/Seed_data_example.png' alt='importing collection schema' width='600'>
+ <img src='/src/Images/Seed_data_example.png' alt='example seed data' width='600'>
  </p>
 
 When the dummy data has been successfully transacted, run the `npm start` command to view the application with populated data in the browser, open [http://localhost:3000](http://localhost:3000). You should see the following: 
 
 <p width="100%" align="center">
- <img src='/src/Images/TodoList_example.png' alt='importing collection schema' width='600'>
+ <img src='/src/Images/TodoList_example.png' alt='to do list in browser' width='600'>
  </p>
 
 ### Querying and Transacting Data within the application
@@ -192,7 +193,7 @@ The application will need to pull the assignee data in order to propagate the `S
 #### Querying assignee data
 
 <p width="100%" align="center">
- <img src='/src/Images/pull_assignee_data.png' alt='importing collection schema' width='600'>
+ <img src='/src/Images/pull_assignee_data.png' alt='code for pulling assignee data' width='600'>
  </p>
 
  Below is the query that is nested in `loadAssignedToData`
@@ -213,7 +214,7 @@ The other section of this query (below the `from` clause), uses the query key of
 #### Querying list data
 
 <p width="100%" align="center">
- <img src='/src/Images/pull_list_data.png' alt='importing collection schema' width='600'>
+ <img src='/src/Images/pull_list_data.png' alt='code for pulling list data' width='600'>
  </p>
 
  Below is the query that was nested in `fetchListData`
@@ -252,7 +253,7 @@ The next set of functionality we will cover are the ones that send transactions 
 Here we will break down all the steps that go into transacting the form data to Fluree, and the creation of the transact that is nested in the api request.
 
 <p width="100%" align="center">
- <img src='/src/Images/add_list_build_transaction.png' alt='importing collection schema' width='600'>
+ <img src='/src/Images/add_list_build_transaction.png' alt='first part of addList function' width='600'>
  </p>
 
  Within the addList function the first const `newList` is the transaction item that holds the list data. Lets run through it and dissect each part, then we will compare it to the seed data we entered earlier.
@@ -293,8 +294,40 @@ If the `userId` value is NOT a new user then it assumes the `_id` value for the 
 
 The last bit of code is setting each task as `newTask` which is a transaction item that has a temporary id, name, completed checkbox status, and assignee information. Each `newTask` transaction item is then pushed into `newList` mentioned above.
 
+Once this process has been done and each list, task, and assignee data is accounted for we then nest the `newList` into an array and set it as a variabled called `transactLoad`. 
+
+            let transactLoad = [newList];
+
+We will be using `transactLoad` in the api request detailed in the next code breakdown below. Similar to the transact item in our dummy data this is what the output would generate:
+
+            {
+            _id: `list${'$' + Math.floor(Math.random() * 10 + 1)}`,
+            name,
+            description,
+            tasks: [{
+            _id: `task$${index}`,
+            name: task.task
+            isCompleted: task.completed,
+            assignedTo: isAssignedTo
+        },
+        {
+            _id: `task$${index}`,
+            name: task.task
+            isCompleted: task.completed,
+            assignedTo: isAssignedTo
+        },
+        {
+            _id: `task$${index}`,
+            name: task.task
+            isCompleted: task.completed,
+            assignedTo: isAssignedTo
+        }],
+            }
+
+    Now we focus on the second part of the `addList` function. We have built the transact item with all the form data, but need to construct the api request.        
+
  <p width="100%" align="center">
- <img src='/src/Images/add_list_pt_2.png' alt='importing collection schema' width='600'>
+ <img src='/src/Images/add_list_pt_2.png' alt='second part of addList function' width='600'>
  </p>
 
   <p width="100%" align="center">
