@@ -249,12 +249,49 @@ The next set of functionality we will cover are the ones that send transactions 
 
 #### Transacting data to Fluree
 
-Here we will break down all the steps that go into transacting the form data to Fluree, and the creation of the transact in the api request.
+Here we will break down all the steps that go into transacting the form data to Fluree, and the creation of the transact that is nested in the api request.
 
 <p width="100%" align="center">
  <img src='/src/Images/add_list_build_transaction.png' alt='importing collection schema' width='600'>
  </p>
 
+ Within the addList function the first const `newList` is the transaction item that holds the list data. Lets run through it and dissect each part, then we will compare it to the seed data we entered earlier.
+
+            const newList = {
+            _id: `list${'$' + Math.floor(Math.random() * 10 + 1)}`,
+            name,
+            description,
+            tasks: [],
+            };
+
+The `_id` is set to a temporary id, since every transaction in fluree must be accompanied by an `_id` value in order to refer to the subject we are creating. For more temp id examples visit **Temporary Ids** in the [Transaction Basics](https://docs.flur.ee/docs/1.0.0/transact/basics) section of the docs.
+
+The name and description are set to that values of the `list name` and `list description` submitted in the form. Notice that the tasks is set to an empty array. This is because in we will be looping through the submitted tasks and adding their data as objects to the transact item.
+
+            let userId = task.assignedTo;
+            let isAssignedTo = userId;
+            if (userId === 'new') {
+            isAssignedTo = {
+            _id: userId,
+            name: task.newAssignedTo,
+            email: task.email,
+              };
+            }
+
+        const newTask = {
+            _id: `task$${index}`,
+            name: task.task
+            isCompleted: task.completed,
+            assignedTo: isAssignedTo
+        };
+        
+        newList.tasks.push(newTask); 
+
+The code above is located within the for each that cycles through the tasks array. The first section is setting userId to the value of task.assignedTo, then checking the value of userId, if its 'new' we will need to create a nested transact item that created a new assignee in Fluree (notice the `isAssignedTo` object that holds the predicate information that is needed for the assignee collection).
+
+If the `userId` value is NOT a new user then it assumes the `_id` value for the asignee information queried in `loadAssignedToData()`. This is happening for each task.
+
+The last bit of code is setting each task as `newTask` which is a transaction item that has a temporary id, name, completed checkbox status, and assignee information. Each `newTask` transaction item is then pushed into `newList` mentioned above.
 
  <p width="100%" align="center">
  <img src='/src/Images/add_list_pt_2.png' alt='importing collection schema' width='600'>
