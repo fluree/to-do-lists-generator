@@ -289,7 +289,7 @@ The name and description are set to that values of the `list name` and `list des
 
 The code above is located within the for each that cycles through the tasks array. The first section is setting userId to the value of task.assignedTo, then checking the value of userId, if its 'new' we will need to create a nested transact item that created a new assignee in Fluree (notice the `isAssignedTo` object that holds the predicate information that is needed for the assignee collection).
 
-If the `userId` value is NOT a new user then it assumes the `_id` value for the asignee information queried in `loadAssignedToData()`. This is happening for each task.
+If the `userId` value is NOT a new user then it assumes the `_id` value for the assignee information queried in `loadAssignedToData()`. This is happening for each task. This enables the tasks to be connected to an assignee and their information (name and email) in Fluree.
 
 The last bit of code is setting each task as `newTask` which is a transaction item that has a temporary id, name, completed checkbox status, and assignee information. Each `newTask` transaction item is then pushed into `newList` mentioned above.
 
