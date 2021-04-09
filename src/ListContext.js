@@ -87,7 +87,7 @@ const ListProvider = (props) => {
   //load all the assignee data from fdb on render to propagate the "assignee" Select
   const loadAssignedToData = async () => {
     const response = await axios.post(`${baseURL}query`, {
-      select: ['assignee/_id', 'assignee/email', 'assignee/name'],
+      select: ['_id', 'email', 'name'],
       from: 'assignee',
       opts: {
         compact: true,

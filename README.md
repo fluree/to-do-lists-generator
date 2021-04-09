@@ -16,7 +16,6 @@ In the project directory, you can run:
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-
 ## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
@@ -193,13 +192,13 @@ The application will need to pull the assignee data in order to propagate the `S
 #### Querying assignee data
 
 <p width="100%" align="center">
- <img src='/src/Images/Pull_assignee_from_FDB.png' alt='importing collection schema' width='600'>
+ <img src='/src/Images/pull_assignee_data.png' alt='importing collection schema' width='600'>
  </p>
 
  Below is the query that is nested in `loadAssignedToData`
 
                 {
-                select: ['assignee/_id', 'assignee/email' 'assignee/name'],
+                select: ['_id', 'email' 'name'],
                 from: 'assignee',
                 opts: {
                     compact: true,
@@ -214,7 +213,7 @@ The other section of this query (below the `from` clause), uses the query key of
 #### Querying list data
 
 <p width="100%" align="center">
- <img src='/src/Images/Pull_list_data_from_FDB.png' alt='importing collection schema' width='600'>
+ <img src='/src/Images/pull_list_data.png' alt='importing collection schema' width='600'>
  </p>
 
  Below is the query that was nested in `fetchListData`
@@ -243,3 +242,7 @@ This type of query is called [Crawling the graph](https://docs.flur.ee/docs/1.0.
 The next subquery pulls related data from the `assignee` collection, since the `assignedTo` predicate in the `task` collection is a reference predicate to the `assignee` collection.
 
 Another way of thinking about the predicate type of `ref` are as `joins` in a relational DBs, but the ability to join is a property set to predicates (in Fluree) as displayed in the predicate schema above.
+
+#### Transacting and updating data
+
+The next set of functionality will cover are the areas where transactions are eing 

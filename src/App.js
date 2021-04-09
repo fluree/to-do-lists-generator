@@ -1,10 +1,10 @@
 import React from 'react';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import themeObject from '@fluree/mui-theme';
-import Form from './components/Form';
 import { Typography } from '@material-ui/core';
 import { Grid } from '@material-ui/core';
 import { Box } from '@material-ui/core';
+import Form from './components/Form';
 import ListContainer from './components/ListContainer';
 import Blue_Brandmark from './Images/Blue_Brandmark.png';
 
