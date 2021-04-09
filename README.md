@@ -259,3 +259,7 @@ Here we will break down all the steps that go into transacting the form data to 
  <p width="100%" align="center">
  <img src='/src/Images/add_list_pt_2.png' alt='importing collection schema' width='600'>
  </p>
+
+  <p width="100%" align="center">
+ <img src='/src/Images/submit_list.png' alt='importing collection schema' width='600'>
+ </p>
