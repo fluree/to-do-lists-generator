@@ -202,7 +202,7 @@ const ListProvider = (props) => {
     const remainingTasks = lists.map((list) => {
       //for every task loop through the task's data
       const index = list.tasks.findIndex((task) => task._id === chosenTask._id); //match on _id
-      let deleteTaskFluree = async () => {
+      let deleteTaskFromFluree = async () => {
         //the transaction to delete a task in Fluree
         await axios.post(`${baseURL}transact`, [
           {
@@ -213,7 +213,7 @@ const ListProvider = (props) => {
       };
       if (index >= 0) {
         delete list.tasks[index]; //deletes the task from the UI
-        deleteTaskFluree(); //issues the axios request to send the transaction to delete the task from Fluree
+        deleteTaskFromFluree(); //issues the axios request to send the transaction to delete the task from Fluree
       }
       return list;
     });

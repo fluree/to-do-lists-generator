@@ -338,11 +338,16 @@ Now we focus on the second part of the `addList` function. We have built the tra
 
 This is the submission function that calls the `addList` when the submit button is pressed.
 
+#### Updating existing data in Fluree
+
+Updating data uses the same structure and syntax as transacting new data to Fluree. We will be updating data by using the `_id` retrieved from the query in`fetchListData`. 
 #### Deleting tasks
 
  <p width="100%" align="center">
  <img src='/src/Images/delete_task.png' alt='deleting a task' width='600'>
 </p>
+
+`deleteTaskFromFluree` holds the transact item that deletes the task. By matching the `_id` to the intended task and uses the `_action` transact key to specify a deletion. for more on deleting data refer to the [deleting data](https://docs.flur.ee/docs/1.0.0/transact/deleting-data) section. 
 
 #### Editing tasks
 
