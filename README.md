@@ -356,3 +356,5 @@ Updating data uses the same structure and syntax as transacting new data to Flur
 </p>
 
 Similar to the way we delete tasks above,`editTasks` matches the task `_id` and includes the data change for the name of the task and completion status. For more detail updating data refer to the [updating data](https://docs.flur.ee/docs/1.0.0/transact/updating-data) section.
+
+### Learn more
