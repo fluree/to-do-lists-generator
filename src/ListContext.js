@@ -167,7 +167,7 @@ const ListProvider = (props) => {
     let transactLoad = [newList]; //set the transactLoad to the newList array for use in the transaction
 
     let sendListData = async () => {
-      //hold the axios API request
+      //holds the axios API request
       let transactResponse = await axios.post(
         `${baseURL}transact`, //place your URL followed by this structure: /fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/transact
         transactLoad //this is the body that contains the list data in FlureeQL

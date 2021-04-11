@@ -330,6 +330,22 @@ Now we focus on the second part of the `addList` function. We have built the tra
  <img src='/src/Images/add_list_pt_2.png' alt='second part of addList function' width='600'>
  </p>
 
-  <p width="100%" align="center">
- <img src='/src/Images/submit_list.png' alt='importing collection schema' width='600'>
- </p>
+`sendListData` is an asynchronous function that hold the api requesting that sends the transaction item to Fluree. This is nested within the `addList` function then called at the end. Within the `sendListData` there is an if statement that checks if the response was a successful status code then it sets the list data in the UI with the `setLists` custom hook.
+
+<p width="100%" align="center">
+ <img src='/src/Images/submit_list.png' alt='submitting list data and adding a list' width='600'>
+</p>
+
+This is the submission function that calls the `addList function once the submit button is pressed.
+
+#### Deleting tasks
+
+ <p width="100%" align="center">
+ <img src='/src/Images/delete_task.png' alt='deleting a task' width='600'>
+</p>
+
+#### Editing tasks
+
+ <p width="100%" align="center">
+ <img src='/src/Images/edit_task.png' alt='importing collection schema' width='600'>
+</p>
