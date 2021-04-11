@@ -336,7 +336,7 @@ Now we focus on the second part of the `addList` function. We have built the tra
  <img src='/src/Images/submit_list.png' alt='submitting list data and adding a list' width='600'>
 </p>
 
-This is the submission function that calls the `addList function once the submit button is pressed.
+This is the submission function that calls the `addList` when the submit button is pressed.
 
 #### Deleting tasks
 
