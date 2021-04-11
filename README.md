@@ -347,10 +347,12 @@ Updating data uses the same structure and syntax as transacting new data to Flur
  <img src='/src/Images/delete_task.png' alt='deleting a task' width='600'>
 </p>
 
-`deleteTaskFromFluree` holds the transact item that deletes the task. By matching the `_id` to the intended task and uses the `_action` transact key to specify a deletion. for more on deleting data refer to the [deleting data](https://docs.flur.ee/docs/1.0.0/transact/deleting-data) section. 
+`deleteTask` holds the asynchronous function `deleteTaskFromFluree` that deletes the task. By matching the `_id` to the intended task then uses the `_action` transact key to specify a deletion when sent to Fluree. For more on deleting data refer to the [deleting data](https://docs.flur.ee/docs/1.0.0/transact/deleting-data) section.
 
 #### Editing tasks
 
  <p width="100%" align="center">
  <img src='/src/Images/edit_task.png' alt='importing collection schema' width='600'>
 </p>
+
+Similar to the way we delete tasks above,`editTasks` matches the task `_id` and includes the data change for the name of the task and completion status. For more detail updating data refer to the [updating data](https://docs.flur.ee/docs/1.0.0/transact/updating-data) section.

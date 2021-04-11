@@ -231,8 +231,8 @@ const ListProvider = (props) => {
         //sets the transaction to update data, this type of query can include the "_action" : "update", but if it is transact it is inferred
         {
           _id: newTask._id, //the task _id from list
-          'task/name': newTask.name, //name of the task, if it is different it will change in Fluree
-          'task/isCompleted': newTask.isCompleted, //completed status, if different it will change in Fluree
+          name: newTask.name, //name of the task, if it is different it will change in Fluree
+          isCompleted: newTask.isCompleted, //completed status, if different it will change in Fluree
         },
       ];
 
