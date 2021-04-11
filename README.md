@@ -17,17 +17,17 @@ In the project directory, you can run:
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-## Learn More
+## **Learn More**
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
 
-# Getting Started with Fluree
+# **Getting Started with Fluree**
 
 This to do list generator uses [Fluree Anywhere](https://docs.flur.ee/docs/1.0.0/getting-started/fluree-anywhere) to manage data, for a indepth installation guide of Fluree visit the [Installation](https://docs.flur.ee/docs/1.0.0/getting-started/installation) docs. For brief installation points refer below.
 
-## Installing Fluree
+## **Installing Fluree**
 
 - [Download](https://docs.flur.ee/docs/1.0.0/getting-started/installation#installing-fluree-locally) and unzip Fluree
 - Launch Fluree with default options by running `./fluree_start.sh` in the terminal for mac and in Bash emulator for Windows
@@ -37,11 +37,11 @@ This to do list generator uses [Fluree Anywhere](https://docs.flur.ee/docs/1.0.0
 > Fluree requires Java 11 or above. To verify your version run `java - version` in the terminal or visit [java](https://www.java.com/en/download/manual.jsp) to download.
 
 
-## Creating your Ledger, Schema, and Sample Data
+## **Creating your Ledger, Schema, and Sample Data**
 
 In this section we will break down ledger creation, implementing a basic schema, and adding sample data.
 
-### Ledger
+### **Ledger**
 
 A ledger in Fluree is bascially the mechanism which stores and keeps track of [*updates*](https://docs.flur.ee/docs/1.0.0/transact/updating-data) or [*transactions*](https://docs.flur.ee/docs/1.0.0/transact/basics) to your data. There are a few different ways to create a new ledger, for more details refer to the [ledger](https://docs.flur.ee/docs/1.0.0/getting-started/ledger-operations) docs.
 
@@ -60,7 +60,7 @@ After pressing the 'Add Ledger' button you will see the modal below. Enter a net
 
 > The name of your network and ledger enable you to precisely issue queries and transactions
 
-### Schema
+### **Schema**
 
 Once the ledger has been created the next step is to build your schema. Schema in Fluree consist of [*collections*](https://docs.flur.ee/docs/1.0.0/schema/collections) and [*predicates*](https://docs.flur.ee/docs/1.0.0/schema/predicates).
 
@@ -166,7 +166,7 @@ The assignee collection consists of assignee/name, assignee/email, and assignee/
  <img src='/src/Images/importing%20first%20set%20of%20schema.png' alt='example of import in admin UI' width='600'>
  </p>
 
-### Sample Data
+### **Sample Data**
 
 After setting your schema it is time to transact some dummy data. Similar to how you transacted your schema you will transact some dummy data within the admin UI.
 
@@ -180,7 +180,7 @@ When the dummy data has been successfully transacted, run the `npm start` comman
  <img src='/src/Images/TodoList_example.png' alt='to do list in browser' width='600'>
  </p>
 
-### Querying and Transacting Data within the application
+### **Querying and Transacting Data within the application**
 
 Now that you have some data inside we can dive into the way we structure [queries](https://docs.flur.ee/docs/1.0.0/query/overview) and [transactions](https://docs.flur.ee/docs/1.0.0/transact/basics) in the application.
 
@@ -190,7 +190,7 @@ The application will need to pull the assignee data in order to propagate the `S
 
 > While Fluree does allow querying in GraphQL, Curl, and SparQL, queries issued in this application are in FlureeQL. Please refer to the docs for examples in the above [languages](https://docs.flur.ee/docs/1.0.0/query/overview) by toggling the *Display Examples* at the top left corner.
 
-#### Querying assignee data
+#### **Querying assignee data**
 
 <p width="100%" align="center">
  <img src='/src/Images/pull_assignee_data.png' alt='code for pulling assignee data' width='600'>
@@ -211,7 +211,7 @@ This is a basic query, we are selecting all the `_id`, `email`, and `name` predi
 
 The other section of this query (below the `from` clause), uses the query key of `opts` which is not required, but gives you the ability to set optional keys when retrieving data, for a list of optional keys and their descriptions, refer to the doc [here](https://docs.flur.ee/docs/1.0.0/query/overview#opts-key).
 
-#### Querying list data
+#### **Querying list data**
 
 <p width="100%" align="center">
  <img src='/src/Images/pull_list_data.png' alt='code for pulling list data' width='600'>
@@ -244,11 +244,11 @@ The next subquery pulls related data from the `assignee` collection, since the `
 
 Another way of thinking about the predicate type of `ref` are as `joins` in a relational DBs, but the ability to join is a property set to predicates (in Fluree) as displayed in the predicate schema above.
 
-#### Transacting and updating data
+### **Transacting and updating data**
 
 The next set of functionality we will cover are the ones that send transactions to fluree in the application. When the form component is filled and submitted the data is sent to Fluree via a transact. The other events are when a deletion of a task is made, and then when a task name is edited or the checkbox completed status is changed, these are all updates that are sent to Fluree via a transact.
 
-#### Transacting data to Fluree
+#### **Transacting data to Fluree**
 
 Here we will break down all the steps that go into transacting the form data to Fluree, and the creation of the transact that is nested in the api request.
 
@@ -338,10 +338,10 @@ Now we focus on the second part of the `addList` function. We have built the tra
 
 This is the submission function that calls the `addList` when the submit button is pressed.
 
-#### Updating existing data in Fluree
+#### **Updating existing data in Fluree**
 
 Updating data uses the same structure and syntax as transacting new data to Fluree. We will be updating data by using the `_id` retrieved from the query in`fetchListData`. 
-#### Deleting tasks
+#### **Deleting tasks**
 
  <p width="100%" align="center">
  <img src='/src/Images/delete_task.png' alt='deleting a task' width='600'>
@@ -349,7 +349,7 @@ Updating data uses the same structure and syntax as transacting new data to Flur
 
 `deleteTask` holds the asynchronous function `deleteTaskFromFluree` that deletes the task. By matching the `_id` to the intended task then uses the `_action` transact key to specify a deletion when sent to Fluree. For more on deleting data refer to the [deleting data](https://docs.flur.ee/docs/1.0.0/transact/deleting-data) section.
 
-#### Editing tasks
+#### **Editing tasks**
 
  <p width="100%" align="center">
  <img src='/src/Images/edit_task.png' alt='importing collection schema' width='600'>
@@ -357,4 +357,4 @@ Updating data uses the same structure and syntax as transacting new data to Flur
 
 Similar to the way we delete tasks above,`editTasks` matches the task `_id` and includes the data change for the name of the task and completion status. For more detail updating data refer to the [updating data](https://docs.flur.ee/docs/1.0.0/transact/updating-data) section.
 
-### Learn more
+### **Learn more**
