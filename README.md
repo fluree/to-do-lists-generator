@@ -31,11 +31,11 @@ Every block contains a hash, a timestamp, and the size of the block data (block-
 
 Schema in Fluree is made up of [collections and predicates](https://docs.flur.ee/guides/1.0.0/intro/what-is-fluree#collections-and-predicates), we will go further into how to use them in the Schema section below.
 
-Fluree uses [Resource Description Framework or RDF](https://www.w3.org/TR/rdf-concepts/). RDF is a standard model for data interchange on the Web*. Data in Fluree is modelled by the [RDF Triple](https://www.w3.org/TR/rdf-concepts/#section-triples), which contains a subject, predicate, object. 
+Fluree uses [Resource Description Framework or RDF](https://www.w3.org/TR/rdf-concepts/). RDF is a standard model for data interchange on the Web*. Data in Fluree is modelled by the [RDF Triple](https://www.w3.org/TR/rdf-concepts/#section-triples), which contains a subject, predicate, object.
 
-A simple example would be: "Ingenious rocks are formed from hardened lava", 'Ingenious rocks' is the subject, 'are formed' is the predicate, and 'hardened lava' is the object. Comparing to the typical approach of an entity–attribute–value model: entity(Ingenious rocks), attribute(formed), value(harden lava).
+A simple example would be: "Ingenious rocks are formed from hardened lava", 'Ingenious rocks' is the subject, 'are formed' is the predicate, and 'hardened lava' is the object. When comparing the same sentence to the typical approach of an entity–attribute–value model: entity(Ingenious rocks), attribute(formed), value(harden lava).
 
-> *for an more indepth look into RDF refer to the W3C [docs](https://www.w3.org/RDF/)
+> *For an more indepth look into RDF refer to the W3C [docs](https://www.w3.org/RDF/)
 # **Getting Started with Fluree**
 
 This to do list generator uses [Fluree Anywhere](https://docs.flur.ee/docs/1.0.0/getting-started/fluree-anywhere) to manage data, for a indepth installation guide of Fluree visit the [Installation](https://docs.flur.ee/docs/1.0.0/getting-started/installation) docs. For brief installation points refer below.
