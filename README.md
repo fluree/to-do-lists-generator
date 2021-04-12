@@ -4,7 +4,7 @@
  <img src='/src/Images/Blue_Stacked.png' alt='Fluree logo' width='185'>
  </p>
 
-# To do list generator powered by React and FlureeDB
+# **To do list generator powered by React and FlureeDB**
 
 This repo is designed to introduce a basic react application that uses FlureeDB to manage data. By using [axios](https://axios-http.com/), queries and transactions are issued to send and recieve data from my FlureeDB.
 
@@ -23,6 +23,19 @@ You can learn more in the [Create React App documentation](https://facebook.gith
 
 To learn React, check out the [React documentation](https://reactjs.org/).
 
+# **What is Fluree?**
+
+Fluree is an immutable [ledger](https://docs.flur.ee/guides/1.0.0/intro/what-is-fluree), if you are not familiar with chain or blockchain data, think of it as a list of transactions that are sequenced by time. This ledger is tamperproof and each block in the ledger is linked to the previous block. 
+
+Every block contains a hash, a timestamp, and the size of the block data (block-bytes). The blocks also contain [flakes](https://docs.flur.ee/guides/1.0.0/intro/what-is-fluree#flakes), these flakes contain all the data that is added, updated, or deleted. Flakes are an integral part in Fluree and are used to represent everything, for a indepth look at Flakes refer to the [architecture](https://docs.flur.ee/guides/1.0.0/architecture/flakes) docs.
+
+Schema in Fluree is made up of [collections and predicates](https://docs.flur.ee/guides/1.0.0/intro/what-is-fluree#collections-and-predicates), we will go further into how to use them in the Schema section below.
+
+Fluree uses [Resource Description Framework or RDF](https://www.w3.org/TR/rdf-concepts/). RDF is a standard model for data interchange on the Web*. Data in Fluree is modelled by the [RDF Triple](https://www.w3.org/TR/rdf-concepts/#section-triples), which contains a subject, predicate, object. 
+
+A simple example would be: "Ingenious rocks are formed from hardened lava", 'Ingenious rocks' is the subject, 'are formed' is the predicate, and 'hardened lava' is the object. Comparing to the typical approach of an entity–attribute–value model: entity(Ingenious rocks), attribute(formed), value(harden lava).
+
+> *for an more indepth look into RDF refer to the W3C [docs](https://www.w3.org/RDF/)
 # **Getting Started with Fluree**
 
 This to do list generator uses [Fluree Anywhere](https://docs.flur.ee/docs/1.0.0/getting-started/fluree-anywhere) to manage data, for a indepth installation guide of Fluree visit the [Installation](https://docs.flur.ee/docs/1.0.0/getting-started/installation) docs. For brief installation points refer below.
@@ -188,7 +201,7 @@ First lets review the functionality that is connected to the DB and the data tha
 
 The application will need to pull the assignee data in order to propagate the `Select Assignee` component in the form. We will also need to grab the list data from Fluree on load in order to propagate the `Todo` and the `Task` components. This will all be done by querying Fluree.
 
-> While Fluree does allow querying in GraphQL, Curl, and SparQL, queries issued in this application are in FlureeQL. Please refer to the docs for examples in the above [languages](https://docs.flur.ee/docs/1.0.0/query/overview) by toggling the *Display Examples* at the top left corner.
+> While Fluree does allow querying in GraphQL, Curl, and SparQL, queries issued in this application are in FlureeQL. Please refer to the docs for examples [languages](https://docs.flur.ee/docs/1.0.0/query/overview), mentioned above, by toggling the *Display Examples* at the top left corner.
 
 #### **Querying assignee data**
 
@@ -355,6 +368,7 @@ Updating data uses the same structure and syntax as transacting new data to Flur
  <img src='/src/Images/edit_task.png' alt='importing collection schema' width='600'>
 </p>
 
-Similar to the way we delete tasks above,`editTasks` matches the task `_id` and includes the data change for the name of the task and completion status. For more detail updating data refer to the [updating data](https://docs.flur.ee/docs/1.0.0/transact/updating-data) section.
+Similar to the way we delete tasks above, `editTasks` matches the task `_id` and includes the data change for the name of the task and completion status. For more detail updating data refer to the [updating data](https://docs.flur.ee/docs/1.0.0/transact/updating-data) section.
 
 ### **Learn more**
+
