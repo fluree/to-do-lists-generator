@@ -35,7 +35,7 @@ Fluree uses [Resource Description Framework or RDF](https://www.w3.org/TR/rdf-co
 
 A simple example would be: "Ingenious rocks are formed from hardened lava", 'Ingenious rocks' is the subject, 'are formed' is the predicate, and 'hardened lava' is the object. When comparing the same sentence to the typical approach of an entity–attribute–value model: entity(Ingenious rocks), attribute(formed), value(harden lava).
 
-> *For an more indepth look into RDF refer to the W3C [docs](https://www.w3.org/RDF/)
+> *For an more indepth look into RDF refer to the W3C [docs](https://www.w3.org/RDF/).
 # **Getting Started with Fluree**
 
 This to do list generator uses [Fluree Anywhere](https://docs.flur.ee/docs/1.0.0/getting-started/fluree-anywhere) to manage data, for a indepth installation guide of Fluree visit the [Installation](https://docs.flur.ee/docs/1.0.0/getting-started/installation) docs. For brief installation points refer below.
@@ -371,4 +371,12 @@ Updating data uses the same structure and syntax as transacting new data to Flur
 Similar to the way we delete tasks above, `editTasks` matches the task `_id` and includes the data change for the name of the task and completion status. For more detail updating data refer to the [updating data](https://docs.flur.ee/docs/1.0.0/transact/updating-data) section.
 
 ### **Learn more**
+
+For other API endpoint and examples visit the Fluree docs, [here](https://docs.flur.ee/api).
+
+For more on the Fluree ledger and its Blockchain technology visit the [Blockchain](https://docs.flur.ee/guides/1.0.0/architecture/blockchain) docs.
+
+A subject we did not cover are [Smart Functions](https://docs.flur.ee/guides/1.0.0/smart-functions/smart-functions) in Fluree, which can be used in setting permissions to your DB. Here is a full [list](https://docs.flur.ee/guides/1.0.0/smart-functions/smart-functions) of accepted smart functions.
+
+A deeper dive into analytical queries and examples visit the docs section, [here](https://docs.flur.ee/guides/1.0.0/analytical-queries/inner-joins-in-fluree).
 
