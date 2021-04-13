@@ -42,10 +42,11 @@ This to do list generator uses [Fluree Anywhere](https://docs.flur.ee/docs/1.0.0
 
 ## **Installing Fluree**
 
-- [Download](https://docs.flur.ee/docs/1.0.0/getting-started/installation#installing-fluree-locally) and unzip Fluree
+- [Download](https://s3.amazonaws.com/fluree-releases-public/fluree-latest.zip) and unzip Fluree
 - Launch Fluree with default options by running `./fluree_start.sh` in the terminal for mac and in Bash emulator for Windows
-- Once Fluree is done starting up it will log the web server port 8080, `http://localhost:8080`.
+- Once Fluree is done starting up it will log the web server port 8090, `http://localhost:8090`, for versions below 1.0.0 the web server port is 8080.
 - To exit click `ctrl + c`, this will not delete any ledgers or successful transactions.
+- For further installation information visit the [Installation](https://docs.flur.ee/docs/1.0.0/getting-started/installation) docs
 
 > Fluree requires Java 11 or above. To verify your version run `java -- version` in the terminal or visit [java](https://www.java.com/en/download/manual.jsp) to download.
 
@@ -64,20 +65,19 @@ Here we will create a new ledger in the admin UI:
 <img src='/src/Images/FlureeDB_Admin_Console.png' alt='Fluree admin UI' width='600'>
 </p>
 
-
 After pressing the 'Add Ledger' button you will see the modal below. Enter a network name and DB name, example: `test/one1`
 
 <p width="100%" align="center">
 <img src='/src/Images/Create_ledger_modal.png' alt='Ledger Modal' width='600'>
 </p>
 
-> The name of your network and ledger enable you to precisely issue queries and transactions
+> The name of your network and ledger will become part of the unqiue URL that includes the API endpoint. Example: `http://localhost:8090/fdb/test/one1/query`
 
 ### **Schema**
 
-Once the ledger has been created the next step is to build your schema. Schema in Fluree consist of [*collections*](https://docs.flur.ee/docs/1.0.0/schema/collections) and [*predicates*](https://docs.flur.ee/docs/1.0.0/schema/predicates).
+Once the ledger has been created the next step is to build your schema. Schemas in Fluree consist of [*collections*](https://docs.flur.ee/docs/1.0.0/schema/collections) and [*predicates*](https://docs.flur.ee/docs/1.0.0/schema/predicates).
 
-You can think of *collections* as tables in a relational DB and *predicates* as columns, refer to the [Schema](https://docs.flur.ee/docs/1.0.0/schema/overview) section in the docs for a more elaborate explanation.
+You can think of *collections* as tables in a relational DB and *predicates* as columns, refer to the [Schema](https://docs.flur.ee/docs/1.0.0/schema/overview) section in the docs for a more elaborate explanation. An important detail to note is that Schemas in Fluree are just data, the easiest way to add data is using our JSON syntax format to represent the schema and transact.
 
 Below is the schema for the to do list generator:
 
@@ -86,15 +86,18 @@ The schema has three collections, list, task, and assignee.
                         [    
                             {
                             "_id": "_collection",
-                            "name": "list"
+                            "name": "list",
+                            "doc": "the list collection" //optional descriptive 
                             },
                             {
                             "_id": "_collection",
-                            "name": "task"
+                            "name": "task",
+                            "doc": "the task collection"
                             },
                             {
                             "_id": "_collection",
-                            "name": "assignee"
+                            "name": "assignee",
+                            "doc": "the assignee collection"
                             }
                         ]
 
@@ -107,19 +110,22 @@ The schema has three collections, list, task, and assignee.
                             "_id": "_predicate",
                             "name": "list/name",
                             "type": "string",
-                            "index": true
+                            "index": true,
+                            "doc": "the name of the list"
                             },
                             {
                             "_id": "_predicate",
                             "name": "list/description",
-                            "type": "string"
+                            "type": "string",
+                            "doc": "a description of the list"
                             },
                             {
                             "_id": "_predicate",
                             "name": "list/tasks",
                             "type": "ref",
                             "multi": true,
-                            "restrictCollection": "task"
+                            "restrictCollection": "task",
+                            "doc": "the tasks that make up the list"
                             }
                         ]
 
@@ -130,19 +136,22 @@ The task collection consists of task/name, task/assignedTo, and task/isCompleted
                             "_id": "_predicate",
                             "name": "task/name",
                             "type": "string",
-                            "index": true
+                            "index": true,
+                            "doc": ""
                             },
                             {
                             "_id": "_predicate",
                             "name": "task/assignedTo",
                             "type": "ref",
                             "index": true,
-                            "restrictCollection": "assignee"
+                            "restrictCollection": "assignee",
+                            "doc": ""
                             },
                             {
                             "_id": "_predicate",
                             "name": "task/isCompleted",
-                            "type": "boolean"
+                            "type": "boolean",
+                            "doc": ""
                             }   
                         ]
 
@@ -154,20 +163,23 @@ The assignee collection consists of assignee/name, assignee/email, and assignee/
                             "_id": "_predicate",
                             "name": "assignee/name",
                             "type": "string",
-                            "index": true
+                            "index": true,
+                            "doc": "the name of the assignee"
                             },
                             {
                             "_id": "_predicate",
                             "name": "assignee/email",
                             "type": "string",
-                            "unique": true
+                            "unique": true,
+                            "doc": "the email of the assignee"
                             },
                             {
                             "_id": "_predicate",
                             "name": "assignee/lists",
                             "type": "ref",
                             "multi": true,
-                            "restrictCollection": "list"
+                            "restrictCollection": "list",
+                            "doc": "the lists that the assignee is connected to"
                             }
                         ]   
 
