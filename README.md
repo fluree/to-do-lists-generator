@@ -6,32 +6,32 @@
 
 # **To do list generator powered by React and FlureeDB**
 
-This repo is designed to introduce a basic react application that uses FlureeDB to manage data. By using [axios](https://axios-http.com/), queries and transactions are issued to send and recieve data from my FlureeDB.
+This repo is designed to introduce a basic react application that uses FlureeDB to manage data. By using any http client, in this application we use [axios](https://axios-http.com/), queries and transactions are issued to create, read, update, and destroy data from my FlureeDB.
 
-## Available Scripts
+## Getting started
 
-In the project directory, you can run:
+1. To get started git clone the repo via https: `https://github.com/fdmmarshall/to-do-lists-generator.git`, with the git CLI `gh repo clone fdmmarshall/to-do-lists-generator`, or a number of other suitable methods.
 
-### `npm start`
+2. `cd` into the repo, run `npm install`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+3. then run `npm start`, once its compiled it will set the app to open in the browser [http://localhost:3000](http://localhost:3000)
 
-## **Learn More**
+## **React**
+
+To keep things simple this application uses Create React App.
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
-
 # **What is Fluree?**
 
-Fluree is an immutable [ledger](https://docs.flur.ee/guides/1.0.0/intro/what-is-fluree), if you are not familiar with chain or blockchain data, think of it as a list of transactions that are sequenced by time. This ledger is tamperproof and each block in the ledger is linked to the previous block. 
+Fluree is a data platform that combines immutable [ledger](https://docs.flur.ee/guides/1.0.0/intro/what-is-fluree) with a graph database, if you are not familiar with chain or blockchain data, think of it as a list of transactions that are sequenced by time. This ledger is tamperproof and each block in the ledger is linked to the previous block. 
 
-Every block contains a hash, a timestamp, and the size of the block data (block-bytes). The blocks also contain [flakes](https://docs.flur.ee/guides/1.0.0/intro/what-is-fluree#flakes), these flakes contain all the data that is added, updated, or deleted. Flakes are an integral part in Fluree and are used to represent everything, for a indepth look at Flakes refer to the [architecture](https://docs.flur.ee/guides/1.0.0/architecture/flakes) docs.
+Every block contains critical metadata like a hash, a timestamp, and the size of the block data (block-bytes). Core data of within each block are flakes [flakes](https://docs.flur.ee/guides/1.0.0/intro/what-is-fluree#flakes). These flakes contain all the data that is added, updated, or deleted. Flakes are an integral part in Fluree and are used to represent everything, for a indepth look at Flakes refer to the [architecture](https://docs.flur.ee/guides/1.0.0/architecture/flakes) docs.
 
-Schema in Fluree is made up of [collections and predicates](https://docs.flur.ee/guides/1.0.0/intro/what-is-fluree#collections-and-predicates), we will go further into how to use them in the Schema section below.
+Schemas in Fluree is made up of [collections and predicates](https://docs.flur.ee/guides/1.0.0/intro/what-is-fluree#collections-and-predicates), we will go further into how to use them in the Schema section below.
 
-Fluree uses [Resource Description Framework or RDF](https://www.w3.org/TR/rdf-concepts/). RDF is a standard model for data interchange on the Web*. Data in Fluree is modelled by the [RDF Triple](https://www.w3.org/TR/rdf-concepts/#section-triples), which contains a subject, predicate, object.
+At its core, data in Fluree leverages the [Resource Description Framework (RDF)](https://www.w3.org/TR/rdf-concepts/). RDF is a W3C standard model for data interchange on the Web*. Data in Fluree is modelled by the [RDF Triple](https://www.w3.org/TR/rdf-concepts/#section-triples), which contains a subject, predicate, object.
 
 A simple example would be: "Ingenious rocks are formed from hardened lava", 'Ingenious rocks' is the subject, 'are formed' is the predicate, and 'hardened lava' is the object. When comparing the same sentence to the typical approach of an entity–attribute–value model: entity(Ingenious rocks), attribute(formed), value(harden lava).
 
@@ -259,7 +259,7 @@ Another way of thinking about the predicate type of `ref` are as `joins` in a re
 
 ### **Transacting and updating data**
 
-The next set of functionality we will cover are the ones that send transactions to fluree in the application. When the form component is filled and submitted the data is sent to Fluree via a transact. The other events are when a deletion of a task is made, and then when a task name is edited or the checkbox completed status is changed, these are all updates that are sent to Fluree via a transact.
+The next set of functionality we will cover are the ones that send transactions to Fluree in the application. When the form component is filled and submitted the data is sent to Fluree via a transact. The other events are when a deletion of a task is made, and then when a task name is edited or the checkbox completed status is changed, these are all updates that are sent to Fluree via a transact.
 
 #### **Transacting data to Fluree**
 
