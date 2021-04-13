@@ -47,7 +47,7 @@ This to do list generator uses [Fluree Anywhere](https://docs.flur.ee/docs/1.0.0
 - Once Fluree is done starting up it will log the web server port 8080, `http://localhost:8080`.
 - To exit click `ctrl + c`, this will not delete any ledgers or successful transactions.
 
-> Fluree requires Java 11 or above. To verify your version run `java - version` in the terminal or visit [java](https://www.java.com/en/download/manual.jsp) to download.
+> Fluree requires Java 11 or above. To verify your version run `java -- version` in the terminal or visit [java](https://www.java.com/en/download/manual.jsp) to download.
 
 
 ## **Creating your Ledger, Schema, and Sample Data**
