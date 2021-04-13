@@ -134,7 +134,7 @@ const ListProvider = (props) => {
   //adds a new list to the DB
   function addList({ name, description, tasks }) {
     const newList = {
-      _id: `list${'$' + Math.floor(Math.random() * 10 + 1)}`,
+      _id: 'list$1',
       name,
       description,
       tasks: [],
@@ -142,17 +142,19 @@ const ListProvider = (props) => {
 
     //for each task input information submitted loop through to set all the required predicate information
     tasks.forEach((task, index) => {
-      let userId = task.assignedTo; //sets userId to the assignee/_id we queried from Fluree on first render
-      let isAssignedTo = userId;
-      if (userId === 'new') {
+      let assigneeId = task.assignedTo; //sets assigneeId to the assignee/_id we queried from Fluree on first render
+      let isAssignedTo = null;
+      if (Number.isInteger(assigneeId)) {
+        assigneeId = isAssignedTo;
+      } else {
         //if the _id is 'new' meaning new assignee(ie not a value we queired from Fluree) then execute code below
-        userId = `assignee$${index}`; //creates a temporary id for the new assignee
+        assigneeId = `assignee$${index}`; //creates a temporary id for the new assignee
         isAssignedTo = {
-          _id: userId, //temporar id goes here
+          _id: assigneeId, //temporar id goes here
           name: task.newAssignedTo, //the first name of the new assignee
           email: task.email, //the email of the new assignee
         };
-      } //all existing assignees already have their name and email info in Fluree, so we issue the transaction with their if values recieved in the initial query
+      }
 
       const newTask = {
         //creates a transaction using FlureeQL syntax to send over the new list data to Fluree
@@ -239,7 +241,7 @@ const ListProvider = (props) => {
       let editTaskProps = async () => {
         await axios.post(
           // axios request to submit an update transaction to fluree
-          `${baseURL}/transact`,
+          `${baseURL}transact`,
           taskChangeTransact //this is the body that holds the update transaction in FlureeQL
         );
       };
