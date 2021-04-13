@@ -58,7 +58,7 @@ function TasksInput({ task }) {
             title='New Assignee'
             type='text'
             name='newAssignedTo'
-            value={newTaskState.newAssignedTo}
+            value={newTaskState.newAssignedTo ? newTaskState.newAssignedTo : ''}
             change={sendTasksToParent}
           />
           <InputComponent
