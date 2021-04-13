@@ -8,7 +8,7 @@ function InputComponent({ title, name, value, change, index }) {
       margin='dense'
       label={title}
       variant='outlined'
-      id={title + index}
+      id={title + `${Math.floor(Math.random() * 10 + 1)}`}
       name={name}
       autoComplete='off'
       value={value}
