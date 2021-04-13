@@ -14,7 +14,7 @@
   {
     "_id": "task$first",
     "name": "Donate gently used clothing",
-    "isCompleted": false, //boolean
+    "isCompleted": false,
     "assignedTo": "assignee$assignee1"
   },
   {
