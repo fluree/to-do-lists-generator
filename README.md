@@ -304,53 +304,53 @@ Here we will break down all the steps that go into transacting the form data to 
 
 The const [`newList`](https://github.com/fdmmarshall/to-do-lists-generator/blob/74b1e4ec7554c3d92c558abba359f831ffc5d1c3/src/ListContext.js#L136) is the transaction item that holds the list data. Lets run through it and dissect each part, then we will compare it to the seed data we entered earlier.
 
-            const newList = {
-            _id: `list$1`,
-            name,
-            description,
-            tasks: [],
-            };
+                {
+                    _id: `list$1`,
+                    name,
+                    description,
+                    tasks: [],
+                };
 
 The `_id` is set to a temporary id, since every transaction in fluree must be accompanied by an `_id` value in order to refer to the subject we are creating. For more temp id examples visit **Temporary Ids** in the [Transaction Basics](https://docs.flur.ee/docs/1.0.0/transact/basics) section of the docs.
 
 The name and description (above) are set to the values of the `list name` and `list description` submitted in the form. Notice that the tasks is set to an empty array. This is because in we will be looping through the submitted tasks and adding their data as objects to the transaction item [`newTask`](https://github.com/fdmmarshall/to-do-lists-generator/blob/74b1e4ec7554c3d92c558abba359f831ffc5d1c3/src/ListContext.js#L159).
 
-        const newTask = {
-            _id: `task$${index}`,
-            name: task.task
-            isCompleted: task.completed,
-            assignedTo: isAssignedTo
-        };
+                {
+                    _id: `task$${index}`,
+                    name: task.task
+                    isCompleted: task.completed,
+                    assignedTo: isAssignedTo
+                };
 
 Below is an example of the transaction that is sent to Fluree on submission.
 
-        [
-            {
-            _id: `list$1`,
-            name,
-            description,
-            tasks: [
+                [
                     {
-            _id: `task$${index}`,
-            name: task.task
-            isCompleted: task.completed,
-            assignedTo: isAssignedTo
-                    },
-                    {
-            _id: `task$${index}`,
-            name: task.task
-            isCompleted: task.completed,
-            assignedTo: isAssignedTo
-                    },
-                    {
-            _id: `task$${index}`,
-            name: task.task
-            isCompleted: task.completed,
-            assignedTo: isAssignedTo
+                    _id: `list$1`,
+                    name,
+                    description,
+                    tasks: [
+                            {
+                    _id: `task$${index}`,
+                    name: task.task
+                    isCompleted: task.completed,
+                    assignedTo: isAssignedTo
+                            },
+                            {
+                    _id: `task$${index}`,
+                    name: task.task
+                    isCompleted: task.completed,
+                    assignedTo: isAssignedTo
+                            },
+                            {
+                    _id: `task$${index}`,
+                    name: task.task
+                    isCompleted: task.completed,
+                    assignedTo: isAssignedTo
+                            }
+                        ],
                     }
-                ],
-            }
-        ]
+                ]
 
 Refer to the code base [here](https://github.com/fdmmarshall/to-do-lists-generator/blob/74b1e4ec7554c3d92c558abba359f831ffc5d1c3/src/ListContext.js#L171) for the API request that holds the `list` data transaction.
 
@@ -361,12 +361,12 @@ Updating data uses the same structure and syntax as transacting new data to Flur
 
 [`deleteTask`](https://github.com/fdmmarshall/to-do-lists-generator/blob/74b1e4ec7554c3d92c558abba359f831ffc5d1c3/src/ListContext.js#L203) holds the asynchronous function [`deleteTaskFromFluree`](https://github.com/fdmmarshall/to-do-lists-generator/blob/74b1e4ec7554c3d92c558abba359f831ffc5d1c3/src/ListContext.js#L207) that deletes the task.
 
-        [
-            {
-                _id: chosenTask._id,
-                _action: 'delete'
-            }
-        ]
+            [
+                {
+                    _id: chosenTask._id,
+                    _action: 'delete'
+                }
+            ]
 
 Instead of using temporary ids, here we match the `_id` to the intended task then use the `_action` transact key to specify a deletion when sent to Fluree. For more on deleting data refer to the [deleting data](https://docs.flur.ee/docs/1.0.0/transact/deleting-data) section.
 
@@ -375,13 +375,14 @@ Refer to the code base [here](https://github.com/fdmmarshall/to-do-lists-generat
 
 Similar to the way we delete tasks above, [`editTasks`](https://github.com/fdmmarshall/to-do-lists-generator/blob/74b1e4ec7554c3d92c558abba359f831ffc5d1c3/src/ListContext.js#L227) matches the task `_id` and includes the data change for the name of the task and completion status. For more detail updating data refer to the [updating data](https://docs.flur.ee/docs/1.0.0/transact/updating-data) section.
 
-            [
-                {
-                    _id: newTask._id,
-                    name: newTask.name,
-                    isCompleted: newTask.isCompleted,
-                }
-            ]
+                [
+                    {
+                        _id: newTask._id,
+                        name: newTask.name,
+                        isCompleted: newTask.isCompleted,
+                    }
+                ]
+
 Refer to the code base [here](https://github.com/fdmmarshall/to-do-lists-generator/blob/74b1e4ec7554c3d92c558abba359f831ffc5d1c3/src/ListContext.js#L241) for the API request that holds the update transact item.
 ### **Learn more**
 
@@ -392,4 +393,3 @@ For more on the Fluree ledger and its Blockchain technology visit the [Blockchai
 A subject we did not cover are [Smart Functions](https://docs.flur.ee/guides/1.0.0/smart-functions/smart-functions) in Fluree, which can be used in setting permissions to your DB. Here is a full [list](https://docs.flur.ee/guides/1.0.0/smart-functions/smart-functions) of accepted smart functions.
 
 A deeper dive into analytical queries and examples visit the docs section, [here](https://docs.flur.ee/guides/1.0.0/analytical-queries/inner-joins-in-fluree).
-
