@@ -243,11 +243,11 @@ This is a basic query, where we are selecting all the `_id`, `email`, and `name`
                 _id,
                 email,
                 name
-                FROM assignee
+                FROM assignee;
             
                OR
 
-                SELECT * FROM assignee    
+                SELECT * FROM assignee;    
 
 The other section of this query (below the `from` clause), uses the query key of `opts` which is not required, but gives you the ability to set optional keys when retrieving data, for a list of optional keys and their descriptions, refer to the doc [here](https://docs.flur.ee/docs/1.0.0/query/overview#opts-key).
 
@@ -322,7 +322,7 @@ The name and description (above) are set to the values of the `list name` and `l
                     assignedTo: isAssignedTo
                 };
 
-Below is an example of the transaction that is sent to Fluree on submission.
+Below is an example of the transaction array with nested transaction items that is sent to Fluree on submission.
 
                 [
                     {
@@ -361,14 +361,17 @@ Updating data uses the same structure and syntax as transacting new data to Flur
 
 [`deleteTask`](https://github.com/fdmmarshall/to-do-lists-generator/blob/74b1e4ec7554c3d92c558abba359f831ffc5d1c3/src/ListContext.js#L203) holds the asynchronous function [`deleteTaskFromFluree`](https://github.com/fdmmarshall/to-do-lists-generator/blob/74b1e4ec7554c3d92c558abba359f831ffc5d1c3/src/ListContext.js#L207) that deletes the task.
 
-            [
-                {
-                    _id: chosenTask._id,
-                    _action: 'delete'
-                }
-            ]
+                [
+                    {
+                        _id: chosenTask._id,
+                        _action: 'delete'
+                    }
+                ]
 
-Instead of using temporary ids, here we match the `_id` to the intended task then use the `_action` transact key to specify a deletion when sent to Fluree. For more on deleting data refer to the [deleting data](https://docs.flur.ee/docs/1.0.0/transact/deleting-data) section.
+Instead of using temporary ids, here we match the `_id` to the intended task then use the `_action` transact key to specify a deletion when sent to Fluree. For more on deleting data refer to the [deleting data](https://docs.flur.ee/docs/1.0.0/transact/deleting-data) section. The same transaction can be written in SQL below
+
+                DELETE FROM task 
+                WHERE task._id = chosenTask._id;
 
 Refer to the code base [here](https://github.com/fdmmarshall/to-do-lists-generator/blob/74b1e4ec7554c3d92c558abba359f831ffc5d1c3/src/ListContext.js#L207) for the API request that holds the deletion transact item.
 #### **Editing tasks**
@@ -382,6 +385,15 @@ Similar to the way we delete tasks above, [`editTasks`](https://github.com/fdmma
                         isCompleted: newTask.isCompleted,
                     }
                 ]
+
+The same transaction can be written in SQL as:
+
+                UPDATE task
+                SET
+                    task.name = newTask.name,
+                    task.isCompleted = newTask.isCompleted,
+                WHERE
+                    task._id = newTask._id    
 
 Refer to the code base [here](https://github.com/fdmmarshall/to-do-lists-generator/blob/74b1e4ec7554c3d92c558abba359f831ffc5d1c3/src/ListContext.js#L241) for the API request that holds the update transact item.
 ### **Learn more**
