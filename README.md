@@ -77,7 +77,7 @@ After pressing the 'Add Ledger' button you will see the modal below. Enter a net
 
 Once the ledger has been created the next step is to build your schema. Schemas in Fluree consist of [*collections*](https://docs.flur.ee/docs/1.0.0/schema/collections) and [*predicates*](https://docs.flur.ee/docs/1.0.0/schema/predicates).
 
-You can think of *collections* as tables in a relational DB and *predicates* as columns, refer to the [Schema](https://docs.flur.ee/docs/1.0.0/schema/overview) section in the docs for a more elaborate explanation. An important detail to note is that Schemas in Fluree are just data, the easiest way to add data is using our JSON syntax format to represent the schema and transact.
+You can think of *collections* as tables in a relational DB and *predicates* as columns, refer to the [Schema](https://docs.flur.ee/docs/1.0.0/schema/overview) section in the docs for a more elaborate explanation. An important detail to note is that Schemas in Fluree are just data, the easiest way to add data is using our JSON format to represent the schema and transact it into the database. We are using FlureeQL (below) to create our transactions, FlureeQL combines features from GraphQl and SPARQL to create a simple JSON syntax.
 
 Below is the schema for the to do list generator:
 
