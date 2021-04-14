@@ -293,20 +293,16 @@ Another way of thinking about the predicate type of `ref` are as `joins` in a re
 
 ### **Transacting and updating data**
 
-The next set of functionality we will cover are the ones that send transactions to Fluree in the application. When the form component is filled and submitted the data is sent to Fluree via a transact. The other events are when a deletion of a task is made, and then when a task name is edited or the checkbox completed status is changed, these are all updates that are sent to Fluree via a transact.
+The next set of functionality we will cover are the ones that send transactions to Fluree in the application, these are the equivalent to `INSERT` or `UPDATE` statements in SQL. When the form component is filled and submitted the data is sent to Fluree via a transact. The other events are when a deletion of a task is made, and then when a task name is edited or the checkbox completed status is changed, these are all updates that are sent to Fluree via a transact.
 
 #### **Transacting data to Fluree**
 
-Here we will break down all the steps that go into transacting the form data to Fluree, and the creation of the transact that is nested in the api request.
+Here we will break down all the steps that go into transacting the form data to Fluree, and the creation of the transact that is nested in the api request. Start at the `addList` function [here](https://github.com/fdmmarshall/to-do-lists-generator/blob/74b1e4ec7554c3d92c558abba359f831ffc5d1c3/src/ListContext.js#L135) in the code base.
 
-<p width="100%" align="center">
- <img src='/src/Images/add_list_build_transaction.png' alt='first part of addList function' width='600'>
- </p>
-
- Within the addList function the first const `newList` is the transaction item that holds the list data. Lets run through it and dissect each part, then we will compare it to the seed data we entered earlier.
+The const [`newList`](https://github.com/fdmmarshall/to-do-lists-generator/blob/74b1e4ec7554c3d92c558abba359f831ffc5d1c3/src/ListContext.js#L136) is the transaction item that holds the list data. Lets run through it and dissect each part, then we will compare it to the seed data we entered earlier.
 
             const newList = {
-            _id: `list${'$' + Math.floor(Math.random() * 10 + 1)}`,
+            _id: `list$1`,
             name,
             description,
             tasks: [],
@@ -314,17 +310,7 @@ Here we will break down all the steps that go into transacting the form data to 
 
 The `_id` is set to a temporary id, since every transaction in fluree must be accompanied by an `_id` value in order to refer to the subject we are creating. For more temp id examples visit **Temporary Ids** in the [Transaction Basics](https://docs.flur.ee/docs/1.0.0/transact/basics) section of the docs.
 
-The name and description are set to that values of the `list name` and `list description` submitted in the form. Notice that the tasks is set to an empty array. This is because in we will be looping through the submitted tasks and adding their data as objects to the transact item.
-
-            let userId = task.assignedTo;
-            let isAssignedTo = userId;
-            if (userId === 'new') {
-            isAssignedTo = {
-            _id: userId,
-            name: task.newAssignedTo,
-            email: task.email,
-              };
-            }
+The name and description (above) are set to the values of the `list name` and `list description` submitted in the form. Notice that the tasks is set to an empty array. This is because in we will be looping through the submitted tasks and adding their data as objects to the transaction item [`newTask`](https://github.com/fdmmarshall/to-do-lists-generator/blob/74b1e4ec7554c3d92c558abba359f831ffc5d1c3/src/ListContext.js#L159).
 
         const newTask = {
             _id: `task$${index}`,
@@ -332,44 +318,36 @@ The name and description are set to that values of the `list name` and `list des
             isCompleted: task.completed,
             assignedTo: isAssignedTo
         };
-        
-        newList.tasks.push(newTask); 
 
-The code above is located within the for each that cycles through the tasks array. The first section is setting userId to the value of task.assignedTo, then checking the value of userId, if its 'new' we will need to create a nested transact item that created a new assignee in Fluree (notice the `isAssignedTo` object that holds the predicate information that is needed for the assignee collection).
+Below is an example of the transaction that is sent to Fluree on submission.
 
-If the `userId` value is NOT a new user then it assumes the `_id` value for the assignee information queried in `loadAssignedToData()`. This is happening for each task. This enables the tasks to be connected to an assignee and their information (name and email) in Fluree.
-
-The last bit of code is setting each task as `newTask` which is a transaction item that has a temporary id, name, completed checkbox status, and assignee information. Each `newTask` transaction item is then pushed into `newList` mentioned above.
-
-Once this process has been done and each list, task, and assignee data is accounted for we then nest the `newList` into an array and set it as a variabled called `transactLoad`. 
-
-            let transactLoad = [newList];
-
-We will be using `transactLoad` in the api request detailed in the next code breakdown below. Similar to the transact item in our dummy data this is what the output would generate:
-
+        [
             {
-            _id: `list${'$' + Math.floor(Math.random() * 10 + 1)}`,
+            _id: `list$1`,
             name,
             description,
-            tasks: [{
+            tasks: [
+                    {
             _id: `task$${index}`,
             name: task.task
             isCompleted: task.completed,
             assignedTo: isAssignedTo
-        },
-        {
+                    },
+                    {
             _id: `task$${index}`,
             name: task.task
             isCompleted: task.completed,
             assignedTo: isAssignedTo
-        },
-        {
+                    },
+                    {
             _id: `task$${index}`,
             name: task.task
             isCompleted: task.completed,
             assignedTo: isAssignedTo
-        }],
+                    }
+                ],
             }
+        ]
 
 Now we focus on the second part of the `addList` function. We have built the transact item with all the form data, but need to construct the api request.
 
