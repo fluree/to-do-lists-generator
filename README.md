@@ -311,7 +311,10 @@ The const [`newList`](https://github.com/fdmmarshall/to-do-lists-generator/blob/
                     tasks: [],
                 };
 
-The `_id` is set to a temporary id, since every transaction in fluree must be accompanied by an `_id` value in order to refer to the subject we are creating. For more temp id examples visit **Temporary Ids** in the [Transaction Basics](https://docs.flur.ee/docs/1.0.0/transact/basics) section of the docs.
+The `_id` is set to a temporary id, since every transaction in fluree must be accompanied by an `_id` value in order to refer to the subject we are creating. For more temp id examples visit **Temporary Ids** in the [Transaction Basics](https://docs.flur.ee/docs/1.0.0/transact/basics) section of the docs. Below is a diluted example of the query above in SQL:
+
+            INSERT INTO list (_id, name, description, tasks)
+            VALUES('lis$1', 'name', 'description', tasks ) //there would need to be more logic to parse the tasks JSON
 
 The name and description (above) are set to the values of the `list name` and `list description` submitted in the form. Notice that the tasks is set to an empty array. This is because in we will be looping through the submitted tasks and adding their data as objects to the transaction item [`newTask`](https://github.com/fdmmarshall/to-do-lists-generator/blob/74b1e4ec7554c3d92c558abba359f831ffc5d1c3/src/ListContext.js#L159).
 
@@ -321,6 +324,11 @@ The name and description (above) are set to the values of the `list name` and `l
                     isCompleted: task.completed,
                     assignedTo: isAssignedTo
                 };
+
+Below is an example of the same query above in SQL:
+
+             INSERT INTO task (_id, name, isCompleted, assignedTo)
+             VALUES ('task$1', 'name', boolean, assignee._id)   
 
 Below is an example of the transaction array with nested transaction items that is sent to Fluree on submission.
 
