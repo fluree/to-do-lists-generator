@@ -191,6 +191,7 @@ The assignee collection consists of assignee/name, assignee/email, and assignee/
 <img src="/src/Images/Insert_Schema_pt1.gif" alt="transacting schema" width="650" />
  </p>
 
+> In the example gif above we transacted only the collection schema as a separate transaction item, but if we wanted to transact the schema (collection and predicates) together, we can easily achieve this by creating a transaction array with each transaction item as objects. Refer to the example [here](https://github.com/fdmmarshall/to-do-lists-generator/blob/to-do-list/src/data/Schema).
 ### **Sample Data**
 
 After setting your schema it is time to transact some dummy data. Similar to how you transacted your schema you will transact some dummy data within the admin UI.
