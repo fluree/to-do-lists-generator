@@ -280,7 +280,11 @@ The next subquery pulls related data from the `assignee` collection, since the `
 
 Another way of thinking about the predicate type of `ref` are as `joins` in a relational DBs, but the ability to join is a property set to predicates (in Fluree) as displayed in the predicate schema above. A SQL example of the query below would be,
 
-            SELECT *
+            SELECT *,
+            task.isCompleted,
+            task.assignedTo,
+            assignee.name,
+            assignee.email
             FROM list
             JOIN task ON task.list_id = list.id
             LEFT JOIN assignee on assignee.name = task.assignedTo
