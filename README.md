@@ -251,6 +251,8 @@ This is a basic query, where we are selecting all the `_id`, `email`, and `name`
 
 The other section of this query (below the `from` clause), uses the query key of `opts` which is not required, but gives you the ability to set optional keys when retrieving data, for a list of optional keys and their descriptions, refer to the doc [here](https://docs.flur.ee/docs/1.0.0/query/overview#opts-key).
 
+Refer to the code base [here](https://github.com/fdmmarshall/to-do-lists-generator/blob/74b1e4ec7554c3d92c558abba359f831ffc5d1c3/src/ListContext.js#L88) for the API request that hold the `assignee` data query.
+
 #### **Querying list data**
 
  Below is the query that pulls all the related `list` data from Fluree when the application loads. You can find it [here](https://github.com/fdmmarshall/to-do-lists-generator/blob/2dc89d3c15b82d943d7226d5af14390ed9f36120/src/ListContext.js#L106) within the `fetchListData` function.
@@ -291,6 +293,7 @@ Another way of thinking about the predicate type of `ref` are as `joins` in a re
             ORDER BY ASC;
 
 
+Refer to the code base [here](https://github.com/fdmmarshall/to-do-lists-generator/blob/74b1e4ec7554c3d92c558abba359f831ffc5d1c3/src/ListContext.js#L106) for the API request that hold the `list` data query.
 ### **Transacting and updating data**
 
 The next set of functionality we will cover are the ones that send transactions to Fluree in the application, these are the equivalent to `INSERT` or `UPDATE` statements in SQL. When the form component is filled and submitted the data is sent to Fluree via a transact. The other events are when a deletion of a task is made, and then when a task name is edited or the checkbox completed status is changed, these are all updates that are sent to Fluree via a transact.
@@ -349,19 +352,7 @@ Below is an example of the transaction that is sent to Fluree on submission.
             }
         ]
 
-Now we focus on the second part of the `addList` function. We have built the transact item with all the form data, but need to construct the api request.
-
- <p width="100%" align="center">
- <img src='/src/Images/add_list_pt_2.png' alt='second part of addList function' width='600'>
- </p>
-
-`sendListData` is an asynchronous function that hold the api requesting that sends the transaction item to Fluree. This is nested within the `addList` function then called at the end. Within the `sendListData` there is an if statement that checks if the response was a successful status code then it sets the list data in the UI with the `setLists` custom hook.
-
-<p width="100%" align="center">
- <img src='/src/Images/submit_list.png' alt='submitting list data and adding a list' width='600'>
-</p>
-
-This is the submission function that calls the `addList` when the submit button is pressed.
+Refer to the code base [here](https://github.com/fdmmarshall/to-do-lists-generator/blob/74b1e4ec7554c3d92c558abba359f831ffc5d1c3/src/ListContext.js#L171) for the API request that holds the `list` data transaction.
 
 #### **Updating existing data in Fluree**
 
