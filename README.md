@@ -192,6 +192,13 @@ The assignee collection consists of assignee/name, assignee/email, and assignee/
  </p>
 
 > In the example gif above we transacted only the collection schema as a separate transaction item, but if we wanted to transact the schema (collection and predicates) together, we can easily achieve this by creating a transaction array with each transaction item as objects. Refer to the example [here](https://github.com/fdmmarshall/to-do-lists-generator/blob/to-do-list/src/data/Schema).
+
+To explore your schema and understand the connectedness of each collection and predicates, Fluree gives you the ability to visualize each relationship. In the gif below we select *Schema* on the left nav bar then press the *Launch Schema Explorer* button. 
+
+ <p width="100%" align="center">
+<img src="/src/Images/exploring_schema.gif" alt="exploring the Schema" width="650" />
+ </p>
+
 ### **Sample Data**
 
 After setting your schema it is time to transact some dummy data. Similar to how you transacted your schema you will transact some dummy data within the admin UI.
