@@ -188,7 +188,7 @@ The assignee collection consists of assignee/name, assignee/email, and assignee/
  Once you have solidified your schema you can insert it into your DB, using the admin UI, as your first transaction:
 
  <p width="100%" align="center">
-<img src="/src/Images/Insert_Schema_pt1.gif" alt="transacting schema" width="400" />
+<img src="/src/Images/Insert_Schema_pt1.gif" alt="transacting schema" width="550" />
  </p>
 
 ### **Sample Data**
