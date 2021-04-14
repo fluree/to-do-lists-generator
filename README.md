@@ -356,15 +356,21 @@ Refer to the code base [here](https://github.com/fdmmarshall/to-do-lists-generat
 
 #### **Updating existing data in Fluree**
 
-Updating data uses the same structure and syntax as transacting new data to Fluree. We will be updating data by using the `_id` retrieved from the query in`fetchListData`. 
+Updating data uses the same structure and syntax as transacting new data to Fluree. We will be updating data by using the `_id` retrieved from the query in [`fetchListData`](https://github.com/fdmmarshall/to-do-lists-generator/blob/74b1e4ec7554c3d92c558abba359f831ffc5d1c3/src/ListContext.js#L106).
 #### **Deleting tasks**
 
- <p width="100%" align="center">
- <img src='/src/Images/delete_task.png' alt='deleting a task' width='600'>
-</p>
+[`deleteTask`](https://github.com/fdmmarshall/to-do-lists-generator/blob/74b1e4ec7554c3d92c558abba359f831ffc5d1c3/src/ListContext.js#L203) holds the asynchronous function [`deleteTaskFromFluree`](https://github.com/fdmmarshall/to-do-lists-generator/blob/74b1e4ec7554c3d92c558abba359f831ffc5d1c3/src/ListContext.js#L207) that deletes the task.
 
-`deleteTask` holds the asynchronous function `deleteTaskFromFluree` that deletes the task. By matching the `_id` to the intended task then uses the `_action` transact key to specify a deletion when sent to Fluree. For more on deleting data refer to the [deleting data](https://docs.flur.ee/docs/1.0.0/transact/deleting-data) section.
+        [
+            {
+                _id: chosenTask._id,
+                _action: 'delete'
+            }
+        ]
 
+Instead of using temporary ids, here we match the `_id` to the intended task then use the `_action` transact key to specify a deletion when sent to Fluree. For more on deleting data refer to the [deleting data](https://docs.flur.ee/docs/1.0.0/transact/deleting-data) section.
+
+Refer to the code base [here](https://github.com/fdmmarshall/to-do-lists-generator/blob/74b1e4ec7554c3d92c558abba359f831ffc5d1c3/src/ListContext.js#L207) for the API request that holds the deletion transact item.
 #### **Editing tasks**
 
  <p width="100%" align="center">
