@@ -225,10 +225,6 @@ The application will need to pull the `assignee` data in order to propagate the 
 
 #### **Querying assignee data**
 
-<p width="100%" align="center">
- <img src='/src/Images/pull_assignee_data.png' alt='code for pulling assignee data' width='600'>
- </p>
-
  Below is the query that pulls the `assignee` data from Fluree when the application loads. You can find it [here](https://github.com/fdmmarshall/to-do-lists-generator/blob/3a9b6d5c47503df9599ae4c50488c50aad40dbe9/src/ListContext.js#L88) within the `loadAssignedToData` function.
 
 
@@ -248,7 +244,8 @@ This is a basic query, we are selecting all the `_id`, `email`, and `name` (thes
                 email,
                 name
                 FROM assignee
-
+            
+               OR
 
                 SELECT * FROM assignee    
 
