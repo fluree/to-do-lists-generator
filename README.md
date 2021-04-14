@@ -201,7 +201,7 @@ To explore your schema and understand the connectedness of each collection and p
 
 ### **Sample Data**
 
-After setting your schema it is time to transact some dummy data. Similar to how you transacted your schema you will transact some dummy data within the admin UI.
+After setting your schema it is time to transact some dummy data. Similar to how you transacted your schema you will transact some dummy data within the admin UI. To grab a copy of the dummy data refer to the code [here](https://github.com/fdmmarshall/to-do-lists-generator/blob/to-do-list/src/data/Seed-data).
 
 <p width="100%" align="center">
  <img src='/src/Images/Seed_data_example.png' alt='example seed data' width='600'>
@@ -215,7 +215,7 @@ When the dummy data has been successfully transacted, run the `npm start` comman
 
 ### **Querying and Transacting Data within the application**
 
-Now that you have some data inside we can dive into the way we structure [queries](https://docs.flur.ee/docs/1.0.0/query/overview) and [transactions](https://docs.flur.ee/docs/1.0.0/transact/basics) in the application.
+Now that you have some data inside we can dive into the way we structure [queries](https://docs.flur.ee/docs/1.0.0/query/overview) and [transactions](https://docs.flur.ee/docs/1.0.0/transact/basics) in the application. As this is a simple to do list we will be able to create a new list with 1 or more set of tasks, and each task has an assignee. We are also able to delete a task and edit a task's name and completion status.
 
 First lets review the functionality that is connected to the DB and the data that is being recieved and sent.
 
