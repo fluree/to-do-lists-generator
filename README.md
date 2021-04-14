@@ -373,12 +373,16 @@ Instead of using temporary ids, here we match the `_id` to the intended task the
 Refer to the code base [here](https://github.com/fdmmarshall/to-do-lists-generator/blob/74b1e4ec7554c3d92c558abba359f831ffc5d1c3/src/ListContext.js#L207) for the API request that holds the deletion transact item.
 #### **Editing tasks**
 
- <p width="100%" align="center">
- <img src='/src/Images/edit_task.png' alt='importing collection schema' width='600'>
-</p>
+Similar to the way we delete tasks above, [`editTasks`](https://github.com/fdmmarshall/to-do-lists-generator/blob/74b1e4ec7554c3d92c558abba359f831ffc5d1c3/src/ListContext.js#L227) matches the task `_id` and includes the data change for the name of the task and completion status. For more detail updating data refer to the [updating data](https://docs.flur.ee/docs/1.0.0/transact/updating-data) section.
 
-Similar to the way we delete tasks above, `editTasks` matches the task `_id` and includes the data change for the name of the task and completion status. For more detail updating data refer to the [updating data](https://docs.flur.ee/docs/1.0.0/transact/updating-data) section.
-
+            [
+                {
+                    _id: newTask._id,
+                    name: newTask.name,
+                    isCompleted: newTask.isCompleted,
+                }
+            ]
+Refer to the code base [here](https://github.com/fdmmarshall/to-do-lists-generator/blob/74b1e4ec7554c3d92c558abba359f831ffc5d1c3/src/ListContext.js#L241) for the API request that holds the update transact item.
 ### **Learn more**
 
 For other API endpoint and examples visit the Fluree docs, [here](https://docs.flur.ee/api).
