@@ -147,10 +147,10 @@ const ListProvider = (props) => {
       if (Number.isInteger(assigneeId)) {
         assigneeId = isAssignedTo;
       } else {
-        //if the _id is 'new' meaning new assignee(ie not a value we queired from Fluree) then execute code below
+        //if the _id is NOT a number (ie not a value we queired from Fluree) then execute code below
         assigneeId = `assignee$${index}`; //creates a temporary id for the new assignee
         isAssignedTo = {
-          _id: assigneeId, //temporar id goes here
+          _id: assigneeId, //temporary id goes here
           name: task.newAssignedTo, //the first name of the new assignee
           email: task.email, //the email of the new assignee
         };
