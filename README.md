@@ -10,11 +10,11 @@ This repo is designed to introduce a basic react application that uses FlureeDB 
 
 ## Getting started
 
-1. To get started git clone the repo via https: `https://github.com/fdmmarshall/to-do-lists-generator.git`, with the git CLI `gh repo clone fdmmarshall/to-do-lists-generator`, or a number of other suitable methods.
+1. To get started git clone the repo via https, `https://github.com/fdmmarshall/to-do-lists-generator.git`, with the git CLI `gh repo clone fdmmarshall/to-do-lists-generator`, or a number of other suitable methods.
 
 2. `cd` into the repo, run `npm install`
 
-3. then run `npm start`, once its compiled it will set the app to open in the browser [http://localhost:3000](http://localhost:3000)
+3. then run `npm start`, once it's compiled it will set the app to open in the browser [http://localhost:3000](http://localhost:3000)
 
 ## **React**
 
@@ -188,7 +188,7 @@ The assignee collection consists of assignee/name, assignee/email, and assignee/
  Once you have solidified your schema you can insert it into your DB, using the admin UI, as your first transaction:
 
  <p width="100%" align="center">
- <img src='/src/Images/importing%20first%20set%20of%20schema.png' alt='example of import in admin UI' width='600'>
+<img src="/src/Images/Insert_Schema_pt1.gif" alt="transacting schema" width="40" height="40" />
  </p>
 
 ### **Sample Data**
