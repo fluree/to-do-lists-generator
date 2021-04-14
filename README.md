@@ -219,7 +219,7 @@ Now that you have some data inside we can dive into the way we structure [querie
 
 First lets review the functionality that is connected to the DB and the data that is being recieved and sent.
 
-The application will need to pull the assignee data in order to propagate the `Select Assignee` component in the form. We will also need to grab the list data from Fluree on load in order to propagate the `Todo` and the `Task` components. This will all be done by querying Fluree.
+The application will need to pull the `assignee` data in order to propagate the `Select Assignee` component in the form. We will also need to grab the list data from Fluree on load in order to propagate the `Todo` and the `Task` components. This will all be done by querying Fluree.
 
 > While Fluree does allow querying in GraphQL, Curl, and SparQL, queries issued in this application are in FlureeQL. Please refer to the docs for examples [languages](https://docs.flur.ee/docs/1.0.0/query/overview), mentioned above, by toggling the *Display Examples* at the top left corner.
 
@@ -229,7 +229,8 @@ The application will need to pull the assignee data in order to propagate the `S
  <img src='/src/Images/pull_assignee_data.png' alt='code for pulling assignee data' width='600'>
  </p>
 
- Below is the query that is nested in `loadAssignedToData`
+ Below is the query that pulls the `assignee` data from Fluree when the application loads. You can find it [here](https://github.com/fdmmarshall/to-do-lists-generator/blob/3a9b6d5c47503df9599ae4c50488c50aad40dbe9/src/ListContext.js#L88) within the `loadAssignedToData` function.
+
 
                 {
                 select: ['_id', 'email' 'name'],
@@ -240,15 +241,20 @@ The application will need to pull the assignee data in order to propagate the `S
                         },
                 }       
 
-This is a basic query, we are selecting all the `_id`, `email`, and `name` predicate values in the assignee collection.
+This is a basic query, we are selecting all the `_id`, `email`, and `name` (these can also be substituted with just '*') predicate values in the assignee collection. This is similar to a SQL query where we would write the same query as,
+
+                SELECT 
+                _id,
+                email,
+                name
+                FROM assignee
+
+
+                SELECT * FROM assignee    
 
 The other section of this query (below the `from` clause), uses the query key of `opts` which is not required, but gives you the ability to set optional keys when retrieving data, for a list of optional keys and their descriptions, refer to the doc [here](https://docs.flur.ee/docs/1.0.0/query/overview#opts-key).
 
 #### **Querying list data**
-
-<p width="100%" align="center">
- <img src='/src/Images/pull_list_data.png' alt='code for pulling list data' width='600'>
- </p>
 
  Below is the query that was nested in `fetchListData`
 
