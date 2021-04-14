@@ -137,7 +137,7 @@ The task collection consists of task/name, task/assignedTo, and task/isCompleted
                             "name": "task/name",
                             "type": "string",
                             "index": true,
-                            "doc": ""
+                            "doc": "the name of the task"
                             },
                             {
                             "_id": "_predicate",
@@ -145,13 +145,13 @@ The task collection consists of task/name, task/assignedTo, and task/isCompleted
                             "type": "ref",
                             "index": true,
                             "restrictCollection": "assignee",
-                            "doc": ""
+                            "doc": "to whom is the task assigned to"
                             },
                             {
                             "_id": "_predicate",
                             "name": "task/isCompleted",
                             "type": "boolean",
-                            "doc": ""
+                            "doc": "the completetion status of the task"
                             }   
                         ]
 
