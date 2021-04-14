@@ -229,13 +229,13 @@ The application will need to pull the `assignee` data in order to propagate the 
 
 
                 {
-                select: ['_id', 'email' 'name'],
-                from: 'assignee',
-                opts: {
-                    compact: true,
-                    orderBy: ['ASC', '_id'],
+                    select: ['_id', 'email' 'name'],
+                    from: 'assignee',
+                    opts: {
+                        compact: true,
+                        orderBy: ['ASC', '_id'],
                         },
-                }       
+                }    
 
 This is a basic query, where we are selecting all the `_id`, `email`, and `name` predicate values (these can also be substituted with just '*') in the assignee collection. This is similar to a SQL query where we would write the same query as,
 
