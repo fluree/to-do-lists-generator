@@ -6,7 +6,7 @@
 
 # **To do list generator powered by React and FlureeDB**
 
-This repo is designed to introduce a basic react application that uses FlureeDB to manage data. By using any http client, in this application we use [axios](https://axios-http.com/), queries and transactions are issued to create, read, update, and destroy data from my FlureeDB.
+This repo is designed to introduce a basic react application that uses FlureeDB to manage data. By using any http client, in this application we use [axios](https://axios-http.com/), queries and transactions are issued to create, read, update, and destroy data from the FlureeDB.
 
 ## Getting started
 
