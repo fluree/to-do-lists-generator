@@ -5,12 +5,24 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import { Box } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 
 function TasksInput({ task }) {
   const [newTaskState, setNewTaskState] = useState(task);
+  const [newAssigneeState, setNewAssignee] = useState({
+    email: '',
+    newAssignedTo: '',
+  });
 
   const taskState = useContext(ListContext);
-  const { userIsNew, setNewUser, users, handleTaskChange } = taskState; //the context that this component is using
+  const {
+    userIsNew,
+    setNewUser,
+    users,
+    handleTaskChange,
+    handleNewAssigneeSubmit,
+    clearForm,
+  } = taskState; //the context that this component is using
 
   function sendTasksToParent(e) {
     //sends tasks array to parent
@@ -22,6 +34,11 @@ function TasksInput({ task }) {
     handleTaskChange(newTaskState);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newTaskState]);
+
+  function handleNewAssigneeChange(e) {
+    const { name, value } = e.target;
+    setNewAssignee({ ...newAssigneeState, [name]: value });
+  }
 
   return (
     <Box display='flex' flexDirection='column'>
@@ -54,20 +71,35 @@ function TasksInput({ task }) {
       </Select>
       {userIsNew && (
         <>
-          <InputComponent
-            title='New Assignee'
-            type='text'
-            name='newAssignedTo'
-            value={newTaskState.newAssignedTo ? newTaskState.newAssignedTo : ''}
-            change={sendTasksToParent}
-          />
-          <InputComponent
-            title='Email'
-            type='text'
-            name='email'
-            value={newTaskState.email}
-            change={sendTasksToParent}
-          />
+          <Box display='flex' flexDirection='column'>
+            <InputComponent
+              title='New Assignee'
+              type='text'
+              name='newAssignedTo'
+              value={newAssigneeState.newAssignedTo}
+              change={handleNewAssigneeChange}
+            />
+            <InputComponent
+              title='Email'
+              type='text'
+              name='email'
+              value={newAssigneeState.email}
+              change={handleNewAssigneeChange}
+            />
+          </Box>
+          <Button
+            variant='text'
+            color='secondary'
+            style={{ backgroundColor: 'transparent' }}
+            onClick={(e) => {
+              handleNewAssigneeSubmit(newAssigneeState);
+              e.preventDefault();
+              clearForm();
+              setNewUser(false);
+            }}
+          >
+            Add Assignee
+          </Button>
         </>
       )}
     </Box>

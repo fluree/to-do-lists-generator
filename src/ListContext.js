@@ -20,8 +20,6 @@ const ListProvider = (props) => {
         isCompleted: false,
         task: '',
         assignedTo: '',
-        email: '',
-        newAssignedTo: '',
       },
     ],
   });
@@ -131,6 +129,31 @@ const ListProvider = (props) => {
     fetchListData();
   }, []);
 
+  function addNewAssignee({ newAssignedTo, email }) {
+    const newAssignee = [
+      {
+        _id: `assignee$${Math.floor(Math.random() * 10 + 1)}`,
+        name: newAssignedTo, //the first name of the new assignee
+        email: email, //the email of the new assignee
+      },
+    ];
+    let sendAssigneeData = async () => {
+      //holds the axios API request
+      let transactResponse = await axios.post(
+        `${baseURL}transact`, //place your URL followed by this structure: /fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/transact
+        newAssignee //this is the body that contains the list data in FlureeQL
+      );
+      if (transactResponse.status === 200) {
+        loadAssignedToData();
+      }
+    };
+    sendAssigneeData();
+  }
+
+  const handleNewAssigneeSubmit = (newAssignee) => {
+    addNewAssignee(newAssignee);
+  };
+
   //adds a new list to the DB
   function addList({ name, description, tasks }) {
     const newList = {
@@ -142,26 +165,12 @@ const ListProvider = (props) => {
 
     //for each task input information submitted loop through to set all the required predicate information
     tasks.forEach((task, index) => {
-      let assigneeId = task.assignedTo; //sets assigneeId to the assignee/_id we queried from Fluree on first render
-      let isAssignedTo = null;
-      if (Number.isInteger(assigneeId)) {
-        assigneeId = isAssignedTo;
-      } else {
-        //if the _id is NOT a number (ie not a value we queired from Fluree) then execute code below
-        assigneeId = `assignee$${index}`; //creates a temporary id for the new assignee
-        isAssignedTo = {
-          _id: assigneeId, //temporary id goes here
-          name: task.newAssignedTo, //the first name of the new assignee
-          email: task.email, //the email of the new assignee
-        };
-      }
-
       const newTask = {
         //creates a transaction using FlureeQL syntax to send over the new list data to Fluree
         _id: `task$${index}`, //temporary id for the new list data
         name: task.task, //name of the task
         isCompleted: task.completed, //whether the task is completed (boolean)
-        assignedTo: isAssignedTo, //this predicate, in the task collection, is of special type ref so it takes the assigne/_id as parameter to reference the assignee data in the assignee collection belonging to that _id value
+        assignedTo: task.assignedTo, //this predicate, in the task collection, is of special type ref so it takes the assigne/_id as parameter to reference the assignee data in the assignee collection belonging to that _id value
       };
       newList.tasks.push(newTask); //push each new task into the tasks array in the new list object
     });
@@ -261,6 +270,7 @@ const ListProvider = (props) => {
         deleteTask,
         editTask,
         handleSubmit,
+        handleNewAssigneeSubmit,
         addList,
         inputState,
         setInputState,
