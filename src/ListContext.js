@@ -129,6 +129,7 @@ const ListProvider = (props) => {
     fetchListData();
   }, []);
 
+  //create a new Assignee in order to select them from the drop down
   function addNewAssignee({ newAssignedTo, email }) {
     const newAssignee = [
       {
@@ -137,6 +138,7 @@ const ListProvider = (props) => {
         email: email, //the email of the new assignee
       },
     ];
+    // this is the API request that sends the assignee data to Fluree
     let sendAssigneeData = async () => {
       //holds the axios API request
       let transactResponse = await axios.post(
@@ -144,6 +146,7 @@ const ListProvider = (props) => {
         newAssignee //this is the body that contains the list data in FlureeQL
       );
       if (transactResponse.status === 200) {
+        //if the transaction response is 200 then load the Assignee data again
         loadAssignedToData();
       }
     };
