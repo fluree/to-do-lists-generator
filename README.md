@@ -45,13 +45,15 @@ This to-do list app uses [Fluree Anywhere](https://docs.flur.ee/docs/1.0.0/getti
 
 ## **Installing Fluree**
 
-- [Download](https://fluree-releases-public.s3.amazonaws.com/fluree-1.0.0-beta10.zip) and unzip Fluree (v1.0.0-beta10)
-- Launch Fluree with default options by running `./fluree_start.sh` in the terminal for Macs and in Bash emulator for Windows
+- [Download](https://s3.amazonaws.com/fluree-releases-public/fluree-stable.zip) latest stable version and unzip Fluree (fluree-1.0-latest)
+- Launch Fluree with default options by running `./fluree_start.sh` in the terminal for Macs and in Bash emulator for Windows.
 - Once Fluree is done starting up it will be available for use behind port 8090, e.g. `http://localhost:8090`. [Note: for versions below 1.0.0 the default web server port may be :8080]. Navigating to :8090 in your browser will serve Fluree's default AdminUI. The Fluree server behind :8090 will also respond to POST requests against Fluree's HTTP API endpoints.
 - To exit, click `ctrl + c` to kill the thread in your terminal. This will not delete any ledgers or successful transactions.
-- For further installation information visit the [Installation](https://docs.flur.ee/docs/1.0.0/getting-started/installation) docs
+- For further installation information visit the [Installation](https://docs.flur.ee/docs/1.0.0/getting-started/installation) docs.
 
 > Fluree requires Java 11 or above. To verify your version run `java --version` in the terminal or visit [java](https://www.java.com/en/download/manual.jsp) to download.
+
+> For those who use Docker: `docker run -p 8090:8090 -v $PWD/data:/var/lib/fluree fluree/ledger` (no installation or other dependencies necessary). Refer to Fluree Docker installation [here](https://docs.flur.ee/docs/1.0.0/getting-started/installation#fluree-with-docker).
 
 ## **Creating your Ledger, Schema, and Sample Data**
 
