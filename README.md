@@ -37,7 +37,7 @@ At its core, data in Fluree leverages the [Resource Description Framework (RDF)]
 
 A simple example would be: "The sky's color is blue", where 'sky' is the subject, 'color' is the predicate, and 'blue' is the object. When comparing the same sentence to the typical approach of an entity–attribute–value model: entity(sky), attribute(color), value(blue).
 
-> \*For an more in-depth look into RDF refer to the W3C [docs](https://www.w3.org/RDF/).
+> \*For a more in-depth look into RDF refer to the W3C [docs](https://www.w3.org/RDF/).
 
 # **Getting Started with Fluree**
 
@@ -51,7 +51,7 @@ This to-do list app uses [Fluree Anywhere](https://docs.flur.ee/docs/1.0.0/getti
 - To exit, click `ctrl + c` to kill the thread in your terminal. This will not delete any ledgers or successful transactions.
 - For further installation information visit the [Installation](https://docs.flur.ee/docs/1.0.0/getting-started/installation) docs
 
-> Fluree requires Java 11 or above. To verify your version run `java -- version` in the terminal or visit [java](https://www.java.com/en/download/manual.jsp) to download.
+> Fluree requires Java 11 or above. To verify your version run `java --version` in the terminal or visit [java](https://www.java.com/en/download/manual.jsp) to download.
 
 ## **Creating your Ledger, Schema, and Sample Data**
 
@@ -84,7 +84,7 @@ You can think of _collections_ as tables in a relational DB and _predicates_ as 
 Below is the schema for the to-do list generator:
 
 The schema has three collections: `list`, `task`, and `assignee`.
-
+```json
     [{
         "_id": "_collection",
         "name": "list",
@@ -100,14 +100,16 @@ The schema has three collections: `list`, `task`, and `assignee`.
         "name": "assignee",
         "doc": "Subjects in this collection describe individuals who could be assigned specific tasks"
     }]
+```
 
 > We've added some `doc` strings to each collection and predicate to offer additional clarity for users. This descriptive metadata does not affect the schema other than to aid any developers who need to understand it.
 
 Each collection has three predicates.
 
 The list collection consists of list/name, list/description, and list/tasks
-
-    [{
+```json
+[
+    {
         "_id": "_predicate",
         "name": "list/name",
         "type": "string",
@@ -127,11 +129,13 @@ The list collection consists of list/name, list/description, and list/tasks
         "multi": true,
         "restrictCollection": "task",
         "doc": "Because one list can include multiple tasks, this allows a single list subject to make graph references to multiple task subjects"
-    }]
-
+    }
+]
+```
 The task collection consists of task/name, task/assignedTo, and task/isCompleted
-
-    [{
+```json
+[
+    {
         "_id": "_predicate",
         "name": "task/name",
         "type": "string",
@@ -150,36 +154,36 @@ The task collection consists of task/name, task/assignedTo, and task/isCompleted
         "name": "task/isCompleted",
         "type": "boolean",
         "doc": "The completion status of the task"
-    }]
-
+    }
+]
+```
 The assignee collection consists of assignee/name, assignee/email, and assignee/lists
-
-    [
-
-        {
+```json
+[
+    {
         "_id": "_predicate",
         "name": "assignee/name",
         "type": "string",
         "index": true,
         "doc": "The name of the assignee"
-        },
-        {
+    },
+    {
         "_id": "_predicate",
         "name": "assignee/email",
         "type": "string",
         "unique": true,
         "doc": "The email of the assignee"
-        },
-        {
+    },
+    {
         "_id": "_predicate",
         "name": "assignee/lists",
         "type": "ref",
         "multi": true,
         "restrictCollection": "list",
         "doc": "The lists owned by an individual -- this is potentially different from the tasks that are assigned to a specific individual"
-        }
-    ]
-
+    }
+]
+```
 > An important thing to note about predicates is that within Fluree they are their own type of collection, so they can consist of predicates themselves (you can think of them as properties that describe a type of predicate). For example, `_predicate/name` is a predicate that belongs to the `_predicate` collection. For a list of types and further explanation refer to the [predicate](https://docs.flur.ee/docs/1.0.0/schema/predicates#_predicate-predicates) docs.
 
 Once you have solidified your schema you can insert it into your DB, using the admin UI, as your first transaction:
@@ -198,13 +202,13 @@ To explore your schema and understand the connectedness of each collection and p
 
 ### **Sample Data**
 
-After setting your schema it is time to transact some dummy data. Similar to how you transacted your schema you will transact some dummy data within the admin UI. To grab a copy of the dummy data refer to the code [here](https://github.com/fdmmarshall/to-do-lists-generator/blob/to-do-list/src/data/Seed-data).
+After setting your schema it is time to transact some data. Similar to how you transacted your schema you will transact data within the admin UI. To grab a copy of the sample data refer to the code [here](https://github.com/fdmmarshall/to-do-lists-generator/blob/to-do-list/src/data/Seed-data).
 
 <p width="100%" align="center">
  <img src='/src/Images/Seed_data_example.png' alt='example seed data' width='600'>
  </p>
 
-When the dummy data has been successfully transacted, run the `npm start` command to view the application with populated data in the browser (i.e. by opening [http://localhost:3000](http://localhost:3000)). You should see the following:
+When the sample data has been successfully transacted, run the `npm start` command to view the application with populated data in the browser (i.e. by opening [http://localhost:3000](http://localhost:3000)). You should see the following:
 
 <p width="100%" align="center">
  <img src='/src/Images/TodoList_example.png' alt='to do list in browser' width='600'>
@@ -212,7 +216,7 @@ When the dummy data has been successfully transacted, run the `npm start` comman
 
 ### **Querying and Transacting Data within the application**
 
-Now that you have some data inside of Fluree, we can dive into the way we structure [queries](https://docs.flur.ee/docs/1.0.0/query/overview) and [transactions](https://docs.flur.ee/docs/1.0.0/transact/basics) in the application. As this is a simple to do list we will be able to create a new list with 1 or more set of tasks, and each task has an assignee. We are also able to delete a task and edit a task's name and completion status.
+Now that you have some data inside of Fluree, we can dive into the way we structure [queries](https://docs.flur.ee/docs/1.0.0/query/overview) and [transactions](https://docs.flur.ee/docs/1.0.0/transact/basics) in the application. As this is a simple to do list we will be able to create a new list with 1 or more sets of tasks; each task having an assignee. We are also able to delete a task and edit a task's name and completion status.
 
 First, lets review the functionality that is connected to the DB and the data that is being received and sent.
 
@@ -223,7 +227,7 @@ The application will need to pull the `assignee` data in order to populate the `
 #### **Querying assignee data**
 
 Below is the query that pulls the `assignee` data from Fluree when the application loads. You can find it [here](https://github.com/fdmmarshall/to-do-lists-generator/blob/3a9b6d5c47503df9599ae4c50488c50aad40dbe9/src/ListContext.js#L88) within the `loadAssignedToData` function.
-
+```json
     {
         "select": ["_id", "email", "name"],
         "from": "assignee"
@@ -231,38 +235,44 @@ Below is the query that pulls the `assignee` data from Fluree when the applicati
 
     OR
 
-    { "select": ["*"], "from": "assignee" }
-
+    { 
+        "select": [ "*" ], 
+        "from": "assignee" 
+    }
+```
 This is a basic query, where we are selecting all the `_id`, `email`, and `name` predicate values (these can also be substituted with just `"*"`) in the assignee collection. This is similar to a SQL query where we would write the same query as,
-
-    SELECT
-    _id,
-    email,
-    name
+```sql
+    SELECT  _id, email,name
     FROM assignee;
 
     OR
 
     SELECT * FROM assignee;
-
+```
 Refer to the code base [here](https://github.com/fdmmarshall/to-do-lists-generator/blob/74b1e4ec7554c3d92c558abba359f831ffc5d1c3/src/ListContext.js#L88) for the API request that hold the `assignee` data query.
 
 #### **Querying list data**
 
 Below is the query that pulls all the related `list` data from Fluree when the application loads. You can find it [here](https://github.com/fdmmarshall/to-do-lists-generator/blob/2dc89d3c15b82d943d7226d5af14390ed9f36120/src/ListContext.js#L106) within the `fetchListData` function.
-
-    {
-        "select": [
-            "*",
-            { "tasks": [
-                    "*",
-                    { "assignedTo": ["*"] }
-                ]}
-        ],
-        "from": "list",
-        "opts": { "compact": true }
+```json
+{
+    "select": [
+        "*",
+        { 
+            "tasks": [
+                "*",
+                { 
+                    "assignedTo": ["*"] 
+                }
+            ]
+        }
+    ],
+    "from": "list",
+    "opts": { 
+        "compact": true 
     }
-
+}
+```
 We can think about this JSON query as "[crawling the graph](https://docs.flur.ee/docs/1.0.0/query/advanced-query#crawling-the-graph)", wherein we crawl across linked data by representing references from one collection to another as nested objects within our JSON syntax. These references are available through [ref predicates](https://docs.flur.ee/docs/schema/predicates#predicate-types) such as `list/tasks`. So essentially we are selecting ALL the data from the `list` collection then each of the records in the `task` collection that are specifically linked to each list, since `list/tasks` is a reference predicate in the `list` collection.
 
 The next graph-crawl pulls related data from the `assignee` collection, since the `task/assignedTo` predicate in the `task` collection is a reference predicate to the `assignee` collection. All the data above is linked via the predefined predicates of type `ref`.
@@ -270,7 +280,7 @@ The next graph-crawl pulls related data from the `assignee` collection, since th
 > The other section of this query (below the `from` clause), uses the query key of `opts` which is not required, but gives you the ability to set optional keys when retrieving data. For a list of optional keys and their descriptions, refer to the doc [here](https://docs.flur.ee/docs/1.0.0/query/overview#opts-key).
 
 Another way of thinking about the predicate type of `ref` are as `joins` in relational DBs, but the ability to join is a property set to predicates (in Fluree) as displayed in the predicate schema above. A SQL example of the query below would be,
-
+```sql
     SELECT *,
     task.isCompleted,
     task.assignedTo,
@@ -280,85 +290,85 @@ Another way of thinking about the predicate type of `ref` are as `joins` in rela
     JOIN task ON task.list_id = list.id
     LEFT JOIN assignee on assignee.name = task.assignedTo
     ORDER BY ASC;
-
+```
 > As a schema grows, these sorts of joins can become deeply complicated in a SQL-shaped schema, particularly when joins are mediated by additional join tables. One significant advantage of Fluree's graph schemas and graph query language is the ability to navigate links between data more directly and easily. Another advantage is the ability to query for JSON-shaped data in JSON itself.
 
 Refer to the code base [here](https://github.com/fdmmarshall/to-do-lists-generator/blob/74b1e4ec7554c3d92c558abba359f831ffc5d1c3/src/ListContext.js#L106) for the API request that hold the `list` data query.
 
 ### **Transacting and updating data**
 
-The next set of functionality we will cover are the ones that send transactions to Fluree in the application, these are the equivalent to `INSERT` or `UPDATE` statements in SQL. When the form component is filled and submitted the data is sent to Fluree via the `/transaction` API. The `/transaction` API is also used when a task is deleted, when a task name is edited, or when the checkbox completed status is changed: these are all updates that are sent to Fluree via a transaction.
+The next set of functionality we will cover are the ones that send transactions to Fluree in the application, these are the equivalent to `INSERT` or `UPDATE` statements in SQL. When the form component is filled and submitted, the data is sent to Fluree via the `/transaction` API. The `/transaction` API is also used when a task is deleted, when a task name is edited, or when the checkbox completed status is changed: these are all updates that are sent to Fluree via a transaction.
 
 #### **Transacting data to Fluree**
 
 Here we will break down all the steps that go into transacting the form data to Fluree, and the creation of the transaction that is nested in the API request. Start at the `addList` function [here](https://github.com/fdmmarshall/to-do-lists-generator/blob/74b1e4ec7554c3d92c558abba359f831ffc5d1c3/src/ListContext.js#L135) in the code base.
 
 The const [`newList`](https://github.com/fdmmarshall/to-do-lists-generator/blob/74b1e4ec7554c3d92c558abba359f831ffc5d1c3/src/ListContext.js#L136) is the transaction item that holds the list data. Lets run through it and dissect each part, then we will compare it to the seed data we entered earlier. If we were to just transact a list without any linked tasks, it might look like the following:
-
-    [{
-        "_id": "list$1",
-        "name": "My List",
-        "description": "This is my grocery list"
-    }]
-
+```json
+[{
+    "_id": "list$1",
+    "name": "My List",
+    "description": "This is my grocery list"
+}]
+```
 > In FlureeQL's JSON syntax, we differentiate transactions by wrapping each `{ transaction object }` in `[ bracket notation ]`. This also allows us to imply that a single transaction might `[{ include }, { many }, { transaction }, { items }]`.
 
 The `_id` value must describe the collection this record should belong to. In this example the `$1` suffix gives the record a unique "**temporary id**", in case you need to reference this record elsewhere within your transaction. For more temp id examples visit **Temporary Ids** in the [Transaction Basics](https://docs.flur.ee/docs/1.0.0/transact/basics) section of the docs. Below is a diluted example of the query above in SQL:
-
+```sql
     INSERT INTO list (_id, name, description)
     VALUES("list$1", "My List", "This is my grocery list")
-
+```
 Of course, our lists are most valuable when they link list data to independent task record data. An individual task record transaction might look like this:
-
+```json
     [{
         "_id": "task$1",
-        "name": "Get Milk"
+        "name": "Get Milk",
         "isCompleted": false,
         "assignedTo": ["assignee/email", "jDoe@gmail.com"]
     }]
-
+```
 > When a ref predicate like `task/assignedTo` needs to refer to a subject that already exists, Fluree allows you to easily identify that subject by providing a two-tuple of `[A_UNIQUE_PREDICATE, THAT_PREDICATE'S_VALUE]`. So that in the example above, we can have this new `task` refer to an `assignee` whose `assignee/email` value is `jDoe@gmail.com`. You can also, however, reference a brand new `assignee` (see examples below where a new list references a new task), or use a current `assignee`'s unique `_id` value.
 
 Below is an example of the same transaction above in SQL:
-
-             INSERT INTO task (_id, name, isCompleted, assignedTo)
-             VALUES ('task$1', 'Get Milk', false, (SELECT id from asiggnee WHERE email='jDoe@gmail.com'))
-
+```sql
+    INSERT INTO task (_id, name, isCompleted, assignedTo)
+    VALUES ('task$1', 'Get Milk', false, (SELECT id from assignee WHERE email='jDoe@gmail.com'))
+```
 In the examples above, we described `list` and `task` transactions separately, but we can easily transact them at once. Below is an example of the transaction array with nested transaction items that is sent to Fluree on submission of a new list with new tasks:
-
-    [{
-        "_id": "list",
-        "name": "My List",
-        "description": "This is my grocery list",
-        "tasks": [{
-            "_id": "task",
-            "name": "Get Milk",
-            "isCompleted": false,
-            "assignedTo": [
-                "assignee/email",
-                "fmarshall@flur.ee"
-            ]
-        },
-        {
-            "_id": "task",
-            "name": "Get Bananas",
-            "isCompleted": false,
-            "assignedTo": [
-                "assignee/email",
-                "jDoe@gmail.com"
-            ]
-        },
-        {
-            "_id": "task",
-            "name": "Get Spinach",
-            "isCompleted": false,
-            "assignedTo": [
-                "assignee/email",
-                "jDoe@gmail.com"
-            ]
-        }]
+```json
+[{
+    "_id": "list",
+    "name": "My List",
+    "description": "This is my grocery list",
+    "tasks": [{
+        "_id": "task",
+        "name": "Get Milk",
+        "isCompleted": false,
+        "assignedTo": [
+            "assignee/email",
+            "fmarshall@flur.ee"
+        ]
+    },
+    {
+        "_id": "task",
+        "name": "Get Bananas",
+        "isCompleted": false,
+        "assignedTo": [
+            "assignee/email",
+            "jDoe@gmail.com"
+        ]
+    },
+    {
+        "_id": "task",
+        "name": "Get Spinach",
+        "isCompleted": false,
+        "assignedTo": [
+            "assignee/email",
+            "jDoe@gmail.com"
+        ]
     }]
-
+}]
+```
 > This could also have been transacted using **Temp IDs** -- the `Seed-data` file in `src/data` provides exactly this example.
 
 Refer to the code base [here](https://github.com/fdmmarshall/to-do-lists-generator/blob/74b1e4ec7554c3d92c558abba359f831ffc5d1c3/src/ListContext.js#L171) for the API request that holds the `list` data transaction.
@@ -370,46 +380,48 @@ Updating data uses the same structure and syntax as transacting new data to Flur
 #### **Deleting tasks**
 
 [`deleteTask`](https://github.com/fdmmarshall/to-do-lists-generator/blob/74b1e4ec7554c3d92c558abba359f831ffc5d1c3/src/ListContext.js#L203) holds the asynchronous function [`deleteTaskFromFluree`](https://github.com/fdmmarshall/to-do-lists-generator/blob/74b1e4ec7554c3d92c558abba359f831ffc5d1c3/src/ListContext.js#L207) that deletes the task.
-
-            [{
-                "_id": 369435906932736,
-                "_action": "delete"
-            }]
-
+```json
+[{
+    "_id": 369435906932736,
+    "_action": "delete"
+}]
+```
 Instead of using temporary ids, here we match the `_id` to the intended task then use the `_action` transact key to specify a deletion when sent to Fluree. For more on deleting data refer to the [deleting data](https://docs.flur.ee/docs/1.0.0/transact/deleting-data) section. The same transaction can be written in SQL below
-
-            DELETE FROM task
-            WHERE task._id = 369435906932736;
-
+```sql
+DELETE FROM task
+WHERE task._id = 369435906932736;
+```
 Refer to the code base [here](https://github.com/fdmmarshall/to-do-lists-generator/blob/74b1e4ec7554c3d92c558abba359f831ffc5d1c3/src/ListContext.js#L207) for the API request that holds the deletion transact item.
 
 #### **Editing tasks**
 
 Similar to the way we delete tasks above, [`editTasks`](https://github.com/fdmmarshall/to-do-lists-generator/blob/74b1e4ec7554c3d92c558abba359f831ffc5d1c3/src/ListContext.js#L227) matches the task `_id` and includes the data change for the updated name of the task and updated completion status. For more detail updating data refer to the [updating data](https://docs.flur.ee/docs/1.0.0/transact/updating-data) section. This transaction takes a task that already exists and updates its name and its completion status:
-
-            [{
-                "_id": 369435906932736,
-                "name": "This is my task name now",
-                "isCompleted": true,
-            }]
-
+```json
+[{
+    "_id": 369435906932736,
+    "name": "This is my task name now",
+    "isCompleted": true,
+}]
+```
 The same transaction can be written in SQL as:
-
-            UPDATE task
-            SET
-                task.name = "This is my task name now",
-                task.isCompleted = true,
-            WHERE
-                task._id = 369435906932736
-
+```sql
+UPDATE task
+SET
+    task.name = "This is my task name now",
+    task.isCompleted = true,
+WHERE
+    task._id = 369435906932736
+```
 Refer to the code base [here](https://github.com/fdmmarshall/to-do-lists-generator/blob/74b1e4ec7554c3d92c558abba359f831ffc5d1c3/src/ListContext.js#L241) for the API request that holds the update transact item.
 
 ### **Learn more**
 
 For other API endpoint and examples visit the Fluree docs, [here](https://docs.flur.ee/api).
 
-For more on the Fluree ledger and its Blockchain technology visit the [Blockchain](https://docs.flur.ee/guides/1.0.0/architecture/blockchain) docs.
+We also have some additional tutorials, which cover additional Fluree functionality in our [Developer Hub](https://github.com/fluree/developer-hub).
 
-A subject we did not cover are [Smart Functions](https://docs.flur.ee/guides/1.0.0/smart-functions/smart-functions) in Fluree, which can be used in setting permissions to your DB. Here is a full [list](https://docs.flur.ee/guides/1.0.0/smart-functions/smart-functions) of accepted smart functions.
+For more information on the Fluree ledger and its Blockchain technology visit the [Blockchain](https://docs.flur.ee/guides/1.0.0/architecture/blockchain) docs.
+
+A subject we did not cover in this tutorial is [Smart Functions](https://docs.flur.ee/guides/1.0.0/smart-functions/smart-functions) in Fluree, which can be used in setting permissions to your DB. Here is a full [list](https://docs.flur.ee/guides/1.0.0/smart-functions/smart-functions) of accepted smart functions.
 
 A deeper dive into analytical queries and examples visit the docs section, [here](https://docs.flur.ee/guides/1.0.0/analytical-queries/inner-joins-in-fluree).
