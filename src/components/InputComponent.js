@@ -1,7 +1,7 @@
 import React from 'react';
 import { TextField } from '@material-ui/core';
 
-function InputComponent({ title, name, value, change, index }) {
+function InputComponent({ title, name, value, change }) {
   return (
     <TextField
       type='text'
