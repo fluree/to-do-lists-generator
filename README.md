@@ -327,14 +327,18 @@ Of course, our lists are most valuable when they link list data to independent t
         "assignedTo": ["assignee/email", "jDoe@gmail.com"]
     }]
 ```
+
 > When a ref predicate like `task/assignedTo` needs to refer to a subject that already exists, Fluree allows you to easily identify that subject by providing a two-tuple of `[A_UNIQUE_PREDICATE, THAT_PREDICATE'S_VALUE]`. So that in the example above, we can have this new `task` refer to an `assignee` whose `assignee/email` value is `jDoe@gmail.com`. You can also, however, reference a brand new `assignee` (see examples below where a new list references a new task), or use a current `assignee`'s unique `_id` value.
 
 Below is an example of the same transaction above in SQL:
+
 ```sql
     INSERT INTO task (_id, name, isCompleted, assignedTo)
     VALUES ('task$1', 'Get Milk', false, (SELECT id from assignee WHERE email='jDoe@gmail.com'))
 ```
+
 In the examples above, we described `list` and `task` transactions separately, but we can easily transact them at once. Below is an example of the transaction array with nested transaction items that is sent to Fluree on submission of a new list with new tasks:
+
 ```json
 [{
     "_id": "list",
@@ -384,6 +388,13 @@ Above we presented a transaction with `list` data that included an `assignee` al
         "name": "John",
         "email": "john.doe@gmail.com"
 }]
+```
+
+The same transaction can be mirrored in SQL as: 
+
+```sql
+INSERT INTO assignee (_id, name, email)
+VALUES ("assignee$1", "John", "john.doe@gmail.com")
 ```
 
 Refer to the code [here](https://github.com/fdmmarshall/to-do-lists-generator/blob/e1f3076755e0e669d19d0009488f7ee332b4e8b3/src/ListContext.js#L142) for the API request that holds the creation of a new `assignee` data transaction.
