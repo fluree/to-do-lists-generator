@@ -320,12 +320,12 @@ The `_id` value must describe the collection this record should belong to. In th
 ```
 Of course, our lists are most valuable when they link list data to independent task record data. An individual task record transaction might look like this:
 ```json
-    [{
-        "_id": "task$1",
-        "name": "Get Milk",
-        "isCompleted": false,
-        "assignedTo": ["assignee/email", "jDoe@gmail.com"]
-    }]
+[{
+    "_id": "task$1",
+    "name": "Get Milk",
+    "isCompleted": false,
+    "assignedTo": ["assignee/email", "jDoe@gmail.com"]
+}]
 ```
 
 > When a ref predicate like `task/assignedTo` needs to refer to a subject that already exists, Fluree allows you to easily identify that subject by providing a two-tuple of `[A_UNIQUE_PREDICATE, THAT_PREDICATE'S_VALUE]`. So that in the example above, we can have this new `task` refer to an `assignee` whose `assignee/email` value is `jDoe@gmail.com`. You can also, however, reference a brand new `assignee` (see examples below where a new list references a new task), or use a current `assignee`'s unique `_id` value.
@@ -384,9 +384,9 @@ Above we presented a transaction with `list` data that included an `assignee` al
 
 ```json
 [{
-        "_id": "assignee$1",
-        "name": "John",
-        "email": "john.doe@gmail.com"
+    "_id": "assignee$1",
+    "name": "John",
+    "email": "john.doe@gmail.com"
 }]
 ```
 
