@@ -369,9 +369,24 @@ In the examples above, we described `list` and `task` transactions separately, b
     }]
 }]
 ```
+
 > This could also have been transacted using **Temp IDs** -- the `Seed-data` file in `src/data` provides exactly this example.
 
 Refer to the code base [here](https://github.com/fdmmarshall/to-do-lists-generator/blob/74b1e4ec7554c3d92c558abba359f831ffc5d1c3/src/ListContext.js#L171) for the API request that holds the `list` data transaction.
+
+#### **Adding a new Assignee to Fluree**
+
+Above we presented a transaction with `list` data that included an `assignee` already within the drop down selection, but there is functionality in place to create a new assignee and send their information to Fluree, before a transaction with all `list` data is sent. Below is the query found in [addNewAssignee](https://github.com/fdmmarshall/to-do-lists-generator/blob/e1f3076755e0e669d19d0009488f7ee332b4e8b3/src/ListContext.js#L133)
+
+```json
+[{
+        "_id": "assignee$1",
+        "name": "John",
+        "email": "john.doe@gmail.com"
+}]
+```
+
+Refer to the code [here](https://github.com/fdmmarshall/to-do-lists-generator/blob/e1f3076755e0e669d19d0009488f7ee332b4e8b3/src/ListContext.js#L142) for the API request that holds the creation of a new `assignee` data transaction.
 
 #### **Updating & Deleting Existing Data in Fluree**
 

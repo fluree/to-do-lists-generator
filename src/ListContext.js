@@ -153,6 +153,7 @@ const ListProvider = (props) => {
     sendAssigneeData();
   }
 
+  //adds new assignee on submission of information
   const handleNewAssigneeSubmit = (newAssignee) => {
     addNewAssignee(newAssignee);
   };
