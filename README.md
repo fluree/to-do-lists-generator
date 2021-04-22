@@ -31,7 +31,7 @@ If you are not familiar with chain or blockchain data, think of it as a list of 
 
 Every block contains critical metadata like a hash, a timestamp, and the size of the block data (block-bytes). The core data that constitutes each block, though, are extensions of RDF triples that we call [flakes](https://docs.flur.ee/guides/1.0.0/intro/what-is-fluree#flakes). These flakes contain all the data that is added, updated, or deleted at the moment in time described by each block. Flakes are an integral part of Fluree and are used to represent everything: for a in-depth look at Flakes refer to the [architecture](https://docs.flur.ee/guides/1.0.0/architecture/flakes) docs.
 
-Fluree's graph schemas are made up of [collections and predicates](https://docs.flur.ee/guides/1.0.0/intro/what-is-fluree#collections-and-predicates), we will go further into how to use them in the Schema section below.
+Fluree's graph schemas are made up of collections and predicates, we will go further into how to use them in the Schema section [below](https://github.com/fdmmarshall/to-do-lists-generator/blob/to-do-list/README.md#schema).
 
 At its core, data in Fluree leverages the [Resource Description Framework (RDF)](https://www.w3.org/TR/rdf-concepts/). RDF is a W3C standard model for data interchange on the Web\*. Data in Fluree is modelled by the [RDF Triple](https://www.w3.org/TR/rdf-concepts/#section-triples), which contains a subject, a predicate, and an object.
 
@@ -49,7 +49,6 @@ This to-do list app uses [Fluree Anywhere](https://docs.flur.ee/docs/1.0.0/getti
 - Launch Fluree with default options by running `./fluree_start.sh` in the terminal for Macs and in Bash emulator for Windows.
 - Once Fluree is done starting up it will be available for use behind port 8090, e.g. `http://localhost:8090`. [Note: for versions below 1.0.0 the default web server port may be :8080]. Navigating to :8090 in your browser will serve Fluree's default AdminUI. The Fluree server behind :8090 will also respond to POST requests against Fluree's HTTP API endpoints.
 - To exit, click `ctrl + c` to kill the thread in your terminal. This will not delete any ledgers or successful transactions.
-- For further installation information visit the [Installation](https://docs.flur.ee/docs/1.0.0/getting-started/installation) docs.
 
 > Fluree requires Java 11 or above. To verify your version run `java --version` in the terminal or visit [java](https://www.java.com/en/download/manual.jsp) to download.
 
@@ -61,7 +60,7 @@ In this section we will break down ledger creation, implementing a basic schema,
 
 ### **Ledger**
 
-A ledger in Fluree is basically the mechanism which stores and keeps track of [_updates_](https://docs.flur.ee/docs/1.0.0/transact/updating-data) or [_transactions_](https://docs.flur.ee/docs/1.0.0/transact/basics) to your data. There are a few different ways to create a new ledger, for more details refer to the [ledger](https://docs.flur.ee/docs/1.0.0/getting-started/ledger-operations) docs.
+A ledger in Fluree is basically the mechanism which stores and keeps track of [_transactions and updates_](https://github.com/fdmmarshall/to-do-lists-generator#transacting-and-updating-data) to your data. There are a few different ways to create a new [ledger](https://docs.flur.ee/docs/1.0.0/getting-started/ledger-operations).
 
 Here we will create a new ledger in the admin UI:
 
@@ -299,7 +298,7 @@ Refer to the code base [here](https://github.com/fdmmarshall/to-do-lists-generat
 
 ### **Transacting and updating data**
 
-The next set of functionality we will cover are the ones that send transactions to Fluree in the application, these are the equivalent to `INSERT` or `UPDATE` statements in SQL. When the form component is filled and submitted, the data is sent to Fluree via the `/transaction` API. The `/transaction` API is also used when a task is deleted, when a task name is edited, or when the checkbox completed status is changed: these are all updates that are sent to Fluree via a transaction.
+The next set of functionality we will cover are the ones that send [transactions](https://docs.flur.ee/docs/1.0.0/transact/basics) to Fluree in the application, these are the equivalent to `INSERT` or `UPDATE` statements in SQL. When the form component is filled and submitted, the data is sent to Fluree via the `/transaction` API. The `/transaction` API is also used when a task is deleted, when a task name is edited, or when the checkbox completed status is changed: these are all updates that are sent to Fluree via a transaction.
 
 #### **Transacting data to Fluree**
 
@@ -382,7 +381,7 @@ Refer to the code base [here](https://github.com/fdmmarshall/to-do-lists-generat
 
 #### **Adding a new Assignee to Fluree**
 
-Above we presented a transaction with `list` data that included an `assignee` already within the drop down selection, but there is functionality in place to create a new assignee and send their information to Fluree, before a transaction with all `list` data is sent. Below is the query found in [addNewAssignee](https://github.com/fdmmarshall/to-do-lists-generator/blob/e1f3076755e0e669d19d0009488f7ee332b4e8b3/src/ListContext.js#L133)
+Above we presented a transaction with `list` data that included an `assignee` already within the drop down selection, but there is functionality in place to create a new assignee and send their information to Fluree, before a transaction with all `list` data is sent. Below is the query found in [addNewAssignee](https://github.com/fdmmarshall/to-do-lists-generator/blob/e1f3076755e0e669d19d0009488f7ee332b4e8b3/src/ListContext.js#L133):
 
 ```json
 [{
@@ -403,7 +402,7 @@ Refer to the code [here](https://github.com/fdmmarshall/to-do-lists-generator/bl
 
 #### **Updating & Deleting Existing Data in Fluree**
 
-Updating data uses the same structure and syntax as transacting new data to Fluree. We will be updating data by using the `_id` retrieved from the query in [`fetchListData`](https://github.com/fdmmarshall/to-do-lists-generator/blob/74b1e4ec7554c3d92c558abba359f831ffc5d1c3/src/ListContext.js#L106).
+[Updating](https://docs.flur.ee/docs/1.0.0/transact/updating-data) data uses the same structure and syntax as transacting new data to Fluree. We will be updating data by using the `_id` retrieved from the query in [`fetchListData`](https://github.com/fdmmarshall/to-do-lists-generator/blob/74b1e4ec7554c3d92c558abba359f831ffc5d1c3/src/ListContext.js#L106).
 
 #### **Deleting tasks**
 
@@ -423,7 +422,7 @@ Refer to the code base [here](https://github.com/fdmmarshall/to-do-lists-generat
 
 #### **Editing tasks**
 
-Similar to the way we delete tasks above, [`editTasks`](https://github.com/fdmmarshall/to-do-lists-generator/blob/74b1e4ec7554c3d92c558abba359f831ffc5d1c3/src/ListContext.js#L227) matches the task `_id` and includes the data change for the updated name of the task and updated completion status. For more detail updating data refer to the [updating data](https://docs.flur.ee/docs/1.0.0/transact/updating-data) section. This transaction takes a task that already exists and updates its name and its completion status:
+Similar to the way we delete tasks above, [`editTasks`](https://github.com/fdmmarshall/to-do-lists-generator/blob/74b1e4ec7554c3d92c558abba359f831ffc5d1c3/src/ListContext.js#L227) matches the task `_id` and includes the data change for the updated name of the task and updated completion status. This transaction takes a task that already exists and updates its name and its completion status:
 ```json
 [{
     "_id": 369435906932736,
