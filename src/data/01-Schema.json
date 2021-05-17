@@ -1,0 +1,116 @@
+[
+    {
+        "_id": "_collection",
+        "name": "task",
+        "doc": "tasks tied to any list"
+    },
+    {
+        "_id": "_collection",
+        "name": "list",
+        "doc": "all list data"
+    },
+    {
+        "_id": "_collection",
+        "name": "assignee",
+        "doc": "assignees that are tied to tasks"
+    },
+    {
+        "_id": "_collection",
+        "name": "creator",
+        "doc": "creators of lists"
+    },
+    {
+        "_id": "_predicate",
+        "name": "_user/creator",
+        "type": "ref",
+        "multi": true,
+        "restrictCollection": "creator"
+    },
+    {
+        "_id": "_predicate",
+        "name": "_user/assignee",
+        "type": "ref",
+        "multi": true,
+        "restrictCollection": "assignee"
+    },
+    {
+        "_id": "_predicate",
+        "name": "task/assignedTo",
+        "type": "ref",
+        "index": true,
+        "restrictCollection": "assignee"
+    },
+    {
+        "_id": "_predicate",
+        "name": "task/isCompleted",
+        "type": "boolean"
+    },
+    {
+        "_id": "_predicate",
+        "name": "task/name",
+        "type": "string",
+        "index": true
+    },
+    {
+        "_id": "_predicate",
+        "name": "list/description",
+        "type": "string"
+    },
+    {
+        "_id": "_predicate",
+        "name": "list/name",
+        "type": "string",
+        "index": true
+    },
+    {
+        "_id": "_predicate",
+        "name": "list/tasks",
+        "type": "ref",
+        "multi": true,
+        "restrictCollection": "task"
+    },
+    {
+        "_id": "_predicate",
+        "name": "list/creator",
+        "type": "ref",
+        "multi": true,
+        "restrictCollection": "creator"
+    },
+    {
+        "_id": "_predicate",
+        "name": "assignee/lists",
+        "type": "ref",
+        "multi": true,
+        "restrictCollection": "list"
+    },
+    {
+        "_id": "_predicate",
+        "name": "assignee/name",
+        "type": "string",
+        "index": true
+    },
+    {
+        "_id": "_predicate",
+        "name": "assignee/email",
+        "type": "string",
+        "unique": true
+    },
+    {
+        "_id": "_predicate",
+        "name": "creator/name",
+        "type": "string"
+    },
+    {
+        "_id": "_predicate",
+        "name": "creator/email",
+        "type": "string",
+        "unique": true
+    },
+    {
+        "_id": "_predicate",
+        "name": "creator/lists",
+        "type": "ref",
+        "multi": true,
+        "restrictCollection": "list"
+    }
+]
