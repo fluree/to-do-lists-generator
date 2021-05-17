@@ -1,0 +1,125 @@
+[
+    {
+        "_id": [
+            "_role/id",
+            "creator"
+        ],
+        "rules": [
+            "rule$fullAccessListCreation",
+            "rule$canQueryOwnListData",
+            "rule$canUpdateTaskData"
+        ]
+    },
+    {
+        "_id": [
+            "_role/id",
+            "assignee"
+        ],
+        "rules": [
+            "rule$canViewAssignedTasks",
+            "rule$canEditCompletionStatus"
+        ]
+    },
+    {
+        "_id": "rule$fullAccessListCreation",
+        "id": "fullAccessListCreation",
+        "doc": "A _user with this rule has the ability to create a list",
+        "fns": [
+            [
+                "_fn/name",
+                "true"
+            ]
+        ],
+        "ops": [
+            "transact"
+        ],
+        "collection": "list",
+        "predicates": [
+            "*"
+        ]
+    },
+    {
+        "_id": "rule$canQueryOwnListData",
+        "id": "canQueryOwnListData",
+        "doc": "A _user with this rule can only view their own list data",
+        "fns": [
+            "_fn$queryOwnListsData"
+        ],
+        "ops": [
+            "transact"
+        ],
+        "collection": "list",
+        "predicates": [
+            "*"
+        ]
+    },
+    {
+        "_id": "_fn$queryOwnListsData",
+        "name": "fullAccessOwnUserData?",
+        "doc": "A _user can query their own list data",
+        "code": "(relationship? (?sid) [\"_user/auth\"] (?auth_id))"
+    },
+    {
+        "_id": "rule$canUpdateTaskData",
+        "id": "canUpdateTaskData",
+        "doc": "A _user with this rule can update task and assignee data",
+        "fns": [
+            "_fn$canUpdateTaskData"
+        ],
+        "ops": [
+            "transact"
+        ],
+        "collection": "list",
+        "predicates": [
+            "*"
+        ]
+    },
+    {
+        "_id": "_fn$canUpdateTaskData",
+        "name": "canUpdateTaskData?",
+        "doc": "A _user can edit task and assignee data",
+        "code": "(relationship? (?sid) [\"_user/auth\"] (?auth_id))"
+    },
+    {
+        "_id": "rule$canViewAssignedTasks",
+        "id": "canViewAssignedTasks",
+        "doc": "A _user with this rule can update task and assignee data",
+        "fns": [
+            "_fn$canViewAssignedTasks"
+        ],
+        "ops": [
+            "Query"
+        ],
+        "collection": "list",
+        "predicates": [
+            "*"
+        ]
+    },
+    {
+        "_id": "_fn$canViewAssignedTasks",
+        "name": "canViewAssignedTasks?",
+        "doc": "A _user can view the tasks assigned to them in a list",
+        "code": "(relationship? (?sid) [\"_user/auth\"] (?auth_id))"
+    },
+    {
+        "_id": "rule$canEditCompletionStatus",
+        "id": "canEditCompletionStatus",
+        "doc": "A _user with this rule can update a task's completion status if tied to their user",
+        "fns": [
+            "_fn$canEditCompletionStatus"
+        ],
+        "ops": [
+            "transact"
+        ],
+        "collection": "list",
+        "predicates": [
+            "task/isCompleted"
+        ]
+    },
+    {
+        "_id": "_fn$canEditCompletionStatus",
+        "name": "canEditCompletionStatus?",
+        "doc": "A _user can edit a task's completion status if tied to their user",
+        "code": "(relationship? (?sid) [\"_user/auth\"] (?auth_id))"
+    }
+]
