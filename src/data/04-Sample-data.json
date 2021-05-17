@@ -1,0 +1,102 @@
+[
+  {
+    "_id": "creator$1",
+    "name": "Isabel",
+    "email": "IzzyPop@gmail.com",
+    "lists": [
+      "list$1"
+    ]
+  },
+  {
+    "_id": "creator$2",
+    "name": "Tucca",
+    "email": "TucanTuca@gmail.com",
+    "lists": [
+      "list$2"
+    ]
+  },
+  {
+    "_id": "assignee$1",
+    "name": "Jane",
+    "email": "jDoe@gmail.com",
+    "lists": [
+      "list$1",
+      "list$2"
+    ]
+  },
+  {
+    "_id": "assignee$2",
+    "name": "Flor",
+    "email": "fmarshall@flur.ee",
+    "lists": [
+      "list$1",
+      "list$2"
+    ]
+  },
+  {
+    "_id": "assignee$3",
+    "name": "Mannie",
+    "email": "ManE@gmail.com",
+    "lists": [
+      "list$2"
+    ]
+  },
+  {
+    "_id": "list$1",
+    "tasks": [
+      "task$1",
+      "task$2",
+      "task$3"
+    ],
+    "name": "Spring 2021",
+    "description": "Spring cleaning list",
+    "creator": "creator$1"
+  },
+  {
+    "_id": "task$1",
+    "name": "Donate gently used clothing",
+    "isCompleted": false,
+    "assignedTo": "assignee$1"
+  },
+  {
+    "_id": "task$2",
+    "name": "Remove leaves and foliage from garden",
+    "isCompleted": false,
+    "assignedTo": "assignee$2"
+  },
+  {
+    "_id": "task$3",
+    "name": "Put away winter attire",
+    "isCompleted": false,
+    "assignedTo": "assignee$1"
+  },
+  {
+    "_id": "list$2",
+    "tasks": [
+      "task$4",
+      "task$5",
+      "task$6"
+    ],
+    "name": "Summer 2021",
+    "description": "Summer de-clutter list",
+    "creator": "creator$2"
+  },
+  {
+    "_id": "task$4",
+    "name": "Mount the TV",
+    "isCompleted": false,
+    "assignedTo": "assignee$3"
+  },
+  {
+    "_id": "task$5",
+    "name": "Move chili peppers from pot to plot",
+    "isCompleted": false,
+    "assignedTo": "assignee$2"
+  },
+  {
+    "_id": "task$6",
+    "name": "Order new fridge",
+    "isCompleted": false,
+    "assignedTo": "assignee$1"
+  }
+]

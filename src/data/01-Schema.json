@@ -98,7 +98,8 @@
     {
         "_id": "_predicate",
         "name": "creator/name",
-        "type": "string"
+        "type": "string",
+        "index": true
     },
     {
         "_id": "_predicate",
@@ -110,7 +111,6 @@
         "_id": "_predicate",
         "name": "creator/lists",
         "type": "ref",
-        "multi": true,
         "restrictCollection": "list"
     }
 ]
