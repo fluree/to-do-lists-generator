@@ -1,5 +1,90 @@
 [
   {
+    "_id": "_user$1",
+    "username": "Tucca098",
+    "creator": "creator$2",
+    "auth": [
+      {
+        "_id": "_auth",
+        "id": "Tf1F6w8Rx277tDkuYLz9k7okrdqaBvtneEs",
+        "roles": [
+          [
+            "_role/id",
+            "creator"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "_id": "_user$2",
+    "username": "bizzyIzzy999",
+    "creator": "creator$1",
+    "auth": [
+      {
+        "_id": "_auth",
+        "id": "Tf3UqA6Mw1kWismnCwuCy2E6tM4n8rUMcN7",
+        "roles": [
+          [
+            "_role/id",
+            "creator"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "_id": "_user$3",
+    "username": "jDoe",
+    "assignee": "assignee$1",
+    "auth": [
+      {
+        "_id": "_auth",
+        "id": "Tf8Qh9ZnAJwojK6rwdmLcyBtAwdgiC6shjL",
+        "roles": [
+          [
+            "_role/id",
+            "assignee"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "_id": "_user$4",
+    "username": "fdm",
+    "assignee": "assignee$2",
+    "auth": [
+      {
+        "_id": "_auth",
+        "id": "TfDPiP3dMc53a95NnQE2TJq3Bt7EGfA2xbk",
+        "roles": [
+          [
+            "_role/id",
+            "assignee"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "_id": "_user$5",
+    "username": "ManeChau",
+    "assignee": "assignee$3",
+    "auth": [
+      {
+        "_id": "_auth",
+        "id": "TfDmCkYnGTctGVSw8sDnrwpnKueqK63vBsn",
+        "roles": [
+          [
+            "_role/id",
+            "assignee"
+          ]
+        ]
+      }
+    ]
+  },
+  {
     "_id": "creator$1",
     "name": "Isabel",
     "email": "IzzyPop@gmail.com",
