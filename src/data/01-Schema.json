@@ -110,6 +110,7 @@
         "_id": "_predicate",
         "name": "creator/lists",
         "type": "ref",
+        "multi": true,
         "restrictCollection": "list"
     }
 ]
