@@ -15,23 +15,6 @@
         "doc": "assignees that are tied to tasks"
     },
     {
-        "_id": "_collection",
-        "name": "creator",
-        "doc": "creators of lists"
-    },
-    {
-        "_id": "_predicate",
-        "name": "_user/creator",
-        "type": "ref",
-        "restrictCollection": "creator"
-    },
-    {
-        "_id": "_predicate",
-        "name": "_user/assignee",
-        "type": "ref",
-        "restrictCollection": "assignee"
-    },
-    {
         "_id": "_predicate",
         "name": "task/assignedTo",
         "type": "ref",
@@ -69,9 +52,16 @@
     },
     {
         "_id": "_predicate",
-        "name": "list/creator",
+        "name": "list/listOwner",
         "type": "ref",
-        "restrictCollection": "creator"
+        "restrictCollection": "user"
+    },
+    {
+        "_id": "_predicate",
+        "name": "list/assignedTo",
+        "type": "ref",
+        "multi": true,
+        "restrictCollection": "user"
     },
     {
         "_id": "_predicate",
@@ -91,24 +81,5 @@
         "name": "assignee/email",
         "type": "string",
         "unique": true
-    },
-    {
-        "_id": "_predicate",
-        "name": "creator/name",
-        "type": "string",
-        "index": true
-    },
-    {
-        "_id": "_predicate",
-        "name": "creator/email",
-        "type": "string",
-        "unique": true
-    },
-    {
-        "_id": "_predicate",
-        "name": "creator/lists",
-        "type": "ref",
-        "multi": true,
-        "restrictCollection": "list"
     }
 ]

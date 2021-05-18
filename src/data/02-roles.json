@@ -1,10 +1,6 @@
 [
     {
-        "_id": "_role?creator",
-        "id": "creator"
-    },
-    {
-        "_id": "_role?assignee",
-        "id": "assignee"
+        "_id": "_role?endUser",
+        "id": "endUser"
     }
 ]
