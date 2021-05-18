@@ -23,14 +23,12 @@
         "_id": "_predicate",
         "name": "_user/creator",
         "type": "ref",
-        "multi": true,
         "restrictCollection": "creator"
     },
     {
         "_id": "_predicate",
         "name": "_user/assignee",
         "type": "ref",
-        "multi": true,
         "restrictCollection": "assignee"
     },
     {
