@@ -73,7 +73,6 @@
         "_id": "_predicate",
         "name": "list/creator",
         "type": "ref",
-        "multi": true,
         "restrictCollection": "creator"
     },
     {
