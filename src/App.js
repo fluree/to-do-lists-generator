@@ -4,7 +4,7 @@ import themeObject from '@fluree/mui-theme';
 import { Typography } from '@material-ui/core';
 import { Grid } from '@material-ui/core';
 import { Box } from '@material-ui/core';
-import Form from './components/Form';
+import FormContainer from './components/FormContainer';
 import ListContainer from './components/ListContainer';
 import Blue_Brandmark from './Images/Blue_Brandmark.png';
 
@@ -29,7 +29,7 @@ function App() {
               style={{ width: '48px', height: '48px' }}
             />
           </Box>
-          <Form />
+          <FormContainer />
         </Grid>
         <Grid item xs={8}>
           <ListContainer></ListContainer>
