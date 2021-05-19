@@ -2,15 +2,14 @@
   {
     "_id": "_user$1",
     "username": "Tucca098",
-    "creator": "creator$2",
     "auth": [
       {
         "_id": "_auth",
-        "id": "Tf1F6w8Rx277tDkuYLz9k7okrdqaBvtneEs",
+        "id": "TfDk1nsChytKQJsEHf9TRUP9ic6K6fmZTnj",
         "roles": [
           [
             "_role/id",
-            "creator"
+            "endUser"
           ]
         ]
       }
@@ -19,15 +18,14 @@
   {
     "_id": "_user$2",
     "username": "bizzyIzzy999",
-    "creator": "creator$1",
     "auth": [
       {
         "_id": "_auth",
-        "id": "Tf3UqA6Mw1kWismnCwuCy2E6tM4n8rUMcN7",
+        "id": "Tf6CBLZqx8sDQhar9vwiPU1hW4gFH41nhJT",
         "roles": [
           [
             "_role/id",
-            "creator"
+            "endUser"
           ]
         ]
       }
@@ -36,15 +34,14 @@
   {
     "_id": "_user$3",
     "username": "jDoe",
-    "assignee": "assignee$1",
     "auth": [
       {
         "_id": "_auth",
-        "id": "Tf8Qh9ZnAJwojK6rwdmLcyBtAwdgiC6shjL",
+        "id": "Tf88dnvpwFNczKkRwe2JhUoAabyBttKzDaV",
         "roles": [
           [
             "_role/id",
-            "assignee"
+            "endUser"
           ]
         ]
       }
@@ -53,15 +50,14 @@
   {
     "_id": "_user$4",
     "username": "fdm",
-    "assignee": "assignee$2",
     "auth": [
       {
         "_id": "_auth",
-        "id": "TfDPiP3dMc53a95NnQE2TJq3Bt7EGfA2xbk",
+        "id": "TfEBXM7Jv1m1cdfiFFwKBRA2dpGsy2E4TDP",
         "roles": [
           [
             "_role/id",
-            "assignee"
+            "endUser"
           ]
         ]
       }
@@ -70,7 +66,6 @@
   {
     "_id": "_user$5",
     "username": "ManeChau",
-    "assignee": "assignee$3",
     "auth": [
       {
         "_id": "_auth",
@@ -78,32 +73,17 @@
         "roles": [
           [
             "_role/id",
-            "assignee"
+            "endUser"
           ]
         ]
       }
     ]
   },
   {
-    "_id": "creator$1",
-    "name": "Isabel",
-    "email": "IzzyPop@gmail.com",
-    "lists": [
-      "list$1"
-    ]
-  },
-  {
-    "_id": "creator$2",
-    "name": "Tucca",
-    "email": "TucanTuca@gmail.com",
-    "lists": [
-      "list$2"
-    ]
-  },
-  {
     "_id": "assignee$1",
     "name": "Jane",
     "email": "jDoe@gmail.com",
+    "user": "_user$3",
     "lists": [
       "list$1",
       "list$2"
@@ -113,6 +93,7 @@
     "_id": "assignee$2",
     "name": "Flor",
     "email": "fmarshall@flur.ee",
+    "user": "_user$4",
     "lists": [
       "list$1",
       "list$2"
@@ -122,6 +103,7 @@
     "_id": "assignee$3",
     "name": "Mannie",
     "email": "ManE@gmail.com",
+    "user": "_user$5",
     "lists": [
       "list$1",
       "list$2"
@@ -136,7 +118,7 @@
     ],
     "name": "Spring 2021",
     "description": "Spring cleaning list",
-    "creator": "creator$1"
+    "listOwner": "user$2"
   },
   {
     "_id": "task$1",
@@ -165,7 +147,7 @@
     ],
     "name": "Summer 2021",
     "description": "Summer de-clutter list",
-    "creator": "creator$2"
+    "listOwner": "_user$1"
   },
   {
     "_id": "task$4",
