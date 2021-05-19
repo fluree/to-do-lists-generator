@@ -1,37 +1,37 @@
 export default {
   Tucca: {
     publicKey:
-      '02abe6276ba35ce73990f5e5e25564512454b12ad814c62c9cc0a1556879673d86',
+      '02f3a83d60cb8baea378071ca22ce7792237727880477c5551d23f8f22ab227fd2',
     privateKey:
-      '190ee2398f6ec5fd779517b571af038b9588e66cc5de9aba30f7b3478f68b452',
-    authId: 'Tf1F6w8Rx277tDkuYLz9k7okrdqaBvtneEs',
+      '33862b77c042edde477c6ab80aa62a0b130a8290d4f16ca10a0bae137f90cbce',
+    authId: 'TfDk1nsChytKQJsEHf9TRUP9ic6K6fmZTnj',
   },
   Isabel: {
     publicKey:
-      '03c1607197f4904c1e79f5563596492c511373094b0a0f55dba6877184b280d542',
+      '03d7abdff6904fde26d5b8868cebd509074fe74cc9345ee755b6bcdb3f0bec8ec6',
     privateKey:
-      '36637d7af5255e75fbfadce07d5aaca08f3b8e990a2a11397f311ef73c4c8820',
-    authId: 'Tf3UqA6Mw1kWismnCwuCy2E6tM4n8rUMcN7',
+      '42d2f62e7901c101d61d7902ac40e3c4c94490fabab08307cb20a8615ff2de73',
+    authId: 'Tf6CBLZqx8sDQhar9vwiPU1hW4gFH41nhJT',
   },
   Jane: {
     publicKey:
-      '02d9e9d78937952b729b357a2cb682593cb136632d457abeeee53277700b8f9b6e',
+      '03e0ed4af0f48ec97043f4c6362ec748484a5f4e25a6a0b7285c0f05686deb229c',
     privateKey:
-      'dc529a6d40fb096eb9bc26df7bca480b52e520e021a82a61afca787974ff31a0',
-    authId: 'Tf8Qh9ZnAJwojK6rwdmLcyBtAwdgiC6shjL',
+      '7565164d9f6349bac517ca38895dd3bac195fbff3b6daca84e77b5427e96e995',
+    authId: 'Tf88dnvpwFNczKkRwe2JhUoAabyBttKzDaV',
   },
   Flor: {
     publicKey:
-      '03c1607197f4904c1e79f5563596492c511373094b0a0f55dba6877184b280d542',
+      '020dccea7dac46a1bf5a78f730f7581ee24f9abb1733093bca552c6655e3b6a6c7',
     privateKey:
-      '9c1a81038f926adc89f9e67b2bb41052747d49e199e0f0043c9c481ecbb59d5f',
-    authId: 'TfDPiP3dMc53a95NnQE2TJq3Bt7EGfA2xbk',
+      'db235518f4652812f9041700836b3c99cfa536d53c502f718a69cb6f2af05a2b',
+    authId: 'TfEBXM7Jv1m1cdfiFFwKBRA2dpGsy2E4TDP',
   },
   Mannie: {
     publicKey:
-      '0368e89ed07101e959407218ac6278118076a446646348783e7d4eebacc5e8c933',
+      '032e6d4370889c47a0180c0f058e0415778a59500bfb90d2d99e3b921180374bb0',
     privateKey:
-      '4b46f8fa717046d33867f2d20b06d5cd0b437710c5889f4fc85a39862c2f5f20',
-    authId: 'TfDmCkYnGTctGVSw8sDnrwpnKueqK63vBsn',
+      '4031ceb81a311554071646beb3c330d203d34cc49e193156c3cc5257372dd997',
+    authId: 'TfCYdrNBWbviwXEd88LWWTxWde95uJikL6v',
   },
 };
