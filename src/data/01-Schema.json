@@ -54,14 +54,7 @@
         "_id": "_predicate",
         "name": "list/listOwner",
         "type": "ref",
-        "restrictCollection": "user"
-    },
-    {
-        "_id": "_predicate",
-        "name": "list/assignedTo",
-        "type": "ref",
-        "multi": true,
-        "restrictCollection": "user"
+        "restrictCollection": "_user"
     },
     {
         "_id": "_predicate",
@@ -81,5 +74,11 @@
         "name": "assignee/email",
         "type": "string",
         "unique": true
+    },
+    {
+        "_id": "_predicate",
+        "name": "assignee/user",
+        "type": "ref",
+        "restrictCollection": "_user"
     }
 ]
