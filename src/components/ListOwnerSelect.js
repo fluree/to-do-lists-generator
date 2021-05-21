@@ -10,8 +10,8 @@ import { Button } from '@material-ui/core';
 function ListOwnerSelect({ listOwner, change }) {
   const listOwnerState = useContext(ListContext);
   const {
-    userIsNew,
-    setNewUser,
+    ownerIsNew,
+    setNewListOwner,
     owners,
     handleNewOwnerSubmit,
     handleTaskChange,
@@ -28,7 +28,6 @@ function ListOwnerSelect({ listOwner, change }) {
       ...chosenOwner,
       [name]: value,
     });
-    change(e);
   }
 
   useEffect(() => {
@@ -63,20 +62,20 @@ function ListOwnerSelect({ listOwner, change }) {
           <MenuItem
             key={id}
             value={owner._id}
-            onClick={() => setNewUser(false)}
+            onClick={() => setNewListOwner(false)}
           >
             {owner.username}
           </MenuItem>
         ))}
-        <MenuItem onClick={() => setNewUser(true)} value='new'>
+        <MenuItem onClick={() => setNewListOwner(true)} value='new'>
           New List Owner
         </MenuItem>
       </Select>
-      {userIsNew && (
+      {ownerIsNew && (
         <>
           <Box display='flex' flexDirection='column'>
             <InputComponent
-              title='New Assignee'
+              title='New Owner'
               type='text'
               name='newOwner'
               value={newOwnerState.newOwner}
@@ -98,10 +97,10 @@ function ListOwnerSelect({ listOwner, change }) {
               handleNewOwnerSubmit(newOwnerState);
               e.preventDefault();
               clearOwnerSelection();
-              setNewUser(false);
+              setNewListOwner(false);
             }}
           >
-            Add Assignee
+            Add List Owner
           </Button>
         </>
       )}

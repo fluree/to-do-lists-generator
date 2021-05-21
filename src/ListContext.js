@@ -25,6 +25,7 @@ const ListProvider = (props) => {
     ],
   });
   const [userIsNew, setNewUser] = useState(false);
+  const [ownerIsNew, setNewListOwner] = useState(false);
   const [users, setUsers] = useState([]);
   const [owners, setOwners] = useState([]);
 
@@ -295,6 +296,8 @@ const ListProvider = (props) => {
         setUsers,
         owners,
         setOwners,
+        ownerIsNew,
+        setNewListOwner,
         userIsNew,
         setNewUser,
         handleChange,
