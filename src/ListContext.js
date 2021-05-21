@@ -25,7 +25,7 @@ const ListProvider = (props) => {
     ],
   });
   const [userIsNew, setNewUser] = useState(false);
-  const [ownerIsNew, setNewListOwner] = useState(false);
+  // const [ownerIsNew, setNewListOwner] = useState(false);
   const [users, setUsers] = useState([]);
   const [owners, setOwners] = useState([]);
 
@@ -71,6 +71,7 @@ const ListProvider = (props) => {
     setInputState({
       name: '',
       description: '',
+      listOwner: '',
       tasks: [
         {
           id: `task${'-' + Math.floor(Math.random() * 10 + 1)}`,
@@ -143,6 +144,23 @@ const ListProvider = (props) => {
     fetchListData();
   }, []);
 
+  // function addNewOwner({ newListOwner, email }) {
+  //   const newOwner = [
+  //     {
+  //       _id: `user$${Math.floor(Math.random() * 10 + 1)}`,
+  //       username: newListOwner,
+  //       email: email,
+  //     },
+  //   ];
+  //   let sendOwnerData = async () => {
+  //     let transResp = await axios.post(`${baseURL}transact`, newOwner);
+  //     if (transResp.status === 200) {
+  //       loadOwnerData();
+  //     }
+  //   };
+  //   sendOwnerData();
+  // }
+
   //create a new Assignee in order to select them from the drop down
   function addNewAssignee({ newAssignedTo, email }) {
     const newAssignee = [
@@ -172,12 +190,17 @@ const ListProvider = (props) => {
     addNewAssignee(newAssignee);
   };
 
+  // const handleNewOwnerSubmit = (newOwner) => {
+  //   addNewOwner(newOwner);
+  // };
+
   //adds a new list to the DB
-  function addList({ name, description, tasks }) {
+  function addList({ name, description, listOwner, tasks }) {
     const newList = {
       _id: 'list$1',
       name,
       description,
+      listOwner,
       tasks: [],
     };
 
@@ -194,6 +217,8 @@ const ListProvider = (props) => {
     });
 
     let transactLoad = [newList]; //set the transactLoad to the newList array for use in the transaction
+
+    debugger;
 
     let sendListData = async () => {
       //holds the axios API request
@@ -289,6 +314,7 @@ const ListProvider = (props) => {
         editTask,
         handleSubmit,
         handleNewAssigneeSubmit,
+        // handleNewOwnerSubmit,
         addList,
         inputState,
         setInputState,
@@ -296,8 +322,8 @@ const ListProvider = (props) => {
         setUsers,
         owners,
         setOwners,
-        ownerIsNew,
-        setNewListOwner,
+        // ownerIsNew,
+        // setNewListOwner,
         userIsNew,
         setNewUser,
         handleChange,

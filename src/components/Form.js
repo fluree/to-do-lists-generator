@@ -38,7 +38,10 @@ function Form() {
             value={inputState.description}
             change={handleChange}
           />
-          <ListOwnerSelect listOwner={inputState.listOwner} />
+          <ListOwnerSelect
+            listOwner={inputState.listOwner}
+            change={handleChange}
+          />
           <Box
             display='flex'
             flexDirection='column'

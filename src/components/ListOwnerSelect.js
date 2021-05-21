@@ -1,25 +1,25 @@
 import React, { useState, useEffect, useContext } from 'react';
-import InputComponent from './InputComponent';
+// import InputComponent from './InputComponent';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import { ListContext } from '../ListContext';
 import { Box } from '@material-ui/core';
-import { Button } from '@material-ui/core';
+// import { Button } from '@material-ui/core';
 
 function ListOwnerSelect({ listOwner, change }) {
   const listOwnerState = useContext(ListContext);
   const {
-    ownerIsNew,
-    setNewListOwner,
+    // ownerIsNew,
+    // setNewListOwner,
     owners,
-    handleNewOwnerSubmit,
+    // handleNewOwnerSubmit,
     handleTaskChange,
   } = listOwnerState;
-  const [newOwnerState, setNewOwner] = useState({
-    email: '',
-    newOwner: '',
-  });
+  // const [newOwnerState, setNewOwner] = useState({
+  //   email: '',
+  //   newOwner: '',
+  // });
   const [chosenOwner, setChosenOwner] = useState(listOwner);
 
   function handleOwnerSelection(e) {
@@ -28,6 +28,7 @@ function ListOwnerSelect({ listOwner, change }) {
       ...chosenOwner,
       [name]: value,
     });
+    change(e);
   }
 
   useEffect(() => {
@@ -35,14 +36,14 @@ function ListOwnerSelect({ listOwner, change }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chosenOwner]);
 
-  function handleNewOwnerChange(e) {
-    const { name, value } = e.target;
-    setNewOwner({ ...newOwnerState, [name]: value });
-  }
+  // function handleNewOwnerChange(e) {
+  //   const { name, value } = e.target;
+  //   setNewOwner({ ...newOwnerState, [name]: value });
+  // }
 
-  function clearOwnerSelection() {
-    setChosenOwner('');
-  }
+  // function clearOwnerSelection() {
+  //   setChosenOwner('');
+  // }
 
   return (
     <Box display='flex' flexDirection='column'>
@@ -62,16 +63,16 @@ function ListOwnerSelect({ listOwner, change }) {
           <MenuItem
             key={id}
             value={owner._id}
-            onClick={() => setNewListOwner(false)}
+            // onClick={() => setNewListOwner(false)}
           >
             {owner.username}
           </MenuItem>
         ))}
-        <MenuItem onClick={() => setNewListOwner(true)} value='new'>
+        {/* <MenuItem onClick={() => setNewListOwner(true)} value='new'>
           New List Owner
-        </MenuItem>
+        </MenuItem> */}
       </Select>
-      {ownerIsNew && (
+      {/* {ownerIsNew && (
         <>
           <Box display='flex' flexDirection='column'>
             <InputComponent
@@ -103,7 +104,7 @@ function ListOwnerSelect({ listOwner, change }) {
             Add List Owner
           </Button>
         </>
-      )}
+      )} */}
     </Box>
   );
 }
