@@ -14,6 +14,7 @@ const ListProvider = (props) => {
   const [inputState, setInputState] = useState({
     name: '',
     description: '',
+    listOwner: '',
     tasks: [
       {
         id: `task-${nanoid()}`,
@@ -25,6 +26,7 @@ const ListProvider = (props) => {
   });
   const [userIsNew, setNewUser] = useState(false);
   const [users, setUsers] = useState([]);
+  const [owners, setOwners] = useState([]);
 
   //this handles the changes for the name and description inputs in the form component
   function handleChange(e) {
@@ -92,12 +94,23 @@ const ListProvider = (props) => {
         orderBy: ['ASC', '_id'],
       },
     });
+    console.log(response.data);
     setUsers(response.data);
+  };
+
+  const loadOwnerData = async () => {
+    const response = await axios.post(`${baseURL}query`, {
+      select: { '?user': ['_id', 'username'] },
+      where: [['?list', 'list/listOwner', '?user']],
+    });
+    console.log(response.data);
+    setOwners(response.data);
   };
 
   //calls the assignee data function
   useEffect(() => {
     loadAssignedToData();
+    loadOwnerData();
   }, []);
 
   // fetches all the list data in the fdb
@@ -280,6 +293,8 @@ const ListProvider = (props) => {
         setInputState,
         users,
         setUsers,
+        owners,
+        setOwners,
         userIsNew,
         setNewUser,
         handleChange,

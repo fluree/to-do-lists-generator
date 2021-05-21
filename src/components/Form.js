@@ -8,6 +8,7 @@ import { Container } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import IconButton from '@material-ui/core/IconButton';
 import RemoveIcon from '@material-ui/icons/Remove';
+import ListOwnerSelect from './ListOwnerSelect';
 
 function Form() {
   const inputComponentState = useContext(ListContext);
@@ -37,6 +38,7 @@ function Form() {
             value={inputState.description}
             change={handleChange}
           />
+          <ListOwnerSelect listOwner={inputState.listOwner} />
           <Box
             display='flex'
             flexDirection='column'
