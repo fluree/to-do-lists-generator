@@ -10,7 +10,8 @@
             "_rule$canViewAssignedTasks",
             "_rule$fullAccessTaskData",
             "_rule$canEditCompletionStatus",
-            "_rule$canViewAssociatedLists"
+            "_rule$canViewAssociatedLists",
+            "_rule$canViewAssignees"
         ]
     },
     {
@@ -135,5 +136,23 @@
         "name": "canEditCompletionStatus?",
         "doc": "A _user can edit a task's completion status if tied to their user",
         "code": "(relationship? (?sid) [\"task/assignedTo\" \"assignee/user\" \"_user/auth\"] (?auth_id))"
+    },
+    {
+        "_id": "_rule$canViewAssignees",
+        "id": "canViewAssignees",
+        "doc": "A _user with this rule can view all assignee data",
+        "fns": [
+            [
+                "_fn/name",
+                "true"
+            ]
+        ],
+        "ops": [
+            "query"
+        ],
+        "collection": "assignee",
+        "predicates": [
+            "*"
+        ]
     }
 ]
