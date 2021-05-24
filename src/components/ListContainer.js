@@ -1,22 +1,14 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import List from '@material-ui/core/List';
 import Todo from './Todo';
 import UsersTab from './UsersTab';
 import { ListContext } from '../ListContext';
 import { Container } from '@material-ui/core';
-import usersAuth from '../data/usersAuth';
-// import { signQuery, signTransaction } from '@fluree/crypto-utils';
 
 function ListContainer() {
   const listInfo = useContext(ListContext);
-  const [selectedUser, setSelectedUser] = useState(usersAuth['rootUser']);
 
-  const { lists, deleteTask } = listInfo;
-
-  const handleUserChange = (event, name) => {
-    event.preventDefault();
-    setSelectedUser(usersAuth[name]);
-  };
+  const { lists, deleteTask, handleUserChange, selectedUser } = listInfo;
 
   // const changeListDisplay = () => {};
 
