@@ -43,9 +43,9 @@ export default {
   Mannie: {
     name: 'Mannie',
     publicKey:
-      '032e6d4370889c47a0180c0f058e0415778a59500bfb90d2d99e3b921180374bb0',
+      '021d4a03d1292ce9211e304eb2cc74b3e8231a12b5a40dd018d3c2bdc8c5f36337',
     privateKey:
-      '4031ceb81a311554071646beb3c330d203d34cc49e193156c3cc5257372dd997',
-    authId: 'TfCYdrNBWbviwXEd88LWWTxWde95uJikL6v',
+      '43919e1413dd2a7a73924735e4043ba476aae29b3fda67e4d8ce12831079f562',
+    authId: '	Tf7f9zxtx4q25ByEaFeuuzQWcvTZjP95fbV',
   },
 };
