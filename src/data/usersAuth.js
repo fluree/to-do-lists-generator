@@ -1,5 +1,13 @@
 /* eslint-disable import/no-anonymous-default-export */
 export default {
+  rootUser: {
+    name: 'rootUser',
+    publicKey:
+      '	03413b5120d862fbb5c49bbb8ecc60c1d0db45d092c7eb54ec83a741a5263f0266',
+    privateKey:
+      '3c1c9c5f2f984ea8161761071c53bef5f1741123f1496a949cdd8ccc4152a2b2',
+    authId: 'Tf3VDot4jSKHFcLY8HSPsuf2yA5YBnRsEPU',
+  },
   Tucca: {
     name: 'Tucca',
     publicKey:

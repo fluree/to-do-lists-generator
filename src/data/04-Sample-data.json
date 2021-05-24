@@ -1,5 +1,21 @@
 [
   {
+    "_id": "_user$6",
+    "username": "rootUser",
+    "auth": [
+      {
+        "_id": "_auth",
+        "id": "Tf3VDot4jSKHFcLY8HSPsuf2yA5YBnRsEPU",
+        "roles": [
+          [
+            "_role/id",
+            "root"
+          ]
+        ]
+      }
+    ]
+  },
+  {
     "_id": "_user$1",
     "username": "Tucca098",
     "auth": [
