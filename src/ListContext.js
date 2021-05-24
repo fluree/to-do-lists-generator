@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { nanoid } from 'nanoid';
+import { ip, network, db } from './appConfig';
 
 //List Context holds all the functionality that will issue transactions and queries from the Fluree DB
 
@@ -84,7 +85,7 @@ const ListProvider = (props) => {
     });
   }
 
-  const baseURL = 'http://localhost:8090/fdb/todo/v3/';
+  const baseURL = `${ip}/fdb/${network}/${db}/`;
 
   //load all the assignee data from fdb on render to propagate the "assignee" Select
   const loadAssignedToData = async () => {
@@ -113,6 +114,7 @@ const ListProvider = (props) => {
   useEffect(() => {
     loadAssignedToData();
     loadOwnerData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // fetches all the list data in the fdb
@@ -135,6 +137,7 @@ const ListProvider = (props) => {
         orderBy: ['ASC', '_id'],
       },
     });
+    console.log(response.data);
     //use the custom setLists hook to propagate list data pulled from Fluree to the Todo and Task components
     setLists(response.data);
   };
@@ -142,6 +145,7 @@ const ListProvider = (props) => {
   //calls the fetching list data function on render
   useEffect(() => {
     fetchListData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // function addNewOwner({ newListOwner, email }) {
@@ -217,8 +221,6 @@ const ListProvider = (props) => {
     });
 
     let transactLoad = [newList]; //set the transactLoad to the newList array for use in the transaction
-
-    debugger;
 
     let sendListData = async () => {
       //holds the axios API request
