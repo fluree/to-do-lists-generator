@@ -288,7 +288,7 @@ const ListProvider = (props) => {
           },
         ]);
 
-        let signedCommand = signTransaction(
+        let signedCommandOne = signTransaction(
           auth,
           db,
           expire,
@@ -300,7 +300,7 @@ const ListProvider = (props) => {
         const fetchOpts = {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(signedCommand),
+          body: JSON.stringify(signedCommandOne),
         };
 
         fetch(`${baseURL}command`, fetchOpts).then((res) => {
@@ -333,12 +333,35 @@ const ListProvider = (props) => {
         },
       ];
 
-      let editTaskProps = async () => {
-        await axios.post(
-          // axios request to submit an update transaction to fluree
-          `${baseURL}transact`,
-          taskChangeTransact //this is the body that holds the update transaction in FlureeQL
+      let editTaskProps = () => {
+        let txid;
+        const privateKey = selectedUser.privateKey;
+        const auth = selectedUser.authId;
+        const db = 'todo/v3';
+        const expire = Date.now() + 1000;
+        const fuel = 100000;
+        const nonce = 1;
+        const tx = JSON.stringify(taskChangeTransact);
+        let signedCommandTwo = signTransaction(
+          auth,
+          db,
+          expire,
+          fuel,
+          nonce,
+          privateKey,
+          tx
         );
+
+        const fetchOpts = {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(signedCommandTwo),
+        };
+        fetch(`${baseURL}command`, fetchOpts).then((res) => {
+          txid = res;
+          console.log(res);
+          return;
+        });
       };
       if (index >= 0) {
         list.tasks[index] = newTask; //sets the selected task to the newTask with changes
