@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { nanoid } from 'nanoid';
 import { ip, network, db } from './appConfig';
+import { signQuery, signTransaction } from '@fluree/crypto-utils';
+import usersAuth from './data/usersAuth';
 
 //List Context holds all the functionality that will issue transactions and queries from the Fluree DB
 
@@ -29,6 +31,12 @@ const ListProvider = (props) => {
   // const [ownerIsNew, setNewListOwner] = useState(false);
   const [users, setUsers] = useState([]);
   const [owners, setOwners] = useState([]);
+  let [selectedUser, setSelectedUser] = useState(usersAuth['rootUser']);
+
+  const handleUserChange = (event, name) => {
+    event.preventDefault();
+    setSelectedUser(usersAuth[name]);
+  };
 
   //this handles the changes for the name and description inputs in the form component
   function handleChange(e) {
@@ -85,7 +93,7 @@ const ListProvider = (props) => {
     });
   }
 
-  const baseURL = `${ip}/fdb/${network}/${db}/`;
+  let baseURL = `${ip}/fdb/${network}/${db}/`;
 
   //load all the assignee data from fdb on render to propagate the "assignee" Select
   const loadAssignedToData = async () => {
@@ -97,7 +105,6 @@ const ListProvider = (props) => {
         orderBy: ['ASC', '_id'],
       },
     });
-    console.log(response.data);
     setUsers(response.data);
   };
 
@@ -117,9 +124,9 @@ const ListProvider = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // fetches all the list data in the fdb
-  const fetchListData = async () => {
-    let response = await axios.post(`${baseURL}query`, {
+  useEffect(() => {
+    // fetches all the list data in the fdb
+    const fetchListData = {
       select: [
         '*',
         {
@@ -136,17 +143,25 @@ const ListProvider = (props) => {
         compact: true,
         orderBy: ['ASC', '_id'],
       },
-    });
-    console.log(response.data);
-    //use the custom setLists hook to propagate list data pulled from Fluree to the Todo and Task components
-    setLists(response.data);
-  };
-
-  //calls the fetching list data function on render
-  useEffect(() => {
-    fetchListData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    };
+    const privateKey = selectedUser.privateKey;
+    const queryType = 'query';
+    const host = 'localhost';
+    const db = 'todo/v3';
+    const param = JSON.stringify(fetchListData);
+    let signed = signQuery(privateKey, param, queryType, host, db);
+    fetch(`http://localhost:8090/fdb/${db}/query`, signed)
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+        setLists(res);
+      })
+      .catch((err) => {
+        if (/not found/.test(err.message)) {
+          return console.log("this didn't work");
+        }
+      });
+  }, [selectedUser]);
 
   // function addNewOwner({ newListOwner, email }) {
   //   const newOwner = [
@@ -258,14 +273,40 @@ const ListProvider = (props) => {
     const remainingTasks = lists.map((list) => {
       //for every task loop through the task's data
       const index = list.tasks.findIndex((task) => task._id === chosenTask._id); //match on _id
-      let deleteTaskFromFluree = async () => {
-        //the transaction to delete a task in Fluree
-        await axios.post(`${baseURL}transact`, [
+      let deleteTaskFromFluree = () => {
+        let txid;
+        const privateKey = selectedUser.privateKey;
+        const auth = selectedUser.authId;
+        const db = 'todo/v3';
+        const expire = Date.now() + 1000;
+        const fuel = 100000;
+        const nonce = 1;
+        const tx = JSON.stringify([
           {
             _id: chosenTask._id, //this is the task _id to match to the task data in Fluree
             _action: 'delete', // action key required for deletions
           },
         ]);
+
+        let signedCommand = signTransaction(
+          auth,
+          db,
+          expire,
+          fuel,
+          nonce,
+          privateKey,
+          tx
+        );
+        const fetchOpts = {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(signedCommand),
+        };
+
+        fetch(`${baseURL}command`, fetchOpts).then((res) => {
+          txid = res;
+          return;
+        });
       };
       if (index >= 0) {
         delete list.tasks[index]; //deletes the task from the UI
@@ -317,6 +358,8 @@ const ListProvider = (props) => {
         handleSubmit,
         handleNewAssigneeSubmit,
         // handleNewOwnerSubmit,
+        handleUserChange,
+        selectedUser,
         addList,
         inputState,
         setInputState,
