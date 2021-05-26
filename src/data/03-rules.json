@@ -34,7 +34,7 @@
     },
     {
         "_id": "_rule$fullAccessOwnListData",
-        "id": "canQueryOwnListData",
+        "id": "fullAccessOwnListData",
         "doc": "A _user with this rule can only view their own list data",
         "fns": [
             "_fn$fullAccessOwnListsData"
