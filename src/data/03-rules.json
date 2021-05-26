@@ -7,10 +7,10 @@
         "rules": [
             "_rule$fullAccessListCreation",
             "_rule$fullAccessOwnListData",
-            "_rule$canViewAssignedTasks",
             "_rule$fullAccessTaskData",
-            "_rule$canEditCompletionStatus",
             "_rule$canViewAssociatedLists",
+            "_rule$canViewAssignedTasks",
+            "_rule$canEditCompletionStatus",
             "_rule$canViewAssignees"
         ]
     },
