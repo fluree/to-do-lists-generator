@@ -1,4 +1,4 @@
-# To-Do List Generator Part Two: Issuing **Authority and Permissions** at the Data layer with Fluree DB
+# To-Do List Generator Part Two: Issuing **Identity and Permissions** at the Data layer with Fluree DB
 
 ### Recap
 
