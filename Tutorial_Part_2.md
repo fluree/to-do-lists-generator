@@ -18,9 +18,11 @@ To fully understand the way identity and permissions work in Fluree, we will nee
 
 ![relationship-diagram](./public/images/user-auth-role-rule.drawio.png)
 
+> Some of these collections have other predicates aside from the ones depicted.
+
 A user can have an auth record associated with their identity, that auth record is then governed by the roles associated with it. Each specific role has rules that dictate their access (read and write) to the data. The role that comes straight out of the box in Fluree is `["_role/id","root"]`, this role has full read and write access to the db. Users can have multiple roles connected to their auth record, and each role can have different rules as well. Also users can have multiple auth records, but multiple users cannot share the same auth record.
 
-> It is important to note that an auth record does not need to be tied to a user, they can be used independently with a collection of your choosing.
+> It is worth noting that an auth record does not need to be tied to a user, they can be used independently with a collection of your choosing.
 
 ### Generating Auth records with Public-Private Keys
 
@@ -48,3 +50,40 @@ Now that we have the root role and our additional endUser role we need to create
 
 At first glance it doesn't seem like the root user and the endUser differ in what they can and cannot do, but in order to fully grasp how the rules are enforced we need to dive into [Smart Functions](https://docs.flur.ee/guides/1.0.0/smart-functions/smart-functions). Smart functions are functions written in Clojure, they can be triggered with any query or transaction that a user attached to a certain role issues. These smart functions live in the `fn` collection, the `_rule` collection has a predicate called `fns` which is a reference to this collection. So when an action takes place the smart function that is connected to a certain rule is evaluated and will either return true or false depending if the user in question has the permission to execute the desired action.
 
+### Smart Functions and Rules
+
+It is important to note that smart functions are not limited to use in rules, they can be used in `_collection/spec`, `_predicate/spec`, `_predicate/txSpec` and even in transactions. But for the purpose of demonstrating permissions, the bulk of our smart functions are connected to the rules mentioned above. Now lets create a rule that is connected to a smart function:
+
+```json
+    {
+        "_id": "_rule$fullAccessOwnListData",
+        "id": "fullAccessOwnListData",
+        "doc": "A _user with this rule can only view and edit their own list data",
+        "fns": [
+            "_fn$fullAccessOwnListsData"
+        ],
+        "ops": [
+            "all"
+        ],
+        "collection": "list",
+        "predicates": [
+            "*"
+        ]
+    },
+    {
+        "_id": "_fn$fullAccessOwnListsData",
+        "name": "fullAccessOwnListsData?",
+        "doc": "A _user can query and edit their own list data",
+        "code": "(relationship? (?sid) [\"list/listOwner\" \"_user/auth\"] (?auth_id))"
+    }
+```
+
+The JSON snippet above is an example of a transaction that issues both a `rule` and its accompanying `fn`. Starting with the rule object it includes a temporary id (for the transaction) that will evaluate to a interger once it's in Fluree, it also includes an id, a description, the `fns` associated with the rule in the form of a temporary id, `"ops"` is set to `all` (meaning both transact and query), and the collection and its predicates to which this rule is attributed to.
+
+The next object is a transaction that creates the smart function connected to this rule. It uses a temporary id, a name, a description, and the code is in Clojure. Lets break it down:
+
+```clj
+(relationship? (?sid) [\"list/listOwner\" \"_user/auth\"] (?auth_id))
+```
+
+There are a [subset of Clojure functions](https://docs.flur.ee/docs/1.0.0/schema/functions#universal-functions-for-_fncode) that can be used in the code, in this tutorial all of our smart functions use the `relationship` function. The syntax for the `relationship` function is as follows `function startSubject path endSubject`. The function is `relationship?`, the startSubject is `?sid`, a [context-dependent function](https://docs.flur.ee/docs/1.0.0/schema/functions#context-dependent-functions) which refers to a specific subject id, the path can be a single predicate or a vector of predicates that potentially connect the two subjects, the endSubject is the `?auth_id` which refers to a specific auth record id.  The whole code evaluates if the relationship between the subject id and the auth record return true, when evaluated through the given path. 
