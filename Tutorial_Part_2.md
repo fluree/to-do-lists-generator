@@ -159,10 +159,12 @@ The sample schema provided [here](https://github.com/fluree/to-do-lists-generato
       }
     ]
   }]
-``` 
+```
 
-This auth record is already tied to a public-private key pair, it just needs to be transacted, along with the rest of the sample data. The gif below shows how to generate an auth record with private-public keys through thd admin UI.
+This auth record is already tied to a public-private key pair, it just needs to be transacted, along with the rest of the sample data. The gif below shows how to generate an auth record with private-public keys through the admin UI, by selecting _transact_ on the left navigation bar, then pressing the _Generate Keys_ button above the code editor.
 
 <p width="100%" align="center">
 <img src="/src/Images/Generate_prub_priv_keys.gif" alt="generating public private keys" width="650" />
 </p>
+
+This will prompt a modal to appear with the **Public Key**, **Private Key**, and **Auth Id**. You can either transact the auth record within the modal (remembering to make the approriate role changes if necessary), then connect the auth id to a user in a separate transaction, or you can copy the auth object, and nest it into a user transaction similar to the one above. **But be sure to save the public and private keys externally before closing the modal**. In this tutorial there have six users in our sample data and their public-private keys and auth ids are kept in the [usersAuth.js](https://github.com/fluree/to-do-lists-generator/blob/to-do-V2-auth_and_permissions/src/data/usersAuth.js).
