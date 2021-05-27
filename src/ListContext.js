@@ -28,7 +28,6 @@ const ListProvider = (props) => {
     ],
   });
   const [userIsNew, setNewUser] = useState(false);
-  // const [ownerIsNew, setNewListOwner] = useState(false);
   const [users, setUsers] = useState([]);
   const [owners, setOwners] = useState([]);
   let [selectedUser, setSelectedUser] = useState(usersAuth['rootUser']);
@@ -163,23 +162,6 @@ const ListProvider = (props) => {
       });
   }, [selectedUser]);
 
-  // function addNewOwner({ newListOwner, email }) {
-  //   const newOwner = [
-  //     {
-  //       _id: `user$${Math.floor(Math.random() * 10 + 1)}`,
-  //       username: newListOwner,
-  //       email: email,
-  //     },
-  //   ];
-  //   let sendOwnerData = async () => {
-  //     let transResp = await axios.post(`${baseURL}transact`, newOwner);
-  //     if (transResp.status === 200) {
-  //       loadOwnerData();
-  //     }
-  //   };
-  //   sendOwnerData();
-  // }
-
   //create a new Assignee in order to select them from the drop down
   function addNewAssignee({ newAssignedTo, email }) {
     const newAssignee = [
@@ -208,10 +190,6 @@ const ListProvider = (props) => {
   const handleNewAssigneeSubmit = (newAssignee) => {
     addNewAssignee(newAssignee);
   };
-
-  // const handleNewOwnerSubmit = (newOwner) => {
-  //   addNewOwner(newOwner);
-  // };
 
   //adds a new list to the DB
   function addList({ name, description, listOwner, tasks }) {
@@ -274,7 +252,6 @@ const ListProvider = (props) => {
       //for every task loop through the task's data
       const index = list.tasks.findIndex((task) => task._id === chosenTask._id); //match on _id
       let deleteTaskFromFluree = () => {
-        let txid;
         const privateKey = selectedUser.privateKey;
         const auth = selectedUser.authId;
         const db = 'todo/v3';
@@ -304,7 +281,6 @@ const ListProvider = (props) => {
         };
 
         fetch(`${baseURL}command`, fetchOpts).then((res) => {
-          txid = res;
           return;
         });
       };
@@ -334,7 +310,6 @@ const ListProvider = (props) => {
       ];
 
       let editTaskProps = () => {
-        let txid;
         const privateKey = selectedUser.privateKey;
         const auth = selectedUser.authId;
         const db = 'todo/v3';
@@ -358,7 +333,6 @@ const ListProvider = (props) => {
           body: JSON.stringify(signedCommandTwo),
         };
         fetch(`${baseURL}command`, fetchOpts).then((res) => {
-          txid = res;
           console.log(res);
           return;
         });
@@ -380,7 +354,6 @@ const ListProvider = (props) => {
         editTask,
         handleSubmit,
         handleNewAssigneeSubmit,
-        // handleNewOwnerSubmit,
         handleUserChange,
         selectedUser,
         addList,
@@ -390,8 +363,6 @@ const ListProvider = (props) => {
         setUsers,
         owners,
         setOwners,
-        // ownerIsNew,
-        // setNewListOwner,
         userIsNew,
         setNewUser,
         handleChange,

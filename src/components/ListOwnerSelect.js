@@ -9,17 +9,7 @@ import { Box } from '@material-ui/core';
 
 function ListOwnerSelect({ listOwner, change }) {
   const listOwnerState = useContext(ListContext);
-  const {
-    // ownerIsNew,
-    // setNewListOwner,
-    owners,
-    // handleNewOwnerSubmit,
-    handleTaskChange,
-  } = listOwnerState;
-  // const [newOwnerState, setNewOwner] = useState({
-  //   email: '',
-  //   newOwner: '',
-  // });
+  const { owners, handleTaskChange } = listOwnerState;
   const [chosenOwner, setChosenOwner] = useState(listOwner);
 
   function handleOwnerSelection(e) {
@@ -36,15 +26,6 @@ function ListOwnerSelect({ listOwner, change }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chosenOwner]);
 
-  // function handleNewOwnerChange(e) {
-  //   const { name, value } = e.target;
-  //   setNewOwner({ ...newOwnerState, [name]: value });
-  // }
-
-  // function clearOwnerSelection() {
-  //   setChosenOwner('');
-  // }
-
   return (
     <Box display='flex' flexDirection='column'>
       <InputLabel variant='filled' id='select-label'>
@@ -60,51 +41,11 @@ function ListOwnerSelect({ listOwner, change }) {
         variant='filled'
       >
         {owners.map((owner, id) => (
-          <MenuItem
-            key={id}
-            value={owner._id}
-            // onClick={() => setNewListOwner(false)}
-          >
+          <MenuItem key={id} value={owner._id}>
             {owner.username}
           </MenuItem>
         ))}
-        {/* <MenuItem onClick={() => setNewListOwner(true)} value='new'>
-          New List Owner
-        </MenuItem> */}
       </Select>
-      {/* {ownerIsNew && (
-        <>
-          <Box display='flex' flexDirection='column'>
-            <InputComponent
-              title='New Owner'
-              type='text'
-              name='newOwner'
-              value={newOwnerState.newOwner}
-              change={handleNewOwnerChange}
-            />
-            <InputComponent
-              title='Email'
-              type='text'
-              name='email'
-              value={newOwnerState.email}
-              change={handleNewOwnerChange}
-            />
-          </Box>
-          <Button
-            variant='text'
-            color='secondary'
-            style={{ backgroundColor: 'transparent' }}
-            onClick={(e) => {
-              handleNewOwnerSubmit(newOwnerState);
-              e.preventDefault();
-              clearOwnerSelection();
-              setNewListOwner(false);
-            }}
-          >
-            Add List Owner
-          </Button>
-        </>
-      )} */}
     </Box>
   );
 }

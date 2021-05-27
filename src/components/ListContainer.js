@@ -10,8 +10,6 @@ function ListContainer() {
 
   const { lists, deleteTask, handleUserChange, selectedUser } = listInfo;
 
-  // const changeListDisplay = () => {};
-
   const TaskList = (props) => {
     const listItem = (
       <Todo
