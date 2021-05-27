@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 // import InputComponent from './InputComponent';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -7,7 +7,7 @@ import { ListContext } from '../ListContext';
 import { Box } from '@material-ui/core';
 // import { Button } from '@material-ui/core';
 
-function ListOwnerSelect({ listOwner, change }) {
+function ListOwnerSelect({ change }) {
   const listOwnerState = useContext(ListContext);
   const { owners, chosenOwner, setChosenOwner, handleTaskChange } =
     listOwnerState;
