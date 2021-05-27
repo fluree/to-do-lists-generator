@@ -5,31 +5,12 @@
             "endUser"
         ],
         "rules": [
-            "_rule$fullAccessListCreation",
             "_rule$fullAccessOwnListData",
             "_rule$fullAccessTaskData",
             "_rule$canViewAssociatedLists",
             "_rule$canViewAssignedTasks",
             "_rule$canEditCompletionStatus",
             "_rule$canViewAssignees"
-        ]
-    },
-    {
-        "_id": "_rule$fullAccessListCreation",
-        "id": "fullAccessListCreation",
-        "doc": "A _user with this rule has the ability to create a list",
-        "fns": [
-            [
-                "_fn/name",
-                "true"
-            ]
-        ],
-        "ops": [
-            "transact"
-        ],
-        "collection": "list",
-        "predicates": [
-            "*"
         ]
     },
     {
@@ -48,8 +29,8 @@
         ]
     },
     {
-        "_id": "_fn$fullAccessOwnListsData",
-        "name": "fullAccessOwnListsData?",
+        "_id": "_fn$fullAccessOwnListData",
+        "name": "fullAccessOwnListData?",
         "doc": "A _user can query and edit their own list data",
         "code": "(relationship? (?sid) [\"list/listOwner\" \"_user/auth\"] (?auth_id))"
     },
