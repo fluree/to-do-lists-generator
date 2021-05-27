@@ -4,7 +4,6 @@
 
 This tutorial is a follow up to the first tutorial found [here](https://github.com/fluree/to-do-lists-generator) on the `to-do-list` branch, where we built a to-do list generator using React and Fluree. If you are not familiar with Fluree, please refer to the first part of this tutorial series to learn the basics. We will be building off of the first version by using the `to-do-V2-auth_and_permissions` branch.
 
-
 ## Getting started
 
 1. To get started git clone the repo via `git clone https://github.com/fdmmarshall/to-do-lists-generator.git`, or any other preferred method. 
@@ -107,9 +106,9 @@ The next object is a transaction that creates the smart function connected to th
 (relationship? (?sid) [\"list/listOwner\" \"_user/auth\"] (?auth_id))
 ```
 
-There are a [subset of Clojure functions](https://docs.flur.ee/docs/1.0.0/schema/functions#universal-functions-for-_fncode) that can be used in the code, in this tutorial all of our smart functions use the `relationship` function. The syntax for the `relationship?` function is as follows `function startSubject path endSubject`. The function is `relationship?`, the startSubject is `?sid`, a [context-dependent function](https://docs.flur.ee/docs/1.0.0/schema/functions#context-dependent-functions) which refers to a specific subject id, the path can be a single predicate or a vector of predicates that potentially connect the two subjects, the endSubject is the `?auth_id`, which is also a context-dependent function and refers to a specific auth record id.  The whole code evaluates if the relationship between the subject id and the auth record id return true, given the path. In this example in order for a listOwner to view their list data their id must have a connection to the auth record id, the path `[list/listOwner _user/auth]` bridges that connection.
+There are a [subset of Clojure functions](https://docs.flur.ee/docs/1.0.0/schema/functions#universal-functions-for-_fncode) that can be used in the code, in this tutorial all of our smart functions use the `relationship` function. The syntax for the `relationship?` function is as follows `function startSubject path endSubject`. The function is `relationship?`, the startSubject is `?sid`, a [context-dependent function](https://docs.flur.ee/docs/1.0.0/schema/functions#context-dependent-functions) which refers to a specific subject id, the path can be a single predicate or a vector of predicates that potentially connect the two subjects, the endSubject is the `?auth_id`, which is also a context-dependent function and refers to a specific auth record id.  The whole code evaluates if the relationship between the subject id and the auth record id return true, given the path. In this example in order for a `listOwner` to view their list data their id must have a connection to the auth record id, the path `[list/listOwner _user/auth]` bridges that connection.
 
-Not all rules may need a custom smart function as the one above, in some cases a user's ability to query and transact certain data should always be true. That means there does not have to be a startSubject or endSubject evaluated through a path. For a rule to always evaluate to true we simple set the `_rule/fns` to `"fns": [[ "_fn/name","true"]]`, the same can be done if a rule must always evaluate to false.
+Not all rules may need a custom smart function as the one above, in some cases a user's ability to query and transact certain data should always be true. That means there does not have to be a startSubject or endSubject evaluated through a path. For a rule to always evaluate to true we simply set the `_rule/fns` to `"fns": [[ "_fn/name","true"]]`, the same can be done if a rule must always evaluate to false.
 
 ```json
     {
@@ -168,3 +167,5 @@ This auth record is already tied to a public-private key pair, it just needs to 
 </p>
 
 This will prompt a modal to appear with the **Public Key**, **Private Key**, and **Auth Id**. You can either transact the auth record within the modal (remembering to make the approriate role changes if necessary), then connect the auth id to a user in a separate transaction, or you can copy the auth object, and nest it into a user transaction similar to the one above. **But be sure to save the public and private keys externally before closing the modal**. In this tutorial there have six users in our sample data and their public-private keys and auth ids are kept in the [usersAuth.js](https://github.com/fluree/to-do-lists-generator/blob/to-do-V2-auth_and_permissions/src/data/usersAuth.js). Once the sample data is fully transacted, we can now move on to issuing signed queries and transactions.
+
+## Signing Queries and Transactions
