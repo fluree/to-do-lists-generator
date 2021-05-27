@@ -9,8 +9,8 @@ import { Box } from '@material-ui/core';
 
 function ListOwnerSelect({ listOwner, change }) {
   const listOwnerState = useContext(ListContext);
-  const { owners, handleTaskChange } = listOwnerState;
-  const [chosenOwner, setChosenOwner] = useState(listOwner);
+  const { owners, chosenOwner, setChosenOwner, handleTaskChange } =
+    listOwnerState;
 
   function handleOwnerSelection(e) {
     const { name, value } = e.target;

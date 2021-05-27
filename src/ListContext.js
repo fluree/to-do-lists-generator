@@ -30,8 +30,10 @@ const ListProvider = (props) => {
   const [userIsNew, setNewUser] = useState(false);
   const [users, setUsers] = useState([]);
   const [owners, setOwners] = useState([]);
+  const [chosenOwner, setChosenOwner] = useState(inputState.listOwner);
   let [selectedUser, setSelectedUser] = useState(usersAuth['rootUser']);
 
+  //this handles the tab change for a user
   const handleUserChange = (event, name) => {
     event.preventDefault();
     setSelectedUser(usersAuth[name]);
@@ -90,6 +92,7 @@ const ListProvider = (props) => {
         },
       ],
     });
+    setChosenOwner('');
   }
 
   let baseURL = `${ip}/fdb/${network}/${db}/`;
@@ -112,8 +115,17 @@ const ListProvider = (props) => {
       select: { '?user': ['_id', 'username'] },
       where: [['?list', 'list/listOwner', '?user']],
     });
-    console.log(response.data);
-    setOwners(response.data);
+
+    const filteredIds = new Set();
+    const ownerData = response.data;
+
+    const filterOwnerData = ownerData.filter((el) => {
+      const duplicate = filteredIds.has(el._id);
+      filteredIds.add(el._id);
+      return !duplicate;
+    });
+
+    setOwners(filterOwnerData);
   };
 
   //calls the assignee data function
@@ -152,7 +164,6 @@ const ListProvider = (props) => {
     fetch(`http://localhost:8090/fdb/${db}/query`, signed)
       .then((res) => res.json())
       .then((res) => {
-        console.log(res);
         setLists(res);
       })
       .catch((err) => {
@@ -357,6 +368,8 @@ const ListProvider = (props) => {
         handleUserChange,
         selectedUser,
         addList,
+        chosenOwner,
+        setChosenOwner,
         inputState,
         setInputState,
         users,
