@@ -58,7 +58,7 @@
     {
         "_id": "_rule$canViewAssociatedLists",
         "id": "canViewAssociatedLists",
-        "doc": "A _user with this rule can view the lists info they are associated with",
+        "doc": "A _user with this rule can view the list data that they are associated with",
         "fns": [
             "_fn$canViewAssociatedLists"
         ],
@@ -73,7 +73,7 @@
     {
         "_id": "_fn$canViewAssociatedLists",
         "name": "canViewAssociatedLists?",
-        "doc": "A _user can view the list info assigned to them",
+        "doc": "A _user can view the list data that they are associated with",
         "code": "(relationship? (?sid) [\"list/tasks\" \"task/assignedTo\" \"assignee/user\" \"_user/auth\"] (?auth_id))"
     },
     {
