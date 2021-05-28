@@ -42,7 +42,7 @@
             "_fn$fullAccessTaskData"
         ],
         "ops": [
-            "all"
+            "transact"
         ],
         "collection": "task",
         "predicates": [
@@ -77,11 +77,14 @@
         "code": "(relationship? (?sid) [\"list/tasks\" \"task/assignedTo\" \"assignee/user\" \"_user/auth\"] (?auth_id))"
     },
     {
-        "_id": "_rule$canViewAssignedTasks",
+        "_id": "_rule$canViewAllTasks",
         "id": "canViewAssignedTasks",
         "doc": "A _user with this rule can view task info assigned to them",
         "fns": [
-            "_fn$canViewAssignedTasks"
+            [
+                "_fn/name",
+                "true"
+            ]
         ],
         "ops": [
             "query"
@@ -90,12 +93,6 @@
         "predicates": [
             "*"
         ]
-    },
-    {
-        "_id": "_fn$canViewAssignedTasks",
-        "name": "canViewAssignedTasks?",
-        "doc": "A _user can view the tasks assigned to them in a list",
-        "code": "(relationship? (?sid) [\"task/assignedTo\" \"assignee/user\" \"_user/auth\"] (?auth_id))"
     },
     {
         "_id": "_rule$canEditCompletionStatus",

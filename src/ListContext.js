@@ -164,6 +164,7 @@ const ListProvider = (props) => {
     fetch(`http://localhost:8090/fdb/${db}/query`, signed)
       .then((res) => res.json())
       .then((res) => {
+        console.log(res);
         setLists(res);
       })
       .catch((err) => {
