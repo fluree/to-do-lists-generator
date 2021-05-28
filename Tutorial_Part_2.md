@@ -100,9 +100,7 @@ It is important to note that smart functions are not limited to use in rules, th
 
 The JSON snippet above is an example of a transaction that issues both a [`rule`](https://docs.flur.ee/docs/1.0.0/schema/identity#_rule) and its accompanying [`fn`](https://docs.flur.ee/docs/1.0.0/schema/functions). Starting with the rule object it includes a temporary id (for the transaction) that will evaluate to a interger once it's in Fluree, it also includes an id, a description, the `fns` associated with the rule in the form of a temporary id, `"ops"` is set to `all` (meaning this applies to both actions, transact and query), and the collection and its predicates to which this rule is attributed to. In this case it applies to the `list` collection and all of its predicates.
 
-The next object is a transaction that creates the smart function connected to this rule. It uses a temporary id, a name, a description, and the code is in Clojure. Clojure is a Lisp family language developed for the Java Virtual Machine, for an indepth look at Clojure's syntax visit [Learn X in Y minutes: Clojure](https://learnxinyminutes.com/docs/clojure/), and useful introduction material can be found at [Clojure for the Brave and True](https://www.braveclojure.com/clojure-for-the-brave-and-true/).
-
-.Lets break it down:
+The next object is a transaction that creates the smart function connected to this rule. It uses a temporary id, a name, a description, and the code is in Clojure. Clojure is a Lisp family language developed for the Java Virtual Machine, for an indepth look at Clojure's syntax visit [Learn X in Y minutes: Clojure](https://learnxinyminutes.com/docs/clojure/), and useful introduction material can be found at [Clojure for the Brave and True](https://www.braveclojure.com/clojure-for-the-brave-and-true/). Lets break the code down:
 
 ```clj
 (relationship? (?sid) [\"list/listOwner\" \"_user/auth\"] (?auth_id))
