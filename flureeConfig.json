@@ -1,5 +1,5 @@
 {
     "network": "todo",
-    "db": "v3",
+    "db": "v2",
     "ip": "http://localhost:8090"
 }
