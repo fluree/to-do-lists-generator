@@ -44,7 +44,7 @@ Now that we have a basic understanding of how identity and permissions can be us
 
 ### Schema Changes
 
-In the previous version of this application the `_user` collection was not used, but now that we need to leverage permissioning we will utilize the `_user` collection, along with their `username` predicate. The only other additions are the following predicates: `list/listOwner` and `assignee/user` these are both predicates that reference the `_user` collection. The `list/listOwner` predicate references a single user, while the`assignee/user` predicate is `multi: true`, meaning it can reference multiple users, given that a list can have more than one assignee. The entire schema can be found [here](https://github.com/fluree/to-do-lists-generator/blob/to-do-V2-auth_and_permissions/src/data/01-Schema.json)and transacted to a new Fluree ledger.
+In the previous version of this application the `_user` collection was not used, but now that we need to leverage permissioning we will utilize the `_user` collection, along with their `username` predicate. The only other additions are the following predicates: `list/listOwner` and `assignee/user`, `task/issuedBy` these are all predicates that reference the `_user` collection. The `list/listOwner` predicate references a single user, while the`assignee/user` predicate is `multi: true`, meaning it can reference multiple users, given that a list can have more than one assignee. The entire schema can be found [here](https://github.com/fluree/to-do-lists-generator/blob/to-do-V2-auth_and_permissions/src/data/01-Schema.json)and transacted to a new Fluree ledger.
 
 ### Roles and Rules
 
@@ -218,7 +218,7 @@ import usersAuth from './data/usersAuth';
 
 ### Signing Transactions
 
-These are two example transactions, they both use the `signTransaction` function, which takes a auth id, db, expire, fuel, private key, tx, and optional deps. It is similar to the query version, but the output of `signTransaction` is then placed with in the body of the `fetchOpts` variable. Then it is placed in the fetch method as the second argument.
+These are two example transactions, they both use the `signTransaction` function, which takes a auth id, db, expire, fuel, private key, tx, and optional deps. It is similar to the query version, but the output of `signTransaction` is then placed with in the body of the `fetchOpts` variable. Then it is placed in the fetch method as the second argument. Please refer to [deleteTaskFromFluree](https://github.com/fluree/to-do-lists-generator/blob/cb12b3d11fb5cdb24686713d40c9575822e4744e/src/ListContext.js#L261) and [editTaskProps](https://github.com/fluree/to-do-lists-generator/blob/cb12b3d11fb5cdb24686713d40c9575822e4744e/src/ListContext.js#L309) for their full implementation.
 
 ```js
 import { signTranaction } from '@fluree/crypto-utils';

@@ -140,19 +140,22 @@
     "_id": "task$1",
     "name": "Donate gently used clothing",
     "isCompleted": false,
-    "assignedTo": "assignee$1"
+    "assignedTo": "assignee$1",
+    "issuedBy": "user$2"
   },
   {
     "_id": "task$2",
     "name": "Remove leaves and foliage from garden",
     "isCompleted": false,
-    "assignedTo": "assignee$2"
+    "assignedTo": "assignee$2",
+    "issuedBy": "user$2"
   },
   {
     "_id": "task$3",
     "name": "Put away winter attire",
     "isCompleted": false,
-    "assignedTo": "assignee$1"
+    "assignedTo": "assignee$1",
+    "issuedBy": "user$2"
   },
   {
     "_id": "list$2",
@@ -169,18 +172,21 @@
     "_id": "task$4",
     "name": "Mount the TV",
     "isCompleted": false,
-    "assignedTo": "assignee$3"
+    "assignedTo": "assignee$3",
+    "issuedBy": "user$1"
   },
   {
     "_id": "task$5",
     "name": "Move chili peppers from pot to plot",
     "isCompleted": false,
-    "assignedTo": "assignee$2"
+    "assignedTo": "assignee$2",
+    "issuedBy": "user$1"
   },
   {
     "_id": "task$6",
     "name": "Order new fridge",
     "isCompleted": false,
-    "assignedTo": "assignee$1"
+    "assignedTo": "assignee$1",
+    "issuedBy": "user$1"
   }
 ]

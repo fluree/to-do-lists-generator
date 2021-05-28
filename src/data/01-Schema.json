@@ -34,6 +34,12 @@
     },
     {
         "_id": "_predicate",
+        "name": "task/issuedBy",
+        "type": "ref",
+        "restrictCollection": "_user"
+    },
+    {
+        "_id": "_predicate",
         "name": "list/description",
         "type": "string"
     },
