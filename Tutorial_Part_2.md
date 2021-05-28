@@ -100,7 +100,9 @@ It is important to note that smart functions are not limited to use in rules, th
 
 The JSON snippet above is an example of a transaction that issues both a [`rule`](https://docs.flur.ee/docs/1.0.0/schema/identity#_rule) and its accompanying [`fn`](https://docs.flur.ee/docs/1.0.0/schema/functions). Starting with the rule object it includes a temporary id (for the transaction) that will evaluate to a interger once it's in Fluree, it also includes an id, a description, the `fns` associated with the rule in the form of a temporary id, `"ops"` is set to `all` (meaning this applies to both actions, transact and query), and the collection and its predicates to which this rule is attributed to. In this case it applies to the `list` collection and all of its predicates.
 
-The next object is a transaction that creates the smart function connected to this rule. It uses a temporary id, a name, a description, and the code is in Clojure. Lets break it down:
+The next object is a transaction that creates the smart function connected to this rule. It uses a temporary id, a name, a description, and the code is in Clojure. Clojure is a Lisp family language developed for the Java Virtual Machine, for an indepth look at Clojure's syntax visit [Learn X in Y minutes: Clojure](https://learnxinyminutes.com/docs/clojure/), introduction material can be found at [Clojure for the Brave and True](https://www.braveclojure.com/clojure-for-the-brave-and-true/).
+
+.Lets break it down:
 
 ```clj
 (relationship? (?sid) [\"list/listOwner\" \"_user/auth\"] (?auth_id))
@@ -169,3 +171,8 @@ This auth record is already tied to a public-private key pair, it just needs to 
 This will prompt a modal to appear with the **Public Key**, **Private Key**, and **Auth Id**. You can either transact the auth record within the modal (remembering to make the approriate role changes if necessary), then connect the auth id to a user in a separate transaction, or you can copy the auth object, and nest it into a user transaction similar to the one above. **But be sure to save the public and private keys externally before closing the modal**. In this tutorial there have six users in our sample data and their public-private keys and auth ids are kept in the [usersAuth.js](https://github.com/fluree/to-do-lists-generator/blob/to-do-V2-auth_and_permissions/src/data/usersAuth.js). Once the sample data is fully transacted, we can now move on to issuing signed queries and transactions.
 
 ## Signing Queries and Transactions
+
+The marriage between issuing permissions and generating private-public keys, takes place when users sign queries and transactions. The signature proves that whom ever is issuing the query or transaction has access to the private key, on successful submission it validates their access to view the data or make changes. There are a few ways to go about signing, in this tutorial we use the NPM package, [`@fluree/crypto-utils`](https://github.com/fluree/crypto-utils), but other methods can be found [here](https://docs.flur.ee/guides/1.0.0/identity/signatures).
+
+### Signing Queries
+
