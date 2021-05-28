@@ -174,3 +174,117 @@ The marriage between issuing permissions and generating private-public keys, tak
 
 ### Signing Queries
 
+The query below uses the `signQuery` function. It takes a private key, param, queryType, host, and db as parameters (defined below), then it returns an object with keys: header, method and body, which can be sent to the `/query` endpoint, other possible endpoints are `/multi-query`, `history`, and `block`. This specific query can be found on [here](https://github.com/fluree/to-do-lists-generator/blob/42fd9831f4ee79665dcc266ee915de4278cf91f3/src/ListContext.js#L138), it is triggered on load and defaults to the rootUser on the tab component. Each tab option is a different user with different permissions. The lists view changes given their identity.
+
+```js
+import { signQuery } from '@fluree/crypto-utils';
+import usersAuth from './data/usersAuth';
+
+    const fetchListData = {
+      select: [
+        '*',
+        {
+          tasks: [
+            '*',
+            {
+              assignedTo: ['*'],
+            },
+          ],
+        },
+      ],
+      from: 'list',
+      opts: {
+        compact: true,
+        orderBy: ['ASC', '_id'],
+      },
+    };
+    const privateKey = selectedUser.privateKey;
+    const queryType = 'query';
+    const host = 'localhost';
+    const db = 'todo/v3';
+    const param = JSON.stringify(fetchListData);
+    let signed = signQuery(privateKey, param, queryType, host, db);
+    fetch(`http://localhost:8090/fdb/${db}/query`, signed)
+      .then((res) => res.json())
+      .then((res) => {
+        setLists(res);
+      })
+      .catch((err) => {
+        if (/not found/.test(err.message)) {
+          return console.log("this didn't work");
+        }
+      });
+```
+
+
+### Signing Transactions
+
+```js
+import { signTranaction } from '@fluree/crypto-utils';
+import usersAuth from './data/usersAuth';
+
+   let deleteTaskFromFluree = () => {
+        const privateKey = selectedUser.privateKey;
+        const auth = selectedUser.authId;
+        const db = 'todo/v3';
+        const expire = Date.now() + 1000;
+        const fuel = 100000;
+        const nonce = 1;
+        const tx = JSON.stringify([
+          {
+            _id: chosenTask._id, 
+            _action: 'delete',
+          },
+        ]);
+
+        let signedCommandOne = signTransaction(
+          auth,
+          db,
+          expire,
+          fuel,
+          nonce,
+          privateKey,
+          tx
+        );
+        const fetchOpts = {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(signedCommandOne),
+        };
+
+        fetch(`${baseURL}command`, fetchOpts).then((res) => {
+          return;
+        });
+      };
+```
+
+```js
+  let editTaskProps = () => {
+        const privateKey = selectedUser.privateKey;
+        const auth = selectedUser.authId;
+        const db = 'todo/v3';
+        const expire = Date.now() + 1000;
+        const fuel = 100000;
+        const nonce = 1;
+        const tx = JSON.stringify(taskChangeTransact);
+        let signedCommandTwo = signTransaction(
+          auth,
+          db,
+          expire,
+          fuel,
+          nonce,
+          privateKey,
+          tx
+        );
+
+        const fetchOpts = {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(signedCommandTwo),
+        };
+        fetch(`${baseURL}command`, fetchOpts).then((res) => {
+          console.log(res);
+          return;
+        });
+      };
+```
