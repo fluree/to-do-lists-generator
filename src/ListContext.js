@@ -158,7 +158,7 @@ const ListProvider = (props) => {
     const privateKey = selectedUser.privateKey;
     const queryType = 'query';
     const host = 'localhost';
-    const db = 'todo/v3';
+    const db = 'todo/v2';
     const param = JSON.stringify(fetchListData);
     let signed = signQuery(privateKey, param, queryType, host, db);
     fetch(`http://localhost:8090/fdb/${db}/query`, signed)
@@ -265,7 +265,7 @@ const ListProvider = (props) => {
       let deleteTaskFromFluree = () => {
         const privateKey = selectedUser.privateKey;
         const auth = selectedUser.authId;
-        const db = 'todo/v3';
+        const db = 'todo/v2';
         const expire = Date.now() + 1000;
         const fuel = 100000;
         const nonce = 1;
@@ -323,7 +323,7 @@ const ListProvider = (props) => {
       let editTaskProps = () => {
         const privateKey = selectedUser.privateKey;
         const auth = selectedUser.authId;
-        const db = 'todo/v3';
+        const db = 'todo/v2';
         const expire = Date.now() + 1000;
         const fuel = 100000;
         const nonce = 1;
