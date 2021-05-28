@@ -204,7 +204,7 @@ import usersAuth from './data/usersAuth';
     const db = 'todo/v3';
     const param = JSON.stringify(fetchListData);
     let signed = signQuery(privateKey, param, queryType, host, db);
-    fetch(`http://localhost:8090/fdb/${db}/query`, signed)
+    fetch(`${baseURL}/query`, signed) //fetch issues the request to the given url and takes the output of signedQuery.
       .then((res) => res.json())
       .then((res) => {
         setLists(res);
@@ -216,8 +216,9 @@ import usersAuth from './data/usersAuth';
       });
 ```
 
-
 ### Signing Transactions
+
+These are two example transactions, they both use the `signTransaction` function, which takes a auth id, db, expire, fuel, private key, tx, and optional deps. It is similar to the query version, but the output of `signTransaction` is then placed with in the body of the `fetchOpts` variable. Then it is placed in the fetch method as the second argument.
 
 ```js
 import { signTranaction } from '@fluree/crypto-utils';
