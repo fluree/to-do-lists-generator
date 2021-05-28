@@ -18,7 +18,7 @@
         "id": "fullAccessOwnListData",
         "doc": "A _user with this rule can only view their own list data",
         "fns": [
-            "_fn$fullAccessOwnListsData"
+            "_fn$fullAccessOwnListData"
         ],
         "ops": [
             "all"
@@ -53,7 +53,7 @@
         "_id": "_fn$fullAccessTaskData",
         "name": "fullAccessTaskData?",
         "doc": "A _user can edit task data",
-        "code": "(relationship? (?sid) [\"task/issuedBy\" \"_user/auth\"] (?auth_id))"
+        "code": "(relationship? (?sid) [\"task/issuedBy\" \"list/listOwner\" \"_user/auth\"] (?auth_id))"
     },
     {
         "_id": "_rule$canViewAssociatedLists",
