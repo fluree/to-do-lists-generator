@@ -6,9 +6,9 @@
         ],
         "rules": [
             "_rule$fullAccessOwnListData",
-            "_rule$fullAccessTaskData",
+            "_rule$transactAccessTaskData",
             "_rule$canViewAssociatedLists",
-            "_rule$canViewAssignedTasks",
+            "_rule$canViewAllTasks",
             "_rule$canEditCompletionStatus",
             "_rule$canViewAssignees"
         ]
@@ -35,11 +35,11 @@
         "code": "(relationship? (?sid) [\"list/listOwner\" \"_user/auth\"] (?auth_id))"
     },
     {
-        "_id": "_rule$fullAccessTaskData",
-        "id": "fullAccessTaskData",
+        "_id": "_rule$transactAccessTaskData",
+        "id": "transactAccessTaskData",
         "doc": "A _user with this rule view and edit task data",
         "fns": [
-            "_fn$fullAccessTaskData"
+            "_fn$transactAccessTaskData"
         ],
         "ops": [
             "transact"
@@ -50,9 +50,9 @@
         ]
     },
     {
-        "_id": "_fn$fullAccessTaskData",
-        "name": "fullAccessTaskData?",
-        "doc": "A _user can edit task data",
+        "_id": "_fn$transactAccessTaskData",
+        "name": "transactAccessTaskData?",
+        "doc": "A _user can edit task data linked to their list",
         "code": "(relationship? (?sid) [\"task/issuedBy\" \"list/listOwner\" \"_user/auth\"] (?auth_id))"
     },
     {
@@ -78,7 +78,7 @@
     },
     {
         "_id": "_rule$canViewAllTasks",
-        "id": "canViewAssignedTasks",
+        "id": "canViewAllTasks",
         "doc": "A _user with this rule can view task info assigned to them",
         "fns": [
             [
