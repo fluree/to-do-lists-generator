@@ -293,7 +293,7 @@ import usersAuth from './data/usersAuth';
 
 ### Wrap up
 
-At its core identity and permissions within Fluree are simply data, but with security in the data layer power and scalability are not at the mercy of firewalls and APIs. Its time to move away from application-centricity and embrace data-centricity. 
+At its core identity and permissions within Fluree are simply data, but with security in the data layer power and scalability are not at the mercy of firewalls and APIs. It's time to move away from application-centricity and embrace data-centricity. 
 
 To learn more about architecture, infrastructure, and identity, visit the Fluree [guides](https://docs.flur.ee/guides/1.0.0/intro/intro) section. And for other repo examples visit our [developer hub](https://github.com/fluree/developer-hub).
 
