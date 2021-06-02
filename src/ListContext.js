@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { nanoid } from 'nanoid';
-import { ip, network, db } from './appConfig';
+import { ip, network, database } from './appConfig';
 import { signQuery, signTransaction } from '@fluree/crypto-utils';
 import usersAuth from './data/usersAuth';
 
@@ -95,7 +95,7 @@ const ListProvider = (props) => {
     setChosenOwner('');
   }
 
-  let baseURL = `${ip}/fdb/${network}/${db}/`;
+  let baseURL = `${ip}/fdb/${network}/${database}/`;
 
   //load all the assignee data from fdb on render to propagate the "assignee" Select
   const loadAssignedToData = async () => {
@@ -158,7 +158,7 @@ const ListProvider = (props) => {
     const privateKey = selectedUser.privateKey;
     const queryType = 'query';
     const host = 'localhost';
-    const db = 'todo/v2';
+    const db = `${network}/${database}`;
     const param = JSON.stringify(fetchListData);
     let signed = signQuery(privateKey, param, queryType, host, db);
     fetch(`http://localhost:8090/fdb/${db}/query`, signed)
@@ -266,7 +266,7 @@ const ListProvider = (props) => {
       let deleteTaskFromFluree = () => {
         const privateKey = selectedUser.privateKey;
         const auth = selectedUser.authId;
-        const db = 'todo/v2';
+        const db = `${network}/${database}`;
         const expire = Date.now() + 1000;
         const fuel = 100000;
         const nonce = 1;
@@ -324,7 +324,7 @@ const ListProvider = (props) => {
       let editTaskProps = () => {
         const privateKey = selectedUser.privateKey;
         const auth = selectedUser.authId;
-        const db = 'todo/v2';
+        const db = `${network}/${database}`;
         const expire = Date.now() + 1000;
         const fuel = 100000;
         const nonce = 1;

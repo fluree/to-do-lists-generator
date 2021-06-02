@@ -42,6 +42,8 @@ The way auth records control identity in Fluree are by tying the record to a spe
 
 Now that we have a basic understanding of how identity and permissions can be used within Fluree lets take these concepts and configure them within our application. We will need to refine our schema, add roles and rules, create smart functions, and generate auth records with private-public keys.
 
+> Make sure to change the network and db variables located in the `appConfig.js` to mirror your Fluree network and db namespace, and double check that the local host is at port `8090`.
+
 ### Schema Changes
 
 In the previous version of this application the `_user` collection was not used, but now that we need to leverage permissioning we will utilize the `_user` collection, along with their `username` predicate. The only other additions are the following predicates: `list/listOwner` and `assignee/user`, `task/issuedBy` these are all predicates that reference the `_user` collection. The `list/listOwner` predicate references a single user, while the`assignee/user` predicate is `multi: true`, meaning it can reference multiple users, given that a list can have more than one assignee. The entire schema can be found [here](https://github.com/fluree/to-do-lists-generator/blob/to-do-V2-auth_and_permissions/src/data/01-Schema.json)and transacted to a new Fluree ledger.
@@ -201,7 +203,7 @@ import usersAuth from './data/usersAuth';
     const privateKey = selectedUser.privateKey;
     const queryType = 'query';
     const host = 'localhost';
-    const db = 'todo/v3';
+    const db = `${network}/${database}`
     const param = JSON.stringify(fetchListData);
     let signed = signQuery(privateKey, param, queryType, host, db);
     fetch(`${baseURL}/query`, signed) //fetch issues the request to the given url and takes the output of signedQuery.
@@ -227,7 +229,7 @@ import usersAuth from './data/usersAuth';
    let deleteTaskFromFluree = () => {
         const privateKey = selectedUser.privateKey;
         const auth = selectedUser.authId;
-        const db = 'todo/v3';
+        const db = `${network}/${database}`;
         const expire = Date.now() + 1000;
         const fuel = 100000;
         const nonce = 1;
@@ -263,7 +265,7 @@ import usersAuth from './data/usersAuth';
   let editTaskProps = () => {
         const privateKey = selectedUser.privateKey;
         const auth = selectedUser.authId;
-        const db = 'todo/v3';
+        const db = `${network}/${database}`;
         const expire = Date.now() + 1000;
         const fuel = 100000;
         const nonce = 1;
@@ -284,8 +286,13 @@ import usersAuth from './data/usersAuth';
           body: JSON.stringify(signedCommandTwo),
         };
         fetch(`${baseURL}command`, fetchOpts).then((res) => {
-          console.log(res);
           return;
         });
       };
 ```
+
+### Wrap up
+
+At its core identity and permissions within Fluree are simply data, but with security in the data layer the power and scalability are not at the mercy of firewalls and APIs. Its time to move away from application-centricity and embrace data-centricity. 
+
+To learn more about architecture, infrastructure, and identity, visit the Fluree [guides](https://docs.flur.ee/guides/1.0.0/intro/intro) section. And for other repo examples our [developer hub](https://github.com/fluree/developer-hub).
