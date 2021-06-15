@@ -5,7 +5,7 @@ import { Box } from '@material-ui/core';
 
 export default function Todo(props) {
   function handleDeletion(task) {
-    props.deleteTask(task);
+    props.deleteTaskFromFluree(task);
   }
 
   const viewTemplate = (

@@ -164,7 +164,6 @@ const ListProvider = (props) => {
     fetch(`http://localhost:8090/fdb/${db}/query`, signed)
       .then((res) => res.json())
       .then((res) => {
-        console.log(res);
         setLists(res);
       })
       .catch((err) => {
@@ -261,50 +260,99 @@ const ListProvider = (props) => {
   //tasks are deleted
   function deleteTask(chosenTask) {
     const remainingTasks = lists.map((list) => {
-      //for every task loop through the task's data
-      const index = list.tasks.findIndex((task) => task._id === chosenTask._id); //match on _id
-      let deleteTaskFromFluree = () => {
-        const privateKey = selectedUser.privateKey;
-        const auth = selectedUser.authId;
-        const db = `${network}/${database}`;
-        const expire = Date.now() + 1000;
-        const fuel = 100000;
-        const nonce = 1;
-        const tx = JSON.stringify([
-          {
-            _id: chosenTask._id, //this is the task _id to match to the task data in Fluree
-            _action: 'delete', // action key required for deletions
-          },
-        ]);
-
-        let signedCommandOne = signTransaction(
-          auth,
-          db,
-          expire,
-          fuel,
-          nonce,
-          privateKey,
-          tx
-        );
-        const fetchOpts = {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(signedCommandOne),
-        };
-
-        fetch(`${baseURL}command`, fetchOpts).then((res) => {
-          return;
-        });
-      };
-      if (index >= 0) {
-        delete list.tasks[index]; //deletes the task from the UI
-        deleteTaskFromFluree(); //issues the axios request to send the transaction to delete the task from Fluree
+      const indexItem = list.tasks.findIndex(
+        (task) => task._id === chosenTask._id
+      );
+      if (indexItem >= 0) {
+        // deleteTaskFromFluree();
+        list.tasks.splice(indexItem, 1);
+        //deletes the task from the UI
+        //issues the fetch request to send the transaction to delete the task from Fluree
       }
       return list;
+      //calls the custom hook to set the lists in the UI
     });
 
-    setLists(remainingTasks); //calls the custom hook to set the lists in the UI
+    setLists(remainingTasks);
   }
+
+  let deleteTaskFromFluree = (chosenTask) => {
+    const privateKey = selectedUser.privateKey;
+    const auth = selectedUser.authId;
+    const db = `${network}/${database}`;
+    const expire = Date.now() + 120000;
+    const fuel = 100000;
+    const nonce = 1;
+    const tx = JSON.stringify([
+      {
+        _id: chosenTask._id, //this is the task _id to match to the task data in Fluree
+        _action: 'delete', // action key required for deletions
+      },
+    ]);
+    let signedCommandOne = signTransaction(
+      auth,
+      db,
+      expire,
+      fuel,
+      nonce,
+      privateKey,
+      tx
+    );
+    const fetchOpts = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(signedCommandOne),
+    };
+    let txID = null;
+    fetch(`${baseURL}command`, fetchOpts)
+      .then((response) => response.json())
+      .then((data) => {
+        txID = data;
+        console.log(txID);
+        let txQuery = {
+          select: ['*'],
+          from: ['_tx/id', txID],
+          opts: {
+            compact: true,
+          },
+        };
+        let fetchData = {
+          method: 'POST',
+          body: JSON.stringify(txQuery),
+          headers: { 'Content-Type': 'application/json' },
+        };
+
+        fetch(`${baseURL}query`, fetchData)
+          .then(
+            setTimeout(() => {
+              console.log('inside timeout');
+            }, 1000)
+          )
+          .then((res) => res.json())
+          .then((res) => {
+            console.log(res);
+            if (res[0].error) {
+              window.alert('You cannot delete this task');
+              return;
+            }
+            const remainingTasks = lists.map((list) => {
+              const indexItem = list.tasks.findIndex(
+                (task) => task._id === chosenTask._id
+              );
+              if (indexItem >= 0) {
+                // deleteTaskFromFluree();
+                list.tasks.splice(indexItem, 1);
+                //deletes the task from the UI
+                //issues the fetch request to send the transaction to delete the task from Fluree
+              }
+              return list;
+              //calls the custom hook to set the lists in the UI
+            });
+
+            setLists(remainingTasks);
+          });
+      });
+  };
 
   //task are edited (task name or their completed status)
   async function editTask(newTask) {
@@ -345,7 +393,6 @@ const ListProvider = (props) => {
           body: JSON.stringify(signedCommandTwo),
         };
         fetch(`${baseURL}command`, fetchOpts).then((res) => {
-          console.log(res);
           return;
         });
       };
@@ -362,6 +409,7 @@ const ListProvider = (props) => {
     <ListContext.Provider //this provides all the state and functionality to every component within in it
       value={{
         lists,
+        deleteTaskFromFluree,
         deleteTask,
         editTask,
         handleSubmit,

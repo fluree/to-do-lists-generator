@@ -8,7 +8,13 @@ import { Container } from '@material-ui/core';
 function ListContainer() {
   const listInfo = useContext(ListContext);
 
-  const { lists, deleteTask, handleUserChange, selectedUser } = listInfo;
+  const {
+    lists,
+    deleteTask,
+    deleteTaskFromFluree,
+    handleUserChange,
+    selectedUser,
+  } = listInfo;
 
   const TaskList = (props) => {
     const listItem = (
@@ -19,6 +25,7 @@ function ListContainer() {
         tasks={props.list.tasks}
         key={props.list._id}
         deleteTask={deleteTask}
+        deleteTaskFromFluree={deleteTaskFromFluree}
       />
     );
 
