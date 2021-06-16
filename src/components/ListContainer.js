@@ -8,12 +8,14 @@ import { Container } from '@material-ui/core';
 function ListContainer() {
   const listInfo = useContext(ListContext);
 
-  const { lists, deleteTask, handleUserChange, selectedUser } = listInfo;
+  const { lists, deleteTaskFromFluree, handleUserChange, selectedUser } =
+    listInfo;
   if (lists.status && lists.status === 400) {
     window.alert(
       `${lists.message} -- Have you added the ledger and updated the app code in appConfig.js with the correct ledger name?`
     );
   }
+
   const TaskList = (props) => {
     const listItem = (
       <Todo
@@ -22,7 +24,7 @@ function ListContainer() {
         id={props.list._id}
         tasks={props.list.tasks}
         key={props.list._id}
-        deleteTask={deleteTask}
+        deleteTaskFromFluree={deleteTaskFromFluree}
       />
     );
 

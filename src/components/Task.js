@@ -10,7 +10,7 @@ import { Box } from '@material-ui/core';
 
 function Task({ task, handleDeletion }) {
   const taskInfo = useContext(ListContext);
-  const { editTask, handleSubmit } = taskInfo;
+  const { editTaskProps, handleSubmit } = taskInfo;
   const [isEditing, setEditing] = useState(false);
   const [taskState] = useState({ ...task });
   const [newName, setNewName] = useState('');
@@ -23,13 +23,13 @@ function Task({ task, handleDeletion }) {
     e.preventDefault();
     setNewName(''); //resets the newName state
     setEditing(false); //sets editing to false to hide the newName input
-    editTask({ ...taskState, name: newName }); // calls the function from the context with the changed params
+    editTaskProps({ ...taskState, name: newName }); // calls the function from the context with the changed params
   }
 
   function toggleCheckbox() {
     //changes the checkbox state
     const taskCompleted = !taskState.isCompleted;
-    editTask({ ...taskState, isCompleted: taskCompleted }); //calls the function from the context to recieve the change
+    editTaskProps({ ...taskState, isCompleted: taskCompleted }); //calls the function from the context to recieve the change
   }
 
   return (

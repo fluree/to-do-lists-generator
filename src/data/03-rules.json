@@ -53,7 +53,7 @@
         "_id": "_fn$transactAccessTaskData",
         "name": "transactAccessTaskData?",
         "doc": "A _user can edit task data linked to their list",
-        "code": "(relationship? (?sid) [\"task/issuedBy\" \"list/listOwner\" \"_user/auth\"] (?auth_id))"
+        "code": "(relationship? (?sid) [\"task/issuedBy\" \"_user/auth\"] (?auth_id))"
     },
     {
         "_id": "_rule$canViewAssociatedLists",
@@ -79,7 +79,7 @@
     {
         "_id": "_rule$canViewAllTasks",
         "id": "canViewAllTasks",
-        "doc": "A _user with this rule can view task info assigned to them",
+        "doc": "A _user with this rule can view task info",
         "fns": [
             [
                 "_fn/name",
