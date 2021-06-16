@@ -354,56 +354,85 @@ const ListProvider = (props) => {
       });
   };
 
-  //task are edited (task name or their completed status)
-  async function editTask(newTask) {
-    const editedTaskList = await lists.map((list) => {
-      //for every task loop through the task's data
-      const index = list.tasks.findIndex((task) => task._id === newTask._id); //match on _id
-
-      let taskChangeTransact = [
-        //sets the transaction to update data, this type of query can include the "_action" : "update", but if it is transact it is inferred
-        {
-          _id: newTask._id, //the task _id from list
-          name: newTask.name, //name of the task, if it is different it will change in Fluree
-          isCompleted: newTask.isCompleted, //completed status, if different it will change in Fluree
-        },
-      ];
-
-      let editTaskProps = () => {
-        const privateKey = selectedUser.privateKey;
-        const auth = selectedUser.authId;
-        const db = `${network}/${database}`;
-        const expire = Date.now() + 1000;
-        const fuel = 100000;
-        const nonce = 1;
-        const tx = JSON.stringify(taskChangeTransact);
-        let signedCommandTwo = signTransaction(
-          auth,
-          db,
-          expire,
-          fuel,
-          nonce,
-          privateKey,
-          tx
-        );
-
-        const fetchOpts = {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(signedCommandTwo),
+  let editTaskProps = (newTask) => {
+    let taskChangeTransact = [
+      //sets the transaction to update data, this type of query can include the "_action" : "update", but if it is transact it is inferred
+      {
+        _id: newTask._id, //the task _id from list
+        name: newTask.name, //name of the task, if it is different it will change in Fluree
+        isCompleted: newTask.isCompleted, //completed status, if different it will change in Fluree
+      },
+    ];
+    const privateKey = selectedUser.privateKey;
+    const auth = selectedUser.authId;
+    const db = `${network}/${database}`;
+    const expire = Date.now() + 120000;
+    const fuel = 100000;
+    const nonce = 1;
+    const tx = JSON.stringify(taskChangeTransact);
+    let signedCommandTwo = signTransaction(
+      auth,
+      db,
+      expire,
+      fuel,
+      nonce,
+      privateKey,
+      tx
+    );
+    let txID = null;
+    const fetchOpts = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(signedCommandTwo),
+    };
+    fetch(`${baseURL}command`, fetchOpts)
+      .then((response) => response.json())
+      .then((data) => {
+        txID = data;
+        console.log(txID);
+        let txQuery = {
+          select: ['*'],
+          from: ['_tx/id', txID],
+          opts: {
+            compact: true,
+          },
         };
-        fetch(`${baseURL}command`, fetchOpts).then((res) => {
-          return;
-        });
-      };
-      if (index >= 0) {
-        list.tasks[index] = newTask; //sets the selected task to the newTask with changes
-        editTaskProps();
-      }
-      return list;
-    });
-    setLists(editedTaskList); //calls the custom hook to set the lists in the UI
-  }
+        let fetchData = {
+          method: 'POST',
+          body: JSON.stringify(txQuery),
+          headers: { 'Content-Type': 'application/json' },
+        };
+
+        fetch(`${baseURL}query`, fetchData)
+          .then(
+            setTimeout(() => {
+              console.log('inside timeout');
+            }, 1000)
+          )
+          .then((res) => res.json())
+          .then((res) => {
+            console.log(res);
+            if (res[0].error) {
+              window.alert('You cannot edit this task');
+              return;
+            }
+            //task are edited (task name or their completed status)
+            const editedTaskList = lists.map((list) => {
+              //for every task loop through the task's data
+              const index = list.tasks.findIndex(
+                (task) => task._id === newTask._id
+              ); //match on _id
+
+              if (index >= 0) {
+                list.tasks[index] = newTask; //sets the selected task to the newTask with changes
+                editTaskProps();
+              }
+              return list;
+            });
+            setLists(editedTaskList); //calls the custom hook to set the lists in the UI
+          });
+      });
+  };
 
   return (
     <ListContext.Provider //this provides all the state and functionality to every component within in it
@@ -411,7 +440,7 @@ const ListProvider = (props) => {
         lists,
         deleteTaskFromFluree,
         deleteTask,
-        editTask,
+        editTaskProps,
         handleSubmit,
         handleNewAssigneeSubmit,
         handleUserChange,
