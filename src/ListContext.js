@@ -257,25 +257,6 @@ const ListProvider = (props) => {
     addList(list);
   };
 
-  //tasks are deleted
-  function deleteTask(chosenTask) {
-    const remainingTasks = lists.map((list) => {
-      const indexItem = list.tasks.findIndex(
-        (task) => task._id === chosenTask._id
-      );
-      if (indexItem >= 0) {
-        // deleteTaskFromFluree();
-        list.tasks.splice(indexItem, 1);
-        //deletes the task from the UI
-        //issues the fetch request to send the transaction to delete the task from Fluree
-      }
-      return list;
-      //calls the custom hook to set the lists in the UI
-    });
-
-    setLists(remainingTasks);
-  }
-
   let deleteTaskFromFluree = (chosenTask) => {
     const privateKey = selectedUser.privateKey;
     const auth = selectedUser.authId;
@@ -322,35 +303,31 @@ const ListProvider = (props) => {
           headers: { 'Content-Type': 'application/json' },
         };
 
-        fetch(`${baseURL}query`, fetchData)
-          .then(
-            setTimeout(() => {
-              console.log('inside timeout');
-            }, 1000)
-          )
-          .then((res) => res.json())
-          .then((res) => {
-            console.log(res);
-            if (res[0].error) {
-              window.alert('You cannot delete this task');
-              return;
+        async function queryTransaction() {
+          const txRes = await fetch(`${baseURL}query`, fetchData);
+          const id = await txRes.json();
+          console.log(id);
+          if (id[0].error) {
+            window.alert('You cannot delete this task');
+            return;
+          }
+          const remainingTasks = lists.map((list) => {
+            const indexItem = list.tasks.findIndex(
+              (task) => task._id === chosenTask._id
+            );
+            if (indexItem >= 0) {
+              list.tasks.splice(indexItem, 1);
+              //deletes the task from the UI
             }
-            const remainingTasks = lists.map((list) => {
-              const indexItem = list.tasks.findIndex(
-                (task) => task._id === chosenTask._id
-              );
-              if (indexItem >= 0) {
-                // deleteTaskFromFluree();
-                list.tasks.splice(indexItem, 1);
-                //deletes the task from the UI
-                //issues the fetch request to send the transaction to delete the task from Fluree
-              }
-              return list;
-              //calls the custom hook to set the lists in the UI
-            });
-
-            setLists(remainingTasks);
+            return list;
+            //calls the custom hook to set the lists in the UI
           });
+          setLists(remainingTasks);
+        }
+        setTimeout(() => {
+          queryTransaction();
+          console.log('inside timeout');
+        }, 1000);
       });
   };
 
@@ -403,34 +380,32 @@ const ListProvider = (props) => {
           headers: { 'Content-Type': 'application/json' },
         };
 
-        fetch(`${baseURL}query`, fetchData)
-          .then(
-            setTimeout(() => {
-              console.log('inside timeout');
-            }, 1000)
-          )
-          .then((res) => res.json())
-          .then((res) => {
-            console.log(res);
-            if (res[0].error) {
-              window.alert('You cannot edit this task');
-              return;
-            }
-            //task are edited (task name or their completed status)
-            const editedTaskList = lists.map((list) => {
-              //for every task loop through the task's data
-              const index = list.tasks.findIndex(
-                (task) => task._id === newTask._id
-              ); //match on _id
+        async function queryTransaction() {
+          const txRes = await fetch(`${baseURL}query`, fetchData);
+          const id = await txRes.json();
+          console.log(id);
+          if (id[0].error) {
+            window.alert('You cannot edit this task');
+            return;
+          }
+          //task are edited (task name or their completed status)
+          const editedTaskList = lists.map((list) => {
+            //for every task loop through the task's data
+            const index = list.tasks.findIndex(
+              (task) => task._id === newTask._id
+            ); //match on _id
 
-              if (index >= 0) {
-                list.tasks[index] = newTask; //sets the selected task to the newTask with changes
-                editTaskProps();
-              }
-              return list;
-            });
-            setLists(editedTaskList); //calls the custom hook to set the lists in the UI
+            if (index >= 0) {
+              list.tasks[index] = newTask; //sets the selected task to the newTask with changes
+            }
+            return list;
           });
+          setLists(editedTaskList);
+        }
+        setTimeout(() => {
+          queryTransaction();
+          console.log('inside timeout');
+        }, 1000);
       });
   };
 
@@ -439,7 +414,6 @@ const ListProvider = (props) => {
       value={{
         lists,
         deleteTaskFromFluree,
-        deleteTask,
         editTaskProps,
         handleSubmit,
         handleNewAssigneeSubmit,
