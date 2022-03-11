@@ -43,7 +43,7 @@ const ListProvider = (props) => {
       'Content-Type': 'application/json',
     };
 
-    if(typeof apiKey !== "undefined"){
+    if(typeof(apiKey) != "undefined"){
       headers["Authorization"] = `Bearer ${apiKey}`
     };
     
@@ -270,9 +270,9 @@ const ListProvider = (props) => {
 
   //task are edited (task name or their completed status)
   async function editTask(newTask) {
-    const editedTaskList = await lists.map((list) => {
+    const editedTaskList = await lists?.map((list) => {
       //for every task loop through the task's data
-      const index = list.tasks.findIndex((task) => task._id === newTask._id); //match on _id
+      const index = list.tasks?.findIndex((task) => task._id === newTask._id); //match on _id
 
       let taskChangeTransact = [
         //sets the transaction to update data, this type of query can include the "_action" : "update", but if it is transact it is inferred

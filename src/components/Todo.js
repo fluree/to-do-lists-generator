@@ -8,6 +8,7 @@ export default function Todo(props) {
     props.deleteTask(task);
   }
 
+  console.log("todo props: ", props)
   const viewTemplate = (
     <Box display='flex' alignItems='center' flexDirection='column' p={2}>
       <Typography variant='subtitle1' component='h2'>
@@ -17,7 +18,7 @@ export default function Todo(props) {
         {props.description}
       </Typography>
 
-      {props.tasks.map((task, index) => {
+      {props.tasks?.map((task, index) => {
         return (
           <Task
             handleDeletion={handleDeletion}
