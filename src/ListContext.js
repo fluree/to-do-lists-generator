@@ -6,6 +6,7 @@ import { nanoid } from 'nanoid';
 
 const ListContext = React.createContext({});
 
+
 const ListProvider = (props) => {
   // initial state of the lists array, custom hook to set the lists each time the hook is called
   const [lists, setLists] = useState([]);
@@ -35,6 +36,37 @@ const ListProvider = (props) => {
     });
   }
 
+  async function transact(body) {
+    const headers = {
+      'Content-Type': 'application/json',
+    };
+
+    if(apiKey){
+      headers["Authorization"] = `Bearer ${apiKey}`
+    };
+    
+    return await axios.post(
+        `${baseURL}transact`,
+        body,
+      {headers: headers}
+    )
+  }
+
+  async function query(body){
+    const headers = {
+      'Content-Type': 'application/json',
+    };
+    if(apiKey){
+      headers["Authorization"] = `Bearer ${apiKey}`
+    };
+    
+    return await axios.post(
+        `${baseURL}query`,
+        body,
+      {headers: headers}
+    )
+  }
+  
   //this handles the changes for the inputs in the TasksInput component
   function handleTaskChange(task) {
     let newTasks = inputState.tasks;
@@ -80,11 +112,11 @@ const ListProvider = (props) => {
     });
   }
 
-  const baseURL = 'http://localhost:8090/fdb/test/one1/';
+  
 
   //load all the assignee data from fdb on render to propagate the "assignee" Select
   const loadAssignedToData = async () => {
-    const response = await axios.post(`${baseURL}query`, {
+    const response = await query( {
       select: ['_id', 'email', 'name'],
       from: 'assignee',
       opts: {
@@ -102,7 +134,7 @@ const ListProvider = (props) => {
 
   // fetches all the list data in the fdb
   const fetchListData = async () => {
-    let response = await axios.post(`${baseURL}query`, {
+    let response = await query( {
       select: [
         '*',
         {
@@ -141,10 +173,8 @@ const ListProvider = (props) => {
     // this is the API request that sends the assignee data to Fluree
     let sendAssigneeData = async () => {
       //holds the axios API request
-      let transactResponse = await axios.post(
-        `${baseURL}transact`, //place your URL followed by this structure: /fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/transact
-        newAssignee //this is the body that contains the list data in FlureeQL
-      );
+      let transactResponse = await transact(newAssignee); //this is the body that contains the list data in FlureeQL
+
       if (transactResponse.status === 200) {
         //if the transaction response is 200 then load the Assignee data again
         loadAssignedToData();
@@ -183,8 +213,7 @@ const ListProvider = (props) => {
 
     let sendListData = async () => {
       //holds the axios API request
-      let transactResponse = await axios.post(
-        `${baseURL}transact`, //place your URL followed by this structure: /fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/transact
+      let transactResponse = await transact( //place your URL followed by this structure: /fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/transact
         transactLoad //this is the body that contains the list data in FlureeQL
       );
       if (transactResponse.status === 200) {
@@ -219,7 +248,7 @@ const ListProvider = (props) => {
       const index = list.tasks.findIndex((task) => task._id === chosenTask._id); //match on _id
       let deleteTaskFromFluree = async () => {
         //the transaction to delete a task in Fluree
-        await axios.post(`${baseURL}transact`, [
+        await transact( [
           {
             _id: chosenTask._id, //this is the task _id to match to the task data in Fluree
             _action: 'delete', // action key required for deletions
@@ -252,9 +281,7 @@ const ListProvider = (props) => {
       ];
 
       let editTaskProps = async () => {
-        await axios.post(
-          // axios request to submit an update transaction to fluree
-          `${baseURL}transact`,
+        await transact(
           taskChangeTransact //this is the body that holds the update transaction in FlureeQL
         );
       };
