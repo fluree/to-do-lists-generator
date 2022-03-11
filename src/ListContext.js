@@ -6,6 +6,8 @@ import { nanoid } from 'nanoid';
 
 const ListContext = React.createContext({});
 
+const baseURL = "http://localhost:8090/"
+let apiKey; //set if using with Fluree Nexus
 
 const ListProvider = (props) => {
   // initial state of the lists array, custom hook to set the lists each time the hook is called
@@ -41,7 +43,7 @@ const ListProvider = (props) => {
       'Content-Type': 'application/json',
     };
 
-    if(apiKey){
+    if(typeof apiKey !== "undefined"){
       headers["Authorization"] = `Bearer ${apiKey}`
     };
     
@@ -56,7 +58,8 @@ const ListProvider = (props) => {
     const headers = {
       'Content-Type': 'application/json',
     };
-    if(apiKey){
+    
+    if(typeof(apiKey) != "undefined"){
       headers["Authorization"] = `Bearer ${apiKey}`
     };
     
